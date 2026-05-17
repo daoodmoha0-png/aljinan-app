@@ -168,6 +168,10 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 .toast{display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{display:block;animation:ta 2.8s forwards}
 @keyframes ta{0%{opacity:0;transform:translateX(-50%) translateY(8px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
+.lang-btn{padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+html[lang="en"]{direction:ltr}
+html[lang="en"] .ar{display:none!important}
+html[lang="ar"] .en{display:none!important}
 </style>
 </head>
 <body>
@@ -177,16 +181,22 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
   <div class="hdr-top">
     <div class="logo-row">
       <div class="logo-c">ج</div>
-      <div><div class="hdr-t">قافلة الجنان</div><div class="hdr-s">عمرة ١٤٤٦ هـ</div></div>
+      <div>
+        <div class="hdr-t"><span class="ar">قافلة الجنان</span><span class="en">Al-Jinan Convoy</span></div>
+        <div class="hdr-s"><span class="ar">عمرة ١٤٤٦ هـ</span><span class="en">Umrah 1446 H</span></div>
+      </div>
     </div>
-    <div class="nwrap">
-      <button class="nbtn" onclick="toggleNotif()"><i class="ti ti-bell"></i></button>
-      <div class="ndot" id="ndot"></div>
-      <div class="npanel" id="npanel">
-        <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🚌</div><div><div class="ni-t">تنبيه الحافلة</div><div class="ni-s">الحافلة A2 ستتحرك بعد 30 دقيقة</div></div><div class="ni-time">٥ د</div></div>
-        <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🍽️</div><div><div class="ni-t">تذكير الوجبة</div><div class="ni-s">آخر موعد طلب الغداء: ١٢:٠٠ م</div></div><div class="ni-time">١ س</div></div>
-        <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🕌</div><div><div class="ni-t">جولة جبل النور</div><div class="ni-s">موعد الجولة الغد ٧:٠٠ ص</div></div><div class="ni-time">٢ س</div></div>
-        <div class="nitem" onclick="closeNotif()"><div class="ni-icon">📿</div><div><div class="ni-t">البرنامج العبادي</div><div class="ni-s">قراءة الأدعية الساعة ٨:٠٠ م</div></div><div class="ni-time">٣ س</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="lang-btn" onclick="toggleLang()" id="lang-btn">🇬🇧 EN</button>
+      <div class="nwrap">
+        <button class="nbtn" onclick="toggleNotif()"><i class="ti ti-bell"></i></button>
+        <div class="ndot" id="ndot"></div>
+        <div class="npanel" id="npanel">
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🚌</div><div><div class="ni-t"><span class="ar">تنبيه الحافلة</span><span class="en">Bus Alert</span></div><div class="ni-s"><span class="ar">الحافلة A2 ستتحرك بعد 30 دقيقة</span><span class="en">Bus A2 departs in 30 minutes</span></div></div><div class="ni-time">٥ د</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🍽️</div><div><div class="ni-t"><span class="ar">تذكير الوجبة</span><span class="en">Meal Reminder</span></div><div class="ni-s"><span class="ar">آخر موعد طلب الغداء: ١٢:٠٠ م</span><span class="en">Last order time: 12:00 PM</span></div></div><div class="ni-time">١ س</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🕌</div><div><div class="ni-t"><span class="ar">جولة جبل النور</span><span class="en">Jabal Nour Tour</span></div><div class="ni-s"><span class="ar">موعد الجولة الغد ٧:٠٠ ص</span><span class="en">Tour tomorrow at 7:00 AM</span></div></div><div class="ni-time">٢ س</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">📿</div><div><div class="ni-t"><span class="ar">البرنامج العبادي</span><span class="en">Prayer Program</span></div><div class="ni-s"><span class="ar">قراءة الأدعية الساعة ٨:٠٠ م</span><span class="en">Group prayers at 8:00 PM</span></div></div><div class="ni-time">٣ س</div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -196,7 +206,7 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 <div id="home-panel">
   <div class="p-card">
     <div class="p-name">محمد عبدالله</div>
-    <div class="p-info">قافلة الجنان · رحلة رجب ١٤٤٦</div>
+    <div class="p-info"><span class="ar">قافلة الجنان · رحلة رجب ١٤٤٦</span><span class="en">Al-Jinan Convoy · Rajab 1446</span></div>
     <div class="badges">
       <div class="bdg bg">🕌 غرفة ٣٠٥</div>
       <div class="bdg bw">🚌 حافلة A2</div>
@@ -207,16 +217,16 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
       <div><div style="font-size:11px;opacity:.7;margin-bottom:4px">رقم المعتمر</div><div class="p-num">#٠٠٤٢</div><div style="font-size:10px;opacity:.6;margin-top:2px">امسح الباركود للتحقق</div></div>
     </div>
   </div>
-  <div class="sec-t">الخدمات</div>
+  <div class="sec-t"><span class="ar">الخدمات</span><span class="en">Services</span></div>
   <div class="qa">
-    <div class="qa-card" onclick="showPanel('meals')"><div class="qa-i">🍽️</div><div class="qa-l">طلب وجبة</div><div class="qa-s">اختر وجبتك</div></div>
-    <div class="qa-card" onclick="showPanel('tours')"><div class="qa-i">🕌</div><div class="qa-l">الجولات</div><div class="qa-s">سجّل في جولة</div></div>
-    <div class="qa-card" onclick="showPanel('schedule')"><div class="qa-i">📅</div><div class="qa-l">البرنامج</div><div class="qa-s">جدول الرحلة</div></div>
-    <div class="qa-card" onclick="showPanel('emergency')"><div class="qa-i">🆘</div><div class="qa-l">طوارئ</div><div class="qa-s">تواصل مع الكادر</div></div>
-    <div class="qa-card" onclick="showPanel('duaa')"><div class="qa-i">📿</div><div class="qa-l">أدعية وأذكار</div><div class="qa-s">دعاء العمرة</div></div>
-    <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l">وين أنا؟</div><div class="qa-s">موقعك الحالي</div></div>
-    <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l">شهادة اعتمار</div><div class="qa-s">شهادتك الرقمية</div></div>
-    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)">دليل العمرة</div><div class="qa-s">خطوات وأدعية</div></div>
+    <div class="qa-card" onclick="showPanel('meals')"><div class="qa-i">🍽️</div><div class="qa-l"><span class="ar">طلب وجبة</span><span class="en">Order Meal</span></div><div class="qa-s"><span class="ar">اختر وجبتك</span><span class="en">Choose your meal</span></div></div>
+    <div class="qa-card" onclick="showPanel('tours')"><div class="qa-i">🕌</div><div class="qa-l"><span class="ar">الجولات</span><span class="en">Tours</span></div><div class="qa-s"><span class="ar">سجّل في جولة</span><span class="en">Register for a tour</span></div></div>
+    <div class="qa-card" onclick="showPanel('schedule')"><div class="qa-i">📅</div><div class="qa-l"><span class="ar">البرنامج</span><span class="en">Schedule</span></div><div class="qa-s"><span class="ar">جدول الرحلة</span><span class="en">Trip schedule</span></div></div>
+    <div class="qa-card" onclick="showPanel('emergency')"><div class="qa-i">🆘</div><div class="qa-l"><span class="ar">طوارئ</span><span class="en">Emergency</span></div><div class="qa-s"><span class="ar">تواصل مع الكادر</span><span class="en">Contact staff</span></div></div>
+    <div class="qa-card" onclick="showPanel('duaa')"><div class="qa-i">📿</div><div class="qa-l"><span class="ar">أدعية وأذكار</span><span class="en">Prayers & Dhikr</span></div><div class="qa-s"><span class="ar">دعاء العمرة</span><span class="en">Umrah prayers</span></div></div>
+    <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l"><span class="ar">وين أنا؟</span><span class="en">Where am I?</span></div><div class="qa-s"><span class="ar">موقعك الحالي</span><span class="en">Your location</span></div></div>
+    <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l"><span class="ar">شهادة اعتمار</span><span class="en">Umrah Certificate</span></div><div class="qa-s"><span class="ar">شهادتك الرقمية</span><span class="en">Your digital cert</span></div></div>
+    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">خطوات وأدعية</span><span class="en">Steps & prayers</span></div></div>
   </div>
   <div class="sec-t">أوقات الصلاة · مكة المكرمة</div>
   <div class="pr-wrap">
@@ -687,15 +697,23 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
   </div>
 </div>
 <div class="bnav">
-  <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span>الرئيسية</span></button>
-  <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span>وجباتي</span></button>
-  <button class="nav-i" id="nav-duaa" onclick="navTo('duaa')"><i class="ti ti-book"></i><span>أدعية</span></button>
-  <button class="nav-i" id="nav-map" onclick="navTo('map')"><i class="ti ti-map-pin"></i><span>موقعي</span></button>
-  <button class="nav-i" id="nav-emergency" onclick="navTo('emergency')"><i class="ti ti-urgent"></i><span>طوارئ</span></button>
+  <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span><span class="ar">الرئيسية</span><span class="en">Home</span></span></button>
+  <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span><span class="ar">وجباتي</span><span class="en">Meals</span></span></button>
+  <button class="nav-i" id="nav-duaa" onclick="navTo('duaa')"><i class="ti ti-book"></i><span><span class="ar">أدعية</span><span class="en">Prayers</span></span></button>
+  <button class="nav-i" id="nav-map" onclick="navTo('map')"><i class="ti ti-map-pin"></i><span><span class="ar">موقعي</span><span class="en">Location</span></span></button>
+  <button class="nav-i" id="nav-emergency" onclick="navTo('emergency')"><i class="ti ti-urgent"></i><span><span class="ar">طوارئ</span><span class="en">Emergency</span></span></button>
 </div>
 </div>
 <script>
-var qty={},meals={chicken:0,meat:0,veg:0},drinks={tea:0,milk:0,water:0,juice:0},notifOpen=false,selPayMethod='';
+var currentLang='ar';
+function toggleLang(){
+  currentLang=currentLang==='ar'?'en':'ar';
+  var html=document.documentElement;
+  html.setAttribute('lang',currentLang);
+  html.setAttribute('dir',currentLang==='ar'?'rtl':'ltr');
+  document.getElementById('lang-btn').textContent=currentLang==='ar'?'🇬🇧 EN':'🇸🇦 AR';
+  showToast(currentLang==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
+},drinks={tea:0,milk:0,water:0,juice:0},notifOpen=false,selPayMethod='';
 var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'عصير 🧃'};
 
 function showPanel(n){
