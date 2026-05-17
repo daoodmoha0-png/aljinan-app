@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>قافلة الجنان - تطبيق المعتمرين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; }
+:root {
+  --navy: #1B2A4A;
+  --navy-light: #2a3f6f;
+  --navy-pale: #e8ecf4;
+  --gold: #C9A84C;
+  --gray: #8a8fa8;
+  --bg: #f4f6fb;
+  --white: #ffffff;
+  --border: rgba(27,42,74,0.12);
+  --success: #1a8a5a;
+  --danger: #c0392b;
+}
+html, body { height: 100%; background: var(--bg); color: var(--navy); }
+.app { max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--white); display: flex; flex-direction: column; position: relative; }
+
+/* Header */
+.header { background: var(--navy); padding: 16px 20px 12px; color: white; }
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.logo-area { display: flex; align-items: center; gap: 10px; }
+.logo-circle { width: 38px; height: 38px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; color: var(--navy); }
+.header-title { font-size: 16px; font-weight: 700; }
+.header-sub { font-size: 11px; opacity: 0.7; }
+.notif-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.15); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+
+/* Pilgrim Card */
+.pilgrim-card { margin: 14px; background: var(--navy); border-radius: 16px; padding: 16px; color: white; position: relative; overflow: hidden; }
+.pilgrim-card::before { content:''; position:absolute; top:-20px; left:-20px; width:100px; height:100px; border-radius:50%; background:rgba(255,255,255,0.05); }
+.pilgrim-name { font-size: 18px; font-weight: 700; margin-bottom: 3px; }
+.pilgrim-info { font-size: 12px; opacity: 0.7; margin-bottom: 12px; }
+.badges { display: flex; gap: 7px; flex-wrap: wrap; }
+.badge { padding: 5px 11px; border-radius: 20px; font-size: 12px; font-weight: 500; }
+.badge-gold { background: var(--gold); color: var(--navy); }
+.badge-white { background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.2); }
+.barcode-section { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.15); }
+.barcode-box { background: white; border-radius: 8px; padding: 7px; }
+.barcode-lines { display: flex; gap: 2px; align-items: flex-end; }
+.barcode-lines div { background: var(--navy); width: 3px; }
+.pilgrim-num { font-size: 22px; font-weight: 700; color: var(--gold); }
+
+/* Scroll area */
+.scroll-area { flex: 1; overflow-y: auto; padding-bottom: 70px; }
+
+.section-title { font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 14px 10px; }
+
+/* Quick Actions */
+.quick-actions { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 0 14px 18px; }
+.action-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 14px; cursor: pointer; text-align: center; transition: all 0.18s; }
+.action-card:active { background: var(--navy-pale); transform: scale(0.97); }
+.action-icon { font-size: 28px; margin-bottom: 6px; }
+.action-label { font-size: 13px; font-weight: 700; }
+.action-sub { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+/* Prayers */
+.prayers-wrap { padding: 0 14px 16px; }
+.prayer-main { background: var(--navy); color: white; border-radius: 12px; padding: 14px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.prayer-name { font-size: 14px; font-weight: 600; }
+.prayer-next { font-size: 11px; opacity: 0.7; }
+.prayer-time-main { font-size: 18px; font-weight: 700; color: var(--gold); }
+.prayer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.prayer-item { background: var(--navy-pale); border-radius: 10px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center; }
+.prayer-item-name { font-size: 12px; font-weight: 600; }
+.prayer-item-time { font-size: 12px; font-weight: 700; color: var(--navy); }
+
+/* Panel */
+.panel { display: none; padding: 0 14px 16px; }
+.panel.active { display: block; }
+.panel-header { display: flex; align-items: center; gap: 10px; padding: 14px 0 12px; }
+.back-btn { background: none; border: none; cursor: pointer; font-size: 22px; color: var(--navy); display: flex; align-items: center; }
+.panel-title { font-size: 16px; font-weight: 700; }
+
+/* Meals */
+.meal-header { background: var(--navy-pale); border-radius: 12px; padding: 12px; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+.meal-options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 12px; }
+.meal-option { border: 1.5px solid var(--border); border-radius: 12px; padding: 12px; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.18s; }
+.meal-option.selected { border-color: var(--navy); background: var(--navy-pale); }
+.meal-option-icon { font-size: 24px; }
+.meal-option-name { font-size: 14px; font-weight: 600; }
+.meal-option-desc { font-size: 11px; color: var(--gray); }
+.checkmark { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border); margin-right: auto; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+.meal-option.selected .checkmark { background: var(--navy); border-color: var(--navy); color: white; }
+.qty-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--bg); border-radius: 10px; margin-bottom: 8px; }
+.qty-label { font-size: 13px; font-weight: 500; }
+.qty-controls { display: flex; align-items: center; gap: 12px; }
+.qty-btn { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: white; cursor: pointer; font-size: 20px; display: flex; align-items: center; justify-content: center; color: var(--navy); font-weight: 700; }
+.qty-val { font-size: 16px; font-weight: 700; min-width: 24px; text-align: center; }
+.drink-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+.drink-btn { padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; background: white; cursor: pointer; font-size: 13px; font-weight: 500; text-align: center; transition: all 0.18s; }
+.drink-btn.selected { background: var(--navy); color: white; border-color: var(--navy); }
+
+/* Tours */
+.tour-card { border: 1px solid var(--border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
+.tour-img { height: 88px; background: var(--navy); display: flex; align-items: center; justify-content: center; font-size: 34px; position: relative; }
+.tour-badge { position: absolute; top: 8px; right: 8px; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+.tour-body { padding: 12px; }
+.tour-name { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.tour-details { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.tour-detail { font-size: 11px; color: var(--gray); }
+.tour-footer { display: flex; align-items: center; justify-content: space-between; }
+.tour-price { font-size: 16px; font-weight: 700; }
+.tour-price span { font-size: 11px; color: var(--gray); font-weight: 400; }
+.tour-btn { padding: 8px 16px; background: var(--navy); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; }
+.tour-btn.registered { background: var(--success); }
+
+/* Schedule */
+.sched-day-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; padding: 0 2px; }
+.sched-items { margin-bottom: 14px; }
+.sched-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+.sched-item:last-child { border-bottom: none; }
+.sched-time { font-size: 12px; color: var(--gray); min-width: 50px; padding-top: 2px; }
+.sched-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--navy); margin-top: 4px; flex-shrink: 0; }
+.sched-dot.prayer { background: var(--gold); }
+.sched-dot.meal { background: var(--success); }
+.sched-dot.tour { background: #e67e22; }
+.sched-event { font-size: 13px; font-weight: 500; }
+.sched-sub { font-size: 11px; color: var(--gray); }
+
+/* Emergency */
+.emergency-card { background: #fff5f5; border: 1.5px solid #f5c6c6; border-radius: 14px; padding: 16px; margin-bottom: 12px; text-align: center; }
+.emergency-btn { width: 80px; height: 80px; border-radius: 50%; background: var(--danger); border: none; color: white; font-size: 30px; cursor: pointer; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(192,57,43,0.3); }
+.emergency-title { font-size: 15px; font-weight: 700; color: var(--danger); }
+.emergency-sub { font-size: 12px; color: var(--gray); margin-top: 4px; line-height: 1.6; }
+.contact-cards { display: flex; flex-direction: column; gap: 8px; }
+.contact-card { display: flex; align-items: center; gap: 12px; padding: 12px; background: var(--white); border: 1px solid var(--border); border-radius: 12px; }
+.contact-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--navy-pale); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.contact-name { font-size: 14px; font-weight: 600; }
+.contact-role { font-size: 11px; color: var(--gray); }
+.call-btn { margin-right: auto; padding: 7px 13px; background: var(--success); color: white; border: none; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+
+/* Submit */
+.submit-btn { width: 100%; padding: 14px; background: var(--navy); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; margin-top: 8px; }
+.submit-btn:active { background: var(--navy-light); }
+
+/* Bottom Nav */
+.bottom-nav { background: white; border-top: 1px solid var(--border); display: flex; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 420px; z-index: 100; }
+.nav-item { flex: 1; padding: 10px 4px 8px; text-align: center; cursor: pointer; border: none; background: none; position: relative; }
+.nav-item i { font-size: 22px; display: block; margin-bottom: 2px; color: var(--gray); }
+.nav-item span { font-size: 10px; color: var(--gray); display: block; }
+.nav-item.active i, .nav-item.active span { color: var(--navy); }
+.nav-item.active::before { content:''; position:absolute; top:0; left:25%; right:25%; height:2px; background:var(--navy); border-radius:0 0 4px 4px; }
+
+/* Toast */
+.toast { display: none; position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%); background: var(--success); color: white; padding: 12px 22px; border-radius: 12px; font-size: 14px; font-weight: 600; z-index: 999; white-space: nowrap; max-width: 90vw; text-align: center; }
+.toast.show { display: block; animation: toastAnim 2.8s forwards; }
+@keyframes toastAnim { 0%{opacity:0;transform:translateX(-50%) translateY(10px)} 15%{opacity:1;transform:translateX(-50%) translateY(0)} 80%{opacity:1} 100%{opacity:0} }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="toast" id="toast"></div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-top">
+      <div class="logo-area">
+        <div class="logo-circle">ج</div>
+        <div>
+          <div class="header-title">قافلة الجنان</div>
+          <div class="header-sub">عمرة ١٤٤٦ هـ</div>
+        </div>
+      </div>
+      <button class="notif-btn" onclick="showToast('لا توجد إشعارات جديدة')">
+        <i class="ti ti-bell"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scroll Area -->
+  <div class="scroll-area" id="scroll-area">
+
+    <!-- HOME -->
+    <div id="home-panel">
+      <div class="pilgrim-card">
+        <div class="pilgrim-name">محمد عبدالله</div>
+        <div class="pilgrim-info">قافلة الجنان · رحلة رجب ١٤٤٦</div>
+        <div class="badges">
+          <div class="badge badge-gold">🕌 غرفة ٣٠٥</div>
+          <div class="badge badge-white">🚌 حافلة A2</div>
+          <div class="badge badge-white">معتمر #٠٠٤٢</div>
+        </div>
+        <div class="barcode-section">
+          <div class="barcode-box">
+            <div class="barcode-lines">
+              <div style="height:32px"></div><div style="height:28px"></div><div style="height:36px"></div>
+              <div style="height:30px"></div><div style="height:34px"></div><div style="height:26px"></div>
+              <div style="height:38px"></div><div style="height:28px"></div><div style="height:32px"></div>
+              <div style="height:30px"></div><div style="height:36px"></div><div style="height:28px"></div>
+              <div style="height:34px"></div><div style="height:38px"></div><div style="height:26px"></div>
+            </div>
+            <div style="font-size:9px;color:#888;text-align:center;margin-top:4px;">٠٠٤٢ - ALJINAN</div>
+          </div>
+          <div>
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px;">رقم المعتمر</div>
+            <div class="pilgrim-num">#٠٠٤٢</div>
+            <div style="font-size:10px;opacity:0.6;margin-top:2px;">امسح الباركود للتحقق</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">الخدمات</div>
+      <div class="quick-actions">
+        <div class="action-card" onclick="showPanel('meals')">
+          <div class="action-icon">🍽️</div>
+          <div class="action-label">طلب وجبة</div>
+          <div class="action-sub">اختر وجبتك اليوم</div>
+        </div>
+        <div class="action-card" onclick="showPanel('tours')">
+          <div class="action-icon">🕌</div>
+          <div class="action-label">الجولات</div>
+          <div class="action-sub">سجّل في جولة</div>
+        </div>
+        <div class="action-card" onclick="showPanel('schedule')">
+          <div class="action-icon">📅</div>
+          <div class="action-label">البرنامج</div>
+          <div class="action-sub">جدول الرحلة</div>
+        </div>
+        <div class="action-card" onclick="showPanel('emergency')">
+          <div class="action-icon">🆘</div>
+          <div class="action-label">طوارئ</div>
+          <div class="action-sub">تواصل مع الكادر</div>
+        </div>
+      </div>
+
+      <div class="section-title">أوقات الصلاة · مكة المكرمة</div>
+      <div class="prayers-wrap">
+        <div class="prayer-main">
+          <div>
+            <div class="prayer-name">🌅 الفجر</div>
+            <div class="prayer-next">الصلاة القادمة</div>
+          </div>
+          <div class="prayer-time-main">٤:١٨ ص</div>
+        </div>
+        <div class="prayer-grid">
+          <div class="prayer-item"><span class="prayer-item-name">☀️ الظهر</span><span class="prayer-item-time">١٢:١٥</span></div>
+          <div class="prayer-item"><span class="prayer-item-name">🌤 العصر</span><span class="prayer-item-time">٣:٤٥</span></div>
+          <div class="prayer-item"><span class="prayer-item-name">🌇 المغرب</span><span class="prayer-item-time">٦:٢٦</span></div>
+          <div class="prayer-item"><span class="prayer-item-name">🌙 العشاء</span><span class="prayer-item-time">٧:٥٦</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEALS -->
+    <div id="meals-panel" class="panel">
+      <div class="panel-header">
+        <button class="back-btn" onclick="showHome()"><i class="ti ti-arrow-right"></i></button>
+        <div class="panel-title">🍽️ طلب وجبة الغداء</div>
+      </div>
+      <div class="meal-header">
+        <div style="font-size:22px;">📅</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;">اليوم · الأحد</div>
+          <div style="font-size:11px;color:var(--gray);">١٧ رجب ١٤٤٦ · الغداء ١:٠٠ ظ</div>
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;">اختر نوع الوجبة</div>
+      <div class="meal-options">
+        <div class="meal-option selected" onclick="selectMeal(this)">
+          <div class="meal-option-icon">🍗</div>
+          <div><div class="meal-option-name">وجبة دجاج مشوي</div><div class="meal-option-desc">دجاج مشوي · خضار · حساء</div></div>
+          <div class="checkmark">✓</div>
+        </div>
+        <div class="meal-option" onclick="selectMeal(this)">
+          <div class="meal-option-icon">🥩</div>
+          <div><div class="meal-option-name">وجبة لحم مع الأرز</div><div class="meal-option-desc">لحم مطهو · أرز بسمتي · سلطة</div></div>
+          <div class="checkmark"></div>
+        </div>
+        <div class="meal-option" onclick="selectMeal(this)">
+          <div class="meal-option-icon">🥗</div>
+          <div><div class="meal-option-name">وجبة نباتية</div><div class="meal-option-desc">أرز · خضار متنوعة · عدس</div></div>
+          <div class="checkmark"></div>
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;">الكميات</div>
+      <div class="qty-row">
+        <div class="qty-label">🍚 صحون أرز</div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty('rice',-1)">−</button>
+          <span class="qty-val" id="rice-qty">1</span>
+          <button class="qty-btn" onclick="changeQty('rice',1)">+</button>
+        </div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin:10px 0 8px;">المشروب</div>
+      <div class="drink-grid">
+        <div class="drink-btn selected" onclick="selectDrink(this)">☕ شاي</div>
+        <div class="drink-btn" onclick="selectDrink(this)">🥛 لبن</div>
+        <div class="drink-btn" onclick="selectDrink(this)">💧 ماء</div>
+        <div class="drink-btn" onclick="selectDrink(this)">🧃 عصير</div>
+      </div>
+      <div class="qty-row">
+        <div class="qty-label">عدد المشروبات</div>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty('drink',-1)">−</button>
+          <span class="qty-val" id="drink-qty">1</span>
+          <button class="qty-btn" onclick="changeQty('drink',1)">+</button>
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitMeal()">✅ تأكيد الطلب</button>
+    </div>
+
+    <!-- TOURS -->
+    <div id="tours-panel" class="panel">
+      <div class="panel-header">
+        <button class="back-btn" onclick="showHome()"><i class="ti ti-arrow-right"></i></button>
+        <div class="panel-title">🕌 الجولات المتاحة</div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img">🕋<div class="tour-badge">متاح</div></div>
+        <div class="tour-body">
+          <div class="tour-name">جولة المسجد الحرام والكعبة</div>
+          <div class="tour-details">
+            <div class="tour-detail">⏰ ٣ ساعات</div>
+            <div class="tour-detail">👥 ١٢ مقعد</div>
+            <div class="tour-detail">📅 الغد ٩:٠٠ ص</div>
+          </div>
+          <div class="tour-footer">
+            <div class="tour-price">٥٠ ريال <span>/ شخص</span></div>
+            <button class="tour-btn" id="t1" onclick="registerTour('t1','جولة المسجد الحرام')">سجّل الآن</button>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img">⛰️<div class="tour-badge" style="background:white;color:var(--navy);">محدود</div></div>
+        <div class="tour-body">
+          <div class="tour-name">جبل النور وغار حراء</div>
+          <div class="tour-details">
+            <div class="tour-detail">⏰ ٤ ساعات</div>
+            <div class="tour-detail">👥 ٥ مقاعد</div>
+            <div class="tour-detail">📅 بعد الغد ٧:٠٠ ص</div>
+          </div>
+          <div class="tour-footer">
+            <div class="tour-price">٧٠ ريال <span>/ شخص</span></div>
+            <button class="tour-btn" id="t2" onclick="registerTour('t2','جبل النور')">سجّل الآن</button>
+          </div>
+        </div>
+      </div>
+      <div class="tour-card">
+        <div class="tour-img">🕌<div class="tour-badge">متاح</div></div>
+        <div class="tour-body">
+          <div class="tour-name">زيارة المسجد النبوي والروضة</div>
+          <div class="tour-details">
+            <div class="tour-detail">⏰ يوم كامل</div>
+            <div class="tour-detail">👥 ٢٠ مقعد</div>
+            <div class="tour-detail">📅 الخميس ٦:٠٠ ص</div>
+          </div>
+          <div class="tour-footer">
+            <div class="tour-price">١٥٠ ريال <span>/ شخص</span></div>
+            <button class="tour-btn" id="t3" onclick="registerTour('t3','المسجد النبوي')">سجّل الآن</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div id="schedule-panel" class="panel">
+      <div class="panel-header">
+        <button class="back-btn" onclick="showHome()"><i class="ti ti-arrow-right"></i></button>
+        <div class="panel-title">📅 البرنامج اليومي</div>
+      </div>
+      <div class="sched-day-title">اليوم · الأحد ١٧ رجب</div>
+      <div class="sched-items">
+        <div class="sched-item"><div class="sched-time">٤:١٨ ص</div><div class="sched-dot prayer"></div><div><div class="sched-event">صلاة الفجر جماعة</div><div class="sched-sub">مسجد الفندق · الدور الأول</div></div></div>
+        <div class="sched-item"><div class="sched-time">٨:٠٠ ص</div><div class="sched-dot meal"></div><div><div class="sched-event">وجبة الإفطار</div><div class="sched-sub">قاعة الطعام · الطابق الأرضي</div></div></div>
+        <div class="sched-item"><div class="sched-time">٩:٣٠ ص</div><div class="sched-dot tour"></div><div><div class="sched-event">أداء العمرة</div><div class="sched-sub">التجمع أمام الفندق</div></div></div>
+        <div class="sched-item"><div class="sched-time">١٢:١٥ م</div><div class="sched-dot prayer"></div><div><div class="sched-event">صلاة الظهر</div><div class="sched-sub">المسجد الحرام</div></div></div>
+        <div class="sched-item"><div class="sched-time">١:٣٠ م</div><div class="sched-dot meal"></div><div><div class="sched-event">وجبة الغداء</div><div class="sched-sub">قاعة الطعام · آخر طلب ١٢:٠٠ م</div></div></div>
+        <div class="sched-item"><div class="sched-time">٦:٢٦ م</div><div class="sched-dot prayer"></div><div><div class="sched-event">صلاة المغرب</div><div class="sched-sub">المسجد الحرام</div></div></div>
+        <div class="sched-item"><div class="sched-time">٨:٠٠ م</div><div class="sched-dot tour"></div><div><div class="sched-event">قراءة الأدعية الجماعية</div><div class="sched-sub">قاعة الاجتماعات · الطابق الثاني</div></div></div>
+      </div>
+      <div class="sched-day-title">الغد · الاثنين ١٨ رجب</div>
+      <div class="sched-items">
+        <div class="sched-item"><div class="sched-time">٩:٠٠ ص</div><div class="sched-dot tour"></div><div><div class="sched-event">جولة المسجد الحرام</div><div class="sched-sub">تجمع أمام الفندق · اختيارية</div></div></div>
+        <div class="sched-item"><div class="sched-time">٢:٠٠ م</div><div class="sched-dot"></div><div><div class="sched-event">وقت حر</div><div class="sched-sub">التسوق والزيارات الشخصية</div></div></div>
+      </div>
+    </div>
+
+    <!-- EMERGENCY -->
+    <div id="emergency-panel" class="panel">
+      <div class="panel-header">
+        <button class="back-btn" onclick="showHome()"><i class="ti ti-arrow-right"></i></button>
+        <div class="panel-title">🆘 طوارئ ومساعدة</div>
+      </div>
+      <div class="emergency-card">
+        <button class="emergency-btn" onclick="triggerEmergency()">🆘</button>
+        <div class="emergency-title">زر الطوارئ</div>
+        <div class="emergency-sub">اضغط في حالة الضياع أو التعب أو أي طارئ<br>سيتواصل معك الكادر فوراً</div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin-bottom:8px;">تواصل مع الكادر</div>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-avatar">👨‍💼</div>
+          <div><div class="contact-name">محمد عبدالله</div><div class="contact-role">كادر الحركة والطوارئ ٢٤/٧</div></div>
+          <button class="call-btn" onclick="showToast('جاري الاتصال بمحمد...')">📞 اتصل</button>
+        </div>
+        <div class="contact-card">
+          <div class="contact-avatar">🕌</div>
+          <div><div class="contact-name">مكتب قافلة الجنان</div><div class="contact-role">الدعم والمساعدة العامة</div></div>
+          <button class="call-btn" onclick="showToast('جاري الاتصال بالمكتب...')">📞 اتصل</button>
+        </div>
+        <div class="contact-card">
+          <div class="contact-avatar">🚑</div>
+          <div><div class="contact-name">الطوارئ الطبية</div><div class="contact-role">للحالات الطبية العاجلة</div></div>
+          <button class="call-btn" style="background:var(--danger);" onclick="showToast('جاري الاتصال بالطوارئ...')">📞 اتصل</button>
+        </div>
+      </div>
+      <div style="background:var(--navy-pale);border-radius:12px;padding:12px;margin-top:12px;">
+        <div style="font-size:13px;font-weight:600;margin-bottom:5px;">📍 موقعك الحالي</div>
+        <div style="font-size:12px;color:var(--gray);">فندق الجنان · شارع أجياد · مكة المكرمة</div>
+        <div style="font-size:11px;color:var(--gray);margin-top:3px;">تم آخر تحديث: ٣ دقائق مضت</div>
+      </div>
+    </div>
+
+  </div><!-- end scroll-area -->
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="nav-item active" id="nav-home" onclick="navTo('home')">
+      <i class="ti ti-home"></i><span>الرئيسية</span>
+    </button>
+    <button class="nav-item" id="nav-meals" onclick="navTo('meals')">
+      <i class="ti ti-tools-kitchen-2"></i><span>وجباتي</span>
+    </button>
+    <button class="nav-item" id="nav-tours" onclick="navTo('tours')">
+      <i class="ti ti-map-pin"></i><span>الجولات</span>
+    </button>
+    <button class="nav-item" id="nav-schedule" onclick="navTo('schedule')">
+      <i class="ti ti-calendar"></i><span>البرنامج</span>
+    </button>
+    <button class="nav-item" id="nav-emergency" onclick="navTo('emergency')">
+      <i class="ti ti-urgent"></i><span>طوارئ</span>
+    </button>
+  </div>
+</div>
+
+<script>
+var qty = { rice: 1, drink: 1 };
+
+function showPanel(name) {
+  document.getElementById('home-panel').style.display = 'none';
+  ['meals','tours','schedule','emergency'].forEach(function(p) {
+    var el = document.getElementById(p+'-panel');
+    if(el) el.classList.remove('active');
+  });
+  var panel = document.getElementById(name+'-panel');
+  if(panel) panel.classList.add('active');
+  document.getElementById('scroll-area').scrollTop = 0;
+  updateNav(name);
+}
+
+function showHome() {
+  document.getElementById('home-panel').style.display = 'block';
+  ['meals','tours','schedule','emergency'].forEach(function(p) {
+    var el = document.getElementById(p+'-panel');
+    if(el) el.classList.remove('active');
+  });
+  document.getElementById('scroll-area').scrollTop = 0;
+  updateNav('home');
+}
+
+function navTo(name) {
+  if(name === 'home') showHome();
+  else showPanel(name);
+}
+
+function updateNav(name) {
+  ['home','meals','tours','schedule','emergency'].forEach(function(n) {
+    var el = document.getElementById('nav-'+n);
+    if(el) el.classList.toggle('active', n === name);
+  });
+}
+
+function selectMeal(el) {
+  document.querySelectorAll('.meal-option').forEach(function(m) {
+    m.classList.remove('selected');
+    m.querySelector('.checkmark').textContent = '';
+  });
+  el.classList.add('selected');
+  el.querySelector('.checkmark').textContent = '✓';
+}
+
+function changeQty(type, delta) {
+  qty[type] = Math.max(1, Math.min(5, qty[type] + delta));
+  document.getElementById(type+'-qty').textContent = qty[type];
+}
+
+function selectDrink(el) {
+  document.querySelectorAll('.drink-btn').forEach(function(d) { d.classList.remove('selected'); });
+  el.classList.add('selected');
+}
+
+function submitMeal() {
+  var meal = document.querySelector('.meal-option.selected .meal-option-name').textContent;
+  var drink = document.querySelector('.drink-btn.selected').textContent;
+  showToast('✅ تم إرسال الطلب: ' + meal);
+}
+
+function registerTour(btnId, tourName) {
+  var btn = document.getElementById(btnId);
+  if(btn.classList.contains('registered')) {
+    btn.classList.remove('registered');
+    btn.textContent = 'سجّل الآن';
+    showToast('تم إلغاء التسجيل في: ' + tourName);
+  } else {
+    btn.classList.add('registered');
+    btn.textContent = '✓ مسجّل';
+    showToast('✅ تم التسجيل في: ' + tourName);
+  }
+}
+
+function triggerEmergency() {
+  showToast('🆘 تم إرسال موقعك! الكادر في الطريق إليك');
+}
+
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show';
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+</script>
+</body>
+</html>
