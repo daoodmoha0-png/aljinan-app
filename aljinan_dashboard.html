@@ -6,152 +6,213 @@
 <title>قافلة الجنان - لوحة التحكم</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
 :root{--navy:#1B2A4A;--navy2:#2a3f6f;--navyp:#e8ecf4;--gold:#C9A84C;--gray:#8a8fa8;--bg:#f0f3fa;--white:#fff;--border:rgba(27,42,74,0.1);--ok:#1a8a5a;--bad:#c0392b;--warn:#e67e22}
 body{background:var(--bg);color:var(--navy);min-height:100vh}
-
-/* HEADER */
-.hdr{background:var(--navy);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.hdr{background:var(--navy);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;color:#fff;position:sticky;top:0;z-index:50}
 .hdr-logo{display:flex;align-items:center;gap:10px}
-.logo-c{width:38px;height:38px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--navy)}
-.hdr-title{font-size:16px;font-weight:700}
-.hdr-sub{font-size:11px;opacity:.7}
+.logo-c{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy)}
+.hdr-t{font-size:15px;font-weight:700}
+.hdr-s{font-size:11px;opacity:.7}
 .hdr-badge{background:var(--gold);color:var(--navy);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-
-/* LAYOUT */
-.layout{display:flex;min-height:calc(100vh - 66px)}
-.sidebar{width:200px;background:var(--white);border-left:1px solid var(--border);padding:16px 0;flex-shrink:0}
-.main{flex:1;padding:20px;overflow-y:auto}
-
-/* SIDEBAR */
-.nav-section{font-size:11px;color:var(--gray);font-weight:600;padding:8px 16px 4px;margin-top:8px}
-.nav-link{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;font-size:13px;font-weight:500;color:var(--gray);transition:all .18s;border-right:3px solid transparent}
-.nav-link:hover{background:var(--navyp);color:var(--navy)}
-.nav-link.active{background:var(--navyp);color:var(--navy);border-right-color:var(--navy)}
-.nav-link i{font-size:18px}
-.nav-badge{margin-right:auto;background:var(--bad);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
-
-/* STATS */
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.stat-card{background:var(--white);border-radius:14px;padding:16px;border:1px solid var(--border)}
-.stat-icon{font-size:24px;margin-bottom:8px}
-.stat-val{font-size:26px;font-weight:700;color:var(--navy)}
-.stat-lbl{font-size:12px;color:var(--gray);margin-top:2px}
-.stat-card.ok .stat-val{color:var(--ok)}
-.stat-card.bad .stat-val{color:var(--bad)}
-.stat-card.warn .stat-val{color:var(--warn)}
-
-/* SECTION */
-.section{background:var(--white);border-radius:14px;padding:16px;margin-bottom:16px;border:1px solid var(--border)}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.section-title{font-size:15px;font-weight:700}
-.section-action{padding:7px 14px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-
-/* TABLE */
-.tbl{width:100%;border-collapse:collapse}
-.tbl th{text-align:right;font-size:12px;color:var(--gray);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}
-.tbl td{padding:10px;font-size:13px;border-bottom:1px solid var(--border);vertical-align:middle}
-.tbl tr:last-child td{border-bottom:none}
-.tbl tr:hover td{background:var(--navyp)}
-
-/* STATUS BADGES */
-.status{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block}
-.s-hotel{background:#e8f5e9;color:#1a8a5a}
-.s-haram{background:#e3f2fd;color:#1565c0}
-.s-missing{background:#ffebee;color:#c0392b}
-.s-bus{background:#fff3e0;color:#e67e22}
-
-/* EMERGENCY */
-.emg-card{background:#fff5f5;border:1.5px solid #ffcdd2;border-radius:12px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px}
-.emg-icon{font-size:28px;flex-shrink:0}
-.emg-name{font-size:14px;font-weight:700}
-.emg-detail{font-size:12px;color:var(--gray);margin-top:2px}
-.emg-time{font-size:11px;color:var(--bad);font-weight:600;margin-right:auto}
-.action-btns{display:flex;gap:6px;flex-shrink:0}
-.btn-sm{padding:6px 12px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit}
-.btn-ok{background:var(--ok);color:#fff}
-.btn-call{background:var(--navy);color:#fff}
-.btn-warn{background:var(--warn);color:#fff}
-
-/* MEALS */
-.meal-order{display:flex;align-items:center;gap:10px;padding:10px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
-.meal-num{width:32px;height:32px;border-radius:50%;background:var(--navyp);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.meal-detail{flex:1}
-.meal-name{font-size:13px;font-weight:600}
-.meal-items{font-size:11px;color:var(--gray);margin-top:2px}
-.meal-status{padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.ms-pending{background:#fff3e0;color:var(--warn)}
-.ms-done{background:#e8f5e9;color:var(--ok)}
-
-/* NOTIFY MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center}
-.modal-overlay.open{display:flex}
-.modal{background:#fff;border-radius:16px;padding:20px;width:90%;max-width:420px}
-.modal-title{font-size:16px;font-weight:700;margin-bottom:14px}
-.modal-input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;margin-bottom:10px;resize:none}
-.modal-btns{display:flex;gap:8px}
-.modal-send{flex:1;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
-.modal-cancel{padding:11px 16px;background:var(--navyp);color:var(--navy);border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
-
-/* PILGRIM STATUS */
-.pilgrim-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
-.pilgrim-row:last-child{border-bottom:none}
-.p-avatar{width:34px;height:34px;border-radius:50%;background:var(--navyp);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
-.p-name{font-size:13px;font-weight:600;flex:1}
-.p-room{font-size:11px;color:var(--gray)}
-.p-status-sel{padding:4px 8px;border-radius:8px;font-size:11px;font-weight:600;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:inherit}
-
-/* PAYMENT */
-.pay-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
-.pay-row:last-child{border-bottom:none}
-.pay-name{font-size:13px;font-weight:600}
-.pay-method{font-size:11px;color:var(--gray)}
-.pay-amount{font-size:14px;font-weight:700;color:var(--navy)}
-.pay-stat{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.ps-paid{background:#e8f5e9;color:var(--ok)}
-.ps-cash{background:#fff3e0;color:var(--warn)}
-
-/* PANELS */
+.lang-btn-d{padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+html[lang="en"]{direction:ltr}
+html[lang="en"] .ar{display:none!important}
+html[lang="ar"] .en{display:none!important}
+.layout{display:flex;min-height:calc(100vh - 60px)}
+.sidebar{width:195px;background:var(--white);border-left:1px solid var(--border);padding:12px 0;flex-shrink:0;position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.main{flex:1;padding:18px;overflow-y:auto}
+.nav-sec{font-size:10px;color:var(--gray);font-weight:700;padding:8px 14px 3px;margin-top:6px;letter-spacing:.5px}
+.nav-lnk{display:flex;align-items:center;gap:9px;padding:9px 14px;cursor:pointer;font-size:13px;font-weight:500;color:var(--gray);transition:all .15s;border-right:3px solid transparent;position:relative}
+.nav-lnk:hover{background:var(--navyp);color:var(--navy)}
+.nav-lnk.active{background:var(--navyp);color:var(--navy);border-right-color:var(--navy);font-weight:700}
+.nav-lnk i{font-size:17px}
+.nbadge{margin-right:auto;background:var(--bad);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+.nbadge.warn{background:var(--warn)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--white);border-radius:12px;padding:14px;border:1px solid var(--border)}
+.stat-i{font-size:22px;margin-bottom:6px}
+.stat-v{font-size:24px;font-weight:700}
+.stat-l{font-size:11px;color:var(--gray);margin-top:2px}
+.stat.ok .stat-v{color:var(--ok)}
+.stat.bad .stat-v{color:var(--bad)}
+.stat.warn .stat-v{color:var(--warn)}
+.stat.gold .stat-v{color:var(--gold)}
+.section{background:var(--white);border-radius:12px;padding:14px;margin-bottom:14px;border:1px solid var(--border)}
+.sec-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sec-t{font-size:14px;font-weight:700}
 .panel{display:none}
 .panel.active{display:block}
-
-/* TOAST */
-.toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:12px 24px;border-radius:12px;font-size:14px;font-weight:600;z-index:999}
+.btn{padding:7px 14px;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-ok{background:var(--ok);color:#fff}
+.btn-warn{background:var(--warn);color:#fff}
+.btn-bad{background:var(--bad);color:#fff}
+.btn-light{background:var(--navyp);color:var(--navy)}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn:active{transform:scale(.97)}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:right;font-size:11px;color:var(--gray);font-weight:700;padding:7px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:9px 10px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:#fafbfd}
+.badge{padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;display:inline-block;white-space:nowrap}
+.b-ok{background:#e8f5e9;color:var(--ok)}
+.b-bad{background:#ffebee;color:var(--bad)}
+.b-warn{background:#fff3e0;color:var(--warn)}
+.b-blue{background:#e3f2fd;color:#1565c0}
+.b-gold{background:#fff8e1;color:#b7860a}
+.emg-card{background:#fff5f5;border:1.5px solid #ffcdd2;border-radius:10px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.emg-icon{font-size:26px;flex-shrink:0}
+.task-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)}
+.task-item:last-child{border-bottom:none}
+.task-cb{width:18px;height:18px;border-radius:5px;border:2px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.task-cb.done{background:var(--ok);border-color:var(--ok);color:#fff;font-size:12px}
+.task-text{font-size:13px;flex:1}
+.task-text.done{text-decoration:line-through;color:var(--gray)}
+.task-time{font-size:11px;color:var(--gray)}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;align-items:center;justify-content:center;padding:16px}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:20px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto}
+.modal-t{font-size:16px;font-weight:700;margin-bottom:14px}
+.form-row{margin-bottom:10px}
+.form-lbl{font-size:12px;font-weight:600;color:var(--navy);margin-bottom:4px;display:block}
+.form-inp{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:9px;font-size:13px;font-family:inherit}
+.form-inp:focus{outline:none;border-color:var(--navy)}
+.modal-btns{display:flex;gap:8px;margin-top:14px}
+.room-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px}
+.room-card{border:1.5px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer;transition:all .18s}
+.room-card:hover{border-color:var(--navy);background:var(--navyp)}
+.room-card.occupied{border-color:var(--ok);background:#e8f5e9}
+.room-card.vip{border-color:var(--gold);background:#fff8e1}
+.room-card.empty{opacity:.5}
+.room-num{font-size:14px;font-weight:700}
+.room-name{font-size:10px;color:var(--gray);margin-top:2px}
+.bus-card{border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:10px}
+.bus-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.bus-name{font-size:14px;font-weight:700}
+.bus-track{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:6px}
+.bus-fill{height:100%;border-radius:4px;transition:width .5s}
+.progress-row{display:flex;justify-content:space-between;font-size:11px;color:var(--gray)}
+.chart-wrap{position:relative;height:200px}
+.notify-quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.nq-btn{padding:10px;background:var(--navyp);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy);text-align:right;display:flex;align-items:center;gap:6px;transition:all .15s}
+.nq-btn:hover{background:var(--navy);color:#fff}
+.pay-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}
+.pay-row:last-child{border-bottom:none}
+.toast{display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:11px 22px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap}
 .toast.show{display:block;animation:ta 2.8s forwards}
 @keyframes ta{0%{opacity:0;transform:translateX(-50%) translateY(8px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
-
-/* RESPONSIVE */
+.search-bar{width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:9px;font-size:13px;font-family:inherit;margin-bottom:12px}
+.search-bar:focus{outline:none;border-color:var(--navy)}
+.p-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.p-row:last-child{border-bottom:none}
+.p-av{width:32px;height:32px;border-radius:50%;background:var(--navyp);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:var(--navy)}
+.p-info{flex:1}
+.p-name{font-size:13px;font-weight:600}
+.p-det{font-size:11px;color:var(--gray)}
+.status-sel{padding:4px 8px;border-radius:7px;font-size:11px;font-weight:600;border:1px solid var(--border);background:#fff;cursor:pointer;font-family:inherit}
+.action-row{display:flex;gap:5px}
+.bc-mini{display:inline-flex;gap:1px;align-items:flex-end;background:#fff;border-radius:4px;padding:4px}
+.bc-mini div{background:var(--navy);width:2px}
 @media(max-width:700px){
   .stats-grid{grid-template-columns:repeat(2,1fr)}
   .sidebar{display:none}
-  .mobile-nav{display:flex!important}
+  .mob-nav{display:flex!important}
+  .room-grid{grid-template-columns:repeat(3,1fr)}
+  .notify-quick{grid-template-columns:1fr}
 }
-.mobile-nav{display:none;background:var(--white);border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100;padding:6px 8px 8px;gap:4px}
-.mnav-i{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 2px;border:none;background:none;cursor:pointer;border-radius:10px}
-.mnav-i i{font-size:20px;color:var(--gray)}
-.mnav-i span{font-size:9px;color:var(--gray);font-weight:500}
-.mnav-i.active{background:var(--navyp)}
-.mnav-i.active i,.mnav-i.active span{color:var(--navy)}
+.mob-nav{display:none;background:var(--white);border-top:1px solid var(--border);position:fixed;bottom:0;left:0;right:0;z-index:100;padding:5px 8px 7px;gap:3px}
+.mn-i{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 2px;border:none;background:none;cursor:pointer;border-radius:9px}
+.mn-i i{font-size:19px;color:var(--gray)}
+.mn-i span{font-size:9px;color:var(--gray);font-weight:500}
+.mn-i.active{background:var(--navyp)}
+.mn-i.active i,.mn-i.active span{color:var(--navy)}
 </style>
 </head>
 <body>
 <div class="toast" id="toast"></div>
 
-<!-- NOTIFY MODAL -->
-<div class="modal-overlay" id="notify-modal">
+<!-- ADD PILGRIM MODAL -->
+<div class="modal-ov" id="modal-add">
   <div class="modal">
-    <div class="modal-title" id="modal-title">📢 إرسال إشعار للمعتمرين</div>
-    <textarea class="modal-input" id="notify-text" rows="3" placeholder="اكتب الإشعار هنا..."></textarea>
-    <select class="modal-input" id="notify-target" style="height:40px">
-      <option value="all">إرسال لجميع المعتمرين</option>
-      <option value="bus-a">حافلة A فقط</option>
-      <option value="bus-b">حافلة B فقط</option>
-      <option value="single">معتمر محدد</option>
-    </select>
+    <div class="modal-t">➕ إضافة معتمر جديد</div>
+    <div class="form-row"><label class="form-lbl">الاسم الكامل *</label><input class="form-inp" placeholder="محمد علي الحسن" id="add-name"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="form-row"><label class="form-lbl">رقم الغرفة *</label><input class="form-inp" placeholder="٣٠١" id="add-room"></div>
+      <div class="form-row"><label class="form-lbl">الحافلة *</label>
+        <select class="form-inp" id="add-bus"><option>A</option><option>B</option></select>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="form-row"><label class="form-lbl">رقم الجوال</label><input class="form-inp" placeholder="+966..." id="add-phone"></div>
+      <div class="form-row"><label class="form-lbl">الجنسية</label><input class="form-inp" placeholder="سعودي" id="add-nat"></div>
+    </div>
+    <div class="form-row"><label class="form-lbl">ملاحظات</label><textarea class="form-inp" rows="2" id="add-notes" placeholder="أي ملاحظات خاصة..."></textarea></div>
     <div class="modal-btns">
-      <button class="modal-send" onclick="sendNotif()">📤 إرسال</button>
-      <button class="modal-cancel" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-navy" style="flex:1" onclick="addPilgrim()">✅ إضافة</button>
+      <button class="btn btn-light" onclick="closeModal('modal-add')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PILGRIM MODAL -->
+<div class="modal-ov" id="modal-edit">
+  <div class="modal">
+    <div class="modal-t">✏️ تعديل بيانات المعتمر</div>
+    <div class="form-row"><label class="form-lbl">الاسم الكامل</label><input class="form-inp" id="edit-name"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="form-row"><label class="form-lbl">رقم الغرفة</label><input class="form-inp" id="edit-room"></div>
+      <div class="form-row"><label class="form-lbl">الحافلة</label><select class="form-inp" id="edit-bus"><option>A</option><option>B</option></select></div>
+    </div>
+    <div class="form-row"><label class="form-lbl">رقم الجوال</label><input class="form-inp" id="edit-phone"></div>
+    <div class="form-row"><label class="form-lbl">ملاحظات</label><textarea class="form-inp" rows="2" id="edit-notes"></textarea></div>
+    <div class="modal-btns">
+      <button class="btn btn-navy" style="flex:1" onclick="saveEdit()">💾 حفظ التعديلات</button>
+      <button class="btn btn-light" onclick="closeModal('modal-edit')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- BARCODE MODAL -->
+<div class="modal-ov" id="modal-bc">
+  <div class="modal" style="text-align:center">
+    <div class="modal-t" style="text-align:right">🖨️ باركود المعتمر</div>
+    <div style="background:var(--navy);border-radius:14px;padding:20px;color:#fff;margin-bottom:14px">
+      <div style="font-size:16px;font-weight:700;margin-bottom:4px" id="bc-name">محمد علي الحسن</div>
+      <div style="font-size:12px;opacity:.7;margin-bottom:14px" id="bc-info">غرفة ٣٠١ · حافلة A</div>
+      <div style="background:#fff;border-radius:10px;padding:12px;display:inline-block;margin-bottom:8px">
+        <div style="display:flex;gap:2px;align-items:flex-end;justify-content:center">
+          <div style="height:36px;width:3px;background:var(--navy)"></div><div style="height:28px;width:3px;background:var(--navy)"></div><div style="height:40px;width:3px;background:var(--navy)"></div><div style="height:32px;width:3px;background:var(--navy)"></div><div style="height:38px;width:3px;background:var(--navy)"></div><div style="height:26px;width:3px;background:var(--navy)"></div><div style="height:42px;width:3px;background:var(--navy)"></div><div style="height:30px;width:3px;background:var(--navy)"></div><div style="height:36px;width:3px;background:var(--navy)"></div><div style="height:28px;width:3px;background:var(--navy)"></div><div style="height:40px;width:3px;background:var(--navy)"></div><div style="height:34px;width:3px;background:var(--navy)"></div><div style="height:38px;width:3px;background:var(--navy)"></div><div style="height:26px;width:3px;background:var(--navy)"></div><div style="height:42px;width:3px;background:var(--navy)"></div><div style="height:32px;width:3px;background:var(--navy)"></div><div style="height:36px;width:3px;background:var(--navy)"></div><div style="height:40px;width:3px;background:var(--navy)"></div>
+        </div>
+        <div style="font-size:10px;color:#888;margin-top:6px" id="bc-num">٠٠٠١ - ALJINAN</div>
+      </div>
+      <div style="font-size:22px;font-weight:700;color:var(--gold)" id="bc-id">#٠٠٠١</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-navy" style="flex:1" onclick="showToast('🖨️ جاري الطباعة...');closeModal('modal-bc')">🖨️ طباعة</button>
+      <button class="btn btn-light" onclick="closeModal('modal-bc')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIFY MODAL -->
+<div class="modal-ov" id="modal-notify">
+  <div class="modal">
+    <div class="modal-t">📢 إرسال إشعار</div>
+    <div class="form-row"><label class="form-lbl">الرسالة</label><textarea class="form-inp" rows="3" id="notif-text" placeholder="اكتب الإشعار..."></textarea></div>
+    <div class="form-row"><label class="form-lbl">إرسال إلى</label>
+      <select class="form-inp" id="notif-target">
+        <option>📢 جميع المعتمرين (٤٢)</option>
+        <option>🚌 حافلة A فقط (٢٢)</option>
+        <option>🚌 حافلة B فقط (٢٠)</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn btn-navy" style="flex:1" onclick="sendNotif()">📤 إرسال</button>
+      <button class="btn btn-light" onclick="closeModal('modal-notify')">إلغاء</button>
     </div>
   </div>
 </div>
@@ -160,221 +221,143 @@ body{background:var(--bg);color:var(--navy);min-height:100vh}
 <div class="hdr">
   <div class="hdr-logo">
     <div class="logo-c">ج</div>
-    <div>
-      <div class="hdr-title">لوحة تحكم الكادر</div>
-      <div class="hdr-sub">قافلة الجنان · رحلة رجب ١٤٤٦</div>
-    </div>
+    <div><div class="hdr-t">لوحة تحكم الكادر</div><div class="hdr-s">قافلة الجنان · رجب ١٤٤٦</div></div>
   </div>
   <div style="display:flex;align-items:center;gap:10px">
-    <div class="hdr-badge">كادر الحركة</div>
-    <div style="font-size:13px;opacity:.8">محمد عبدالله</div>
+    <button class="lang-btn-d" onclick="toggleLangD()" id="lang-btn-d">🇬🇧 EN</button>
+    <div class="hdr-badge"><span class="ar">كادر الحركة</span><span class="en">Staff</span></div>
+    <div style="font-size:12px;opacity:.8">محمد عبدالله</div>
   </div>
 </div>
 
 <div class="layout">
-<!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="nav-section">الرئيسية</div>
-  <div class="nav-link active" onclick="showTab('overview',this)"><i class="ti ti-dashboard"></i> نظرة عامة</div>
-
-  <div class="nav-section">إدارة</div>
-  <div class="nav-link" onclick="showTab('pilgrims',this)"><i class="ti ti-users"></i> المعتمرون</div>
-  <div class="nav-link" onclick="showTab('meals',this)"><i class="ti ti-tools-kitchen-2"></i> الوجبات <span class="nav-badge">٨</span></div>
-  <div class="nav-link" onclick="showTab('tours',this)"><i class="ti ti-map-pin"></i> الجولات</div>
-  <div class="nav-link" onclick="showTab('payments',this)"><i class="ti ti-credit-card"></i> المدفوعات</div>
-
-  <div class="nav-section">تنبيهات</div>
-  <div class="nav-link" onclick="showTab('emergency',this)"><i class="ti ti-urgent"></i> الطوارئ <span class="nav-badge">٢</span></div>
-  <div class="nav-link" onclick="showTab('notify',this)"><i class="ti ti-bell"></i> إرسال إشعار</div>
+  <div class="nav-sec"><span class="ar">الرئيسية</span><span class="en">Home</span></div>
+  <div class="nav-lnk active" onclick="showTab('overview',this)"><i class="ti ti-dashboard"></i> <span class="ar">نظرة عامة</span><span class="en">Overview</span></div>
+  <div class="nav-sec"><span class="ar">إدارة</span><span class="en">Management</span></div>
+  <div class="nav-lnk" onclick="showTab('pilgrims',this)"><i class="ti ti-users"></i> <span class="ar">المعتمرون</span><span class="en">Pilgrims</span></div>
+  <div class="nav-lnk" onclick="showTab('meals',this)"><i class="ti ti-tools-kitchen-2"></i> <span class="ar">الوجبات</span><span class="en">Meals</span> <span class="nbadge warn">٨</span></div>
+  <div class="nav-lnk" onclick="showTab('tours',this)"><i class="ti ti-map-pin"></i> <span class="ar">الجولات</span><span class="en">Tours</span></div>
+  <div class="nav-lnk" onclick="showTab('payments',this)"><i class="ti ti-credit-card"></i> <span class="ar">المدفوعات</span><span class="en">Payments</span></div>
+  <div class="nav-sec"><span class="ar">العمليات</span><span class="en">Operations</span></div>
+  <div class="nav-lnk" onclick="showTab('buses',this)"><i class="ti ti-bus"></i> <span class="ar">الحافلات</span><span class="en">Buses</span></div>
+  <div class="nav-lnk" onclick="showTab('rooms',this)"><i class="ti ti-building"></i> <span class="ar">الغرف</span><span class="en">Rooms</span></div>
+  <div class="nav-lnk" onclick="showTab('tasks',this)"><i class="ti ti-checkbox"></i> <span class="ar">مهام الكادر</span><span class="en">Tasks</span></div>
+  <div class="nav-sec"><span class="ar">تقارير</span><span class="en">Reports</span></div>
+  <div class="nav-lnk" onclick="showTab('reports',this)"><i class="ti ti-chart-bar"></i> <span class="ar">الإحصائيات</span><span class="en">Statistics</span></div>
+  <div class="nav-sec"><span class="ar">تواصل</span><span class="en">Communication</span></div>
+  <div class="nav-lnk" onclick="showTab('emergency',this)"><i class="ti ti-urgent"></i> <span class="ar">الطوارئ</span><span class="en">Emergency</span> <span class="nbadge">٢</span></div>
+  <div class="nav-lnk" onclick="showTab('notify',this)"><i class="ti ti-bell"></i> <span class="ar">إرسال إشعار</span><span class="en">Send Notification</span></div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
 
 <!-- OVERVIEW -->
 <div id="tab-overview" class="panel active">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">نظرة عامة على الرحلة 📊</div>
-
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">نظرة عامة 📊</div>
   <div class="stats-grid">
-    <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">٤٢</div><div class="stat-lbl">إجمالي المعتمرين</div></div>
-    <div class="stat-card ok"><div class="stat-icon">✅</div><div class="stat-val">٣٨</div><div class="stat-lbl">في الفندق / الحرم</div></div>
-    <div class="stat-card bad"><div class="stat-icon">🆘</div><div class="stat-val">٢</div><div class="stat-lbl">حالات طوارئ</div></div>
-    <div class="stat-card warn"><div class="stat-icon">🍽️</div><div class="stat-val">٨</div><div class="stat-lbl">طلبات وجبات معلقة</div></div>
+    <div class="stat"><div class="stat-i">👥</div><div class="stat-v">٤٢</div><div class="stat-l">إجمالي المعتمرين</div></div>
+    <div class="stat ok"><div class="stat-i">✅</div><div class="stat-v">٣٨</div><div class="stat-l">في الفندق / الحرم</div></div>
+    <div class="stat bad"><div class="stat-i">🆘</div><div class="stat-v">٢</div><div class="stat-l">حالات طوارئ</div></div>
+    <div class="stat warn"><div class="stat-i">🍽️</div><div class="stat-v">٨</div><div class="stat-l">وجبات معلقة</div></div>
   </div>
-
-  <!-- Emergency Alert -->
-  <div class="section">
-    <div class="section-header">
-      <div class="section-title">🚨 تنبيهات الطوارئ</div>
-      <div style="font-size:12px;color:var(--bad);font-weight:600">٢ حالة نشطة</div>
-    </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div class="stat gold"><div class="stat-i">💰</div><div class="stat-v">١٦٥٠</div><div class="stat-l">إجمالي المدفوعات (ريال)</div></div>
+    <div class="stat"><div class="stat-i">🕌</div><div class="stat-v">٣</div><div class="stat-l">جولات مسجلة</div></div>
+  </div>
+  <div class="section" style="border-color:#ffcdd2">
+    <div class="sec-hdr"><div class="sec-t" style="color:var(--bad)">🚨 طوارئ نشطة</div><span class="badge b-bad">٢ حالة</span></div>
     <div class="emg-card">
-      <div class="emg-icon">🆘</div>
-      <div>
-        <div class="emg-name">أم كاظم الموسوي</div>
-        <div class="emg-detail">غرفة ٢١٢ · حافلة A · تعبانة وتحتاج مساعدة طبية</div>
-      </div>
-      <div class="emg-time">منذ ٥ د</div>
-      <div class="action-btns">
-        <button class="btn-sm btn-call" onclick="showToast('جاري الاتصال...')">📞</button>
-        <button class="btn-sm btn-ok" onclick="resolveEmg(this)">حُلّت ✓</button>
+      <div class="emg-icon">🏥</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">أم كاظم الموسوي - غرفة ٢١٢</div><div style="font-size:11px;color:var(--gray)">تعبانة وتحتاج مساعدة طبية · حافلة A</div></div>
+      <div style="font-size:11px;color:var(--bad);font-weight:600;margin-left:8px">٥ د</div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-navy" onclick="showToast('جاري الاتصال...')">📞</button>
+        <button class="btn btn-ok" onclick="resolveEmg(this)">حُلّت</button>
       </div>
     </div>
     <div class="emg-card">
       <div class="emg-icon">📍</div>
-      <div>
-        <div class="emg-name">حاج علي الزهراني</div>
-        <div class="emg-detail">غرفة ١٠٧ · حافلة B · ضائع في المسعى</div>
-      </div>
-      <div class="emg-time">منذ ١٢ د</div>
-      <div class="action-btns">
-        <button class="btn-sm btn-call" onclick="showToast('جاري الاتصال...')">📞</button>
-        <button class="btn-sm btn-ok" onclick="resolveEmg(this)">حُلّت ✓</button>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">حاج علي الزهراني - غرفة ١٠٧</div><div style="font-size:11px;color:var(--gray)">ضائع في المسعى · حافلة B</div></div>
+      <div style="font-size:11px;color:var(--warn);font-weight:600;margin-left:8px">١٢ د</div>
+      <div style="display:flex;gap:5px">
+        <button class="btn btn-navy" onclick="showToast('جاري الاتصال...')">📞</button>
+        <button class="btn btn-ok" onclick="resolveEmg(this)">حُلّت</button>
       </div>
     </div>
   </div>
-
-  <!-- Quick Stats -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
     <div class="section">
-      <div class="section-title" style="margin-bottom:12px">🚌 توزيع الحافلات</div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">حافلة A</span><span style="font-size:13px;font-weight:700">٢٢ معتمر</span></div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="font-size:13px">حافلة B</span><span style="font-size:13px;font-weight:700">٢٠ معتمر</span></div>
+      <div class="sec-t" style="margin-bottom:10px">📍 مواقع المعتمرين</div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">🏨 الفندق</span><span style="font-size:13px;font-weight:700;color:var(--ok)">٢٤</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">🕋 الحرم</span><span style="font-size:13px;font-weight:700;color:#1565c0">١٤</span></div>
+      <div style="display:flex;justify-content:space-between;padding:7px 0"><span style="font-size:13px">❓ غير محدد</span><span style="font-size:13px;font-weight:700;color:var(--gray)">٤</span></div>
     </div>
     <div class="section">
-      <div class="section-title" style="margin-bottom:12px">📍 مواقع المعتمرين</div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">🏨 الفندق</span><span style="font-size:13px;font-weight:700;color:var(--ok)">٢٤</span></div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><span style="font-size:13px">🕋 الحرم</span><span style="font-size:13px;font-weight:700;color:#1565c0">١٤</span></div>
-      <div style="display:flex;justify-content:space-between;padding:8px 0"><span style="font-size:13px">❓ غير محدد</span><span style="font-size:13px;font-weight:700;color:var(--gray)">٤</span></div>
+      <div class="sec-t" style="margin-bottom:10px">🚌 الحافلات</div>
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>حافلة A</span><span>٢٢ معتمر</span></div>
+        <div class="bus-track"><div class="bus-fill" style="width:52%;background:var(--navy)"></div></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>حافلة B</span><span>٢٠ معتمر</span></div>
+        <div class="bus-track"><div class="bus-fill" style="width:48%;background:var(--navy2)"></div></div>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- PILGRIMS -->
 <div id="tab-pilgrims" class="panel">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-    <div style="font-size:18px;font-weight:700">قائمة المعتمرين 👥</div>
-    <button class="section-action" onclick="openModal()">📢 إشعار جماعي</button>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <div style="font-size:17px;font-weight:700">المعتمرون 👥</div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-light" onclick="showToast('📊 جاري استيراد ملف Excel...')"><i class="ti ti-upload" style="font-size:14px"></i> Excel</button>
+      <button class="btn btn-navy" onclick="openModal('modal-add')">➕ إضافة معتمر</button>
+    </div>
   </div>
   <div class="section">
-    <div style="display:flex;gap:8px;margin-bottom:14px">
-      <input style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:inherit" placeholder="🔍 بحث باسم المعتمر..." oninput="filterPilgrims(this.value)">
-      <select style="padding:8px 12px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:inherit">
-        <option>كل الحافلات</option>
-        <option>حافلة A</option>
-        <option>حافلة B</option>
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input class="search-bar" style="margin:0;flex:1" placeholder="🔍 بحث بالاسم..." oninput="filterP(this.value)" id="p-search">
+      <select class="form-inp" style="width:auto" onchange="filterBus(this.value)">
+        <option value="">كل الحافلات</option>
+        <option value="A">حافلة A</option>
+        <option value="B">حافلة B</option>
       </select>
     </div>
-    <div id="pilgrims-list">
-      <div class="pilgrim-row" data-name="محمد علي الحسن">
-        <div class="p-avatar">م</div>
-        <div style="flex:1"><div class="p-name">محمد علي الحسن</div><div class="p-room">غرفة ٣٠١ · حافلة A · #٠٠٠١</div></div>
-        <select class="p-status-sel" onchange="changeStatus(this)">
-          <option value="hotel" selected>🏨 الفندق</option>
-          <option value="haram">🕋 الحرم</option>
-          <option value="bus">🚌 الحافلة</option>
-          <option value="missing">❓ مفقود</option>
-        </select>
-        <button class="btn-sm btn-call" style="margin-right:8px" onclick="showToast('جاري الاتصال بالمعتمر...')">📞</button>
-      </div>
-      <div class="pilgrim-row" data-name="فاطمة حسين الموسوي">
-        <div class="p-avatar">ف</div>
-        <div style="flex:1"><div class="p-name">فاطمة حسين الموسوي</div><div class="p-room">غرفة ٣٠٢ · حافلة A · #٠٠٠٢</div></div>
-        <select class="p-status-sel" onchange="changeStatus(this)">
-          <option value="hotel">🏨 الفندق</option>
-          <option value="haram" selected>🕋 الحرم</option>
-          <option value="bus">🚌 الحافلة</option>
-          <option value="missing">❓ مفقود</option>
-        </select>
-        <button class="btn-sm btn-call" style="margin-right:8px" onclick="showToast('جاري الاتصال بالمعتمر...')">📞</button>
-      </div>
-      <div class="pilgrim-row" data-name="زينب عبدالله القريش">
-        <div class="p-avatar">ز</div>
-        <div style="flex:1"><div class="p-name">زينب عبدالله القريش</div><div class="p-room">غرفة ٢٠٥ · حافلة B · #٠٠٠٣</div></div>
-        <select class="p-status-sel" onchange="changeStatus(this)">
-          <option value="hotel" selected>🏨 الفندق</option>
-          <option value="haram">🕋 الحرم</option>
-          <option value="bus">🚌 الحافلة</option>
-          <option value="missing">❓ مفقود</option>
-        </select>
-        <button class="btn-sm btn-call" style="margin-right:8px" onclick="showToast('جاري الاتصال بالمعتمر...')">📞</button>
-      </div>
-      <div class="pilgrim-row" data-name="حسن محمد الجابر">
-        <div class="p-avatar">ح</div>
-        <div style="flex:1"><div class="p-name">حسن محمد الجابر</div><div class="p-room">غرفة ١٠٩ · حافلة B · #٠٠٠٤</div></div>
-        <select class="p-status-sel" onchange="changeStatus(this)" style="background:#ffebee">
-          <option value="hotel">🏨 الفندق</option>
-          <option value="haram">🕋 الحرم</option>
-          <option value="bus">🚌 الحافلة</option>
-          <option value="missing" selected>❓ مفقود</option>
-        </select>
-        <button class="btn-sm btn-call" style="margin-right:8px" onclick="showToast('جاري الاتصال بالمعتمر...')">📞</button>
-      </div>
-      <div class="pilgrim-row" data-name="أم كاظم الموسوي">
-        <div class="p-avatar">أ</div>
-        <div style="flex:1"><div class="p-name">أم كاظم الموسوي</div><div class="p-room">غرفة ٢١٢ · حافلة A · #٠٠٠٥</div></div>
-        <select class="p-status-sel" onchange="changeStatus(this)">
-          <option value="hotel" selected>🏨 الفندق</option>
-          <option value="haram">🕋 الحرم</option>
-          <option value="bus">🚌 الحافلة</option>
-          <option value="missing">❓ مفقود</option>
-        </select>
-        <button class="btn-sm btn-call" style="margin-right:8px" onclick="showToast('جاري الاتصال بالمعتمر...')">📞</button>
-      </div>
-    </div>
-    <div style="text-align:center;padding:12px;font-size:12px;color:var(--gray)">عرض ٥ من ٤٢ معتمر</div>
+    <div id="pilgrim-list"></div>
+    <div style="text-align:center;padding:10px;font-size:12px;color:var(--gray)" id="p-count">عرض ٥ من ٤٢ معتمر</div>
   </div>
 </div>
 
 <!-- MEALS -->
 <div id="tab-meals" class="panel">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">طلبات الوجبات 🍽️</div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">طلبات الوجبات 🍽️</div>
   <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
-    <div class="stat-card warn"><div class="stat-icon">⏳</div><div class="stat-val">٨</div><div class="stat-lbl">طلبات معلقة</div></div>
-    <div class="stat-card ok"><div class="stat-icon">✅</div><div class="stat-val">٣٤</div><div class="stat-lbl">تم التسليم</div></div>
-    <div class="stat-card"><div class="stat-icon">🍽️</div><div class="stat-val">٤٢</div><div class="stat-lbl">إجمالي الطلبات</div></div>
+    <div class="stat warn"><div class="stat-i">⏳</div><div class="stat-v">٨</div><div class="stat-l">معلقة</div></div>
+    <div class="stat ok"><div class="stat-i">✅</div><div class="stat-v">٣٤</div><div class="stat-l">مسلّمة</div></div>
+    <div class="stat"><div class="stat-i">🍽️</div><div class="stat-v">٤٢</div><div class="stat-l">الإجمالي</div></div>
   </div>
   <div class="section">
-    <div class="section-header">
-      <div class="section-title">الطلبات المعلقة</div>
-      <button class="section-action" onclick="markAllMeals()">تسليم الكل ✓</button>
-    </div>
+    <div class="sec-hdr"><div class="sec-t">الطلبات المعلقة</div><button class="btn btn-ok" onclick="deliverAll()">تسليم الكل ✓</button></div>
     <div id="meals-list">
-      <div class="meal-order">
-        <div class="meal-num">٣٠١</div>
-        <div class="meal-detail">
-          <div class="meal-name">محمد علي الحسن</div>
-          <div class="meal-items">🍗 دجاج × ٢ · ☕ شاي × ١ · غرفة ٣٠١</div>
-        </div>
-        <div style="text-align:left">
-          <div class="meal-status ms-pending">معلق</div>
-          <div style="font-size:10px;color:var(--gray);margin-top:3px">١٢:٣٠ م</div>
-        </div>
-        <button class="btn-sm btn-ok" style="margin-right:8px" onclick="deliverMeal(this)">سُلّم ✓</button>
+      <div class="p-row">
+        <div class="p-av">٣٠١</div>
+        <div class="p-info"><div class="p-name">محمد علي الحسن</div><div class="p-det">🍗 دجاج ×٢ · ☕ شاي ×١ · غرفة ٣٠١</div></div>
+        <div style="text-align:left;margin-left:8px"><span class="badge b-warn">معلق</span><div style="font-size:10px;color:var(--gray);margin-top:2px">١٢:٣٠</div></div>
+        <button class="btn btn-ok" onclick="deliverOne(this)">سُلّم ✓</button>
       </div>
-      <div class="meal-order">
-        <div class="meal-num">٢١٢</div>
-        <div class="meal-detail">
-          <div class="meal-name">أم كاظم الموسوي</div>
-          <div class="meal-items">🥗 نباتية × ١ · 💧 ماء × ٢ · غرفة ٢١٢</div>
-        </div>
-        <div style="text-align:left">
-          <div class="meal-status ms-pending">معلق</div>
-          <div style="font-size:10px;color:var(--gray);margin-top:3px">١٢:٤٥ م</div>
-        </div>
-        <button class="btn-sm btn-ok" style="margin-right:8px" onclick="deliverMeal(this)">سُلّم ✓</button>
+      <div class="p-row">
+        <div class="p-av">٢١٢</div>
+        <div class="p-info"><div class="p-name">أم كاظم الموسوي</div><div class="p-det">🥗 نباتية ×١ · 💧 ماء ×٢ · غرفة ٢١٢</div></div>
+        <div style="text-align:left;margin-left:8px"><span class="badge b-warn">معلق</span><div style="font-size:10px;color:var(--gray);margin-top:2px">١٢:٤٥</div></div>
+        <button class="btn btn-ok" onclick="deliverOne(this)">سُلّم ✓</button>
       </div>
-      <div class="meal-order">
-        <div class="meal-num">١٠٩</div>
-        <div class="meal-detail">
-          <div class="meal-name">حسن محمد الجابر</div>
-          <div class="meal-items">🥩 لحم × ٣ · 🧃 عصير × ٢ · غرفة ١٠٩</div>
-        </div>
-        <div style="text-align:left">
-          <div class="meal-status ms-pending">معلق</div>
-          <div style="font-size:10px;color:var(--gray);margin-top:3px">١:٠٠ م</div>
-        </div>
-        <button class="btn-sm btn-ok" style="margin-right:8px" onclick="deliverMeal(this)">سُلّم ✓</button>
+      <div class="p-row">
+        <div class="p-av">١٠٩</div>
+        <div class="p-info"><div class="p-name">حسن محمد الجابر</div><div class="p-det">🥩 لحم ×٣ · 🧃 عصير ×٢ · غرفة ١٠٩</div></div>
+        <div style="text-align:left;margin-left:8px"><span class="badge b-warn">معلق</span><div style="font-size:10px;color:var(--gray);margin-top:2px">١:٠٠</div></div>
+        <button class="btn btn-ok" onclick="deliverOne(this)">سُلّم ✓</button>
       </div>
     </div>
   </div>
@@ -382,227 +365,362 @@ body{background:var(--bg);color:var(--navy);min-height:100vh}
 
 <!-- TOURS -->
 <div id="tab-tours" class="panel">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">تسجيلات الجولات 🕌</div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">تسجيلات الجولات 🕌</div>
   <div class="section">
-    <div class="section-header">
-      <div class="section-title">جولة المسجد الحرام - الغد ٩:٠٠ ص</div>
-      <div style="font-size:12px;font-weight:600;color:var(--ok)">١٢ مسجل</div>
-    </div>
-    <table class="tbl">
-      <thead><tr><th>الاسم</th><th>الغرفة</th><th>الدفع</th><th>الحالة</th></tr></thead>
-      <tbody>
-        <tr><td>محمد علي الحسن</td><td>٣٠١</td><td><span class="pay-stat ps-paid">مدفوع</span></td><td><span class="status s-hotel">مؤكد</span></td></tr>
-        <tr><td>فاطمة الموسوي</td><td>٣٠٢</td><td><span class="pay-stat ps-cash">كاش</span></td><td><span class="status s-hotel">مؤكد</span></td></tr>
-        <tr><td>زينب القريش</td><td>٢٠٥</td><td><span class="pay-stat ps-paid">مدفوع</span></td><td><span class="status s-hotel">مؤكد</span></td></tr>
-      </tbody>
-    </table>
+    <div class="sec-hdr"><div class="sec-t">جولة المسجد الحرام - الغد ٩:٠٠ ص</div><span class="badge b-ok">١٢ مسجل</span></div>
+    <table class="tbl"><thead><tr><th>الاسم</th><th>الغرفة</th><th>طريقة الدفع</th><th>الحالة</th></tr></thead>
+    <tbody>
+      <tr><td>محمد علي الحسن</td><td>٣٠١</td><td>Apple Pay</td><td><span class="badge b-ok">مؤكد</span></td></tr>
+      <tr><td>فاطمة الموسوي</td><td>٣٠٢</td><td>كاش</td><td><span class="badge b-warn">انتظار</span></td></tr>
+      <tr><td>زينب القريش</td><td>٢٠٥</td><td>STC Pay</td><td><span class="badge b-ok">مؤكد</span></td></tr>
+    </tbody></table>
   </div>
   <div class="section">
-    <div class="section-header">
-      <div class="section-title">جبل النور - بعد الغد ٧:٠٠ ص</div>
-      <div style="font-size:12px;font-weight:600;color:var(--warn)">٥ مسجل (محدود)</div>
-    </div>
-    <table class="tbl">
-      <thead><tr><th>الاسم</th><th>الغرفة</th><th>الدفع</th><th>الحالة</th></tr></thead>
-      <tbody>
-        <tr><td>حسن الجابر</td><td>١٠٩</td><td><span class="pay-stat ps-paid">مدفوع</span></td><td><span class="status s-hotel">مؤكد</span></td></tr>
-        <tr><td>أم كاظم</td><td>٢١٢</td><td><span class="pay-stat ps-cash">كاش</span></td><td><span class="status s-bus">انتظار</span></td></tr>
-      </tbody>
-    </table>
+    <div class="sec-hdr"><div class="sec-t">جبل النور - بعد الغد ٧:٠٠ ص</div><span class="badge b-warn">٥ مسجل</span></div>
+    <table class="tbl"><thead><tr><th>الاسم</th><th>الغرفة</th><th>طريقة الدفع</th><th>الحالة</th></tr></thead>
+    <tbody>
+      <tr><td>حسن الجابر</td><td>١٠٩</td><td>بطاقة</td><td><span class="badge b-ok">مؤكد</span></td></tr>
+      <tr><td>أم كاظم</td><td>٢١٢</td><td>كاش</td><td><span class="badge b-warn">انتظار</span></td></tr>
+    </tbody></table>
   </div>
 </div>
 
 <!-- PAYMENTS -->
 <div id="tab-payments" class="panel">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">متابعة المدفوعات 💳</div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">المدفوعات 💳</div>
   <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
-    <div class="stat-card ok"><div class="stat-icon">💳</div><div class="stat-val">١٢٠٠</div><div class="stat-lbl">مدفوع (ريال)</div></div>
-    <div class="stat-card warn"><div class="stat-icon">💵</div><div class="stat-val">٤٥٠</div><div class="stat-lbl">كاش معلق (ريال)</div></div>
-    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val">١٦٥٠</div><div class="stat-lbl">الإجمالي (ريال)</div></div>
+    <div class="stat ok"><div class="stat-i">💳</div><div class="stat-v">١٢٠٠</div><div class="stat-l">مدفوع إلكترونياً</div></div>
+    <div class="stat warn"><div class="stat-i">💵</div><div class="stat-v">٤٥٠</div><div class="stat-l">كاش معلق</div></div>
+    <div class="stat gold"><div class="stat-i">📊</div><div class="stat-v">١٦٥٠</div><div class="stat-l">الإجمالي</div></div>
   </div>
   <div class="section">
-    <div class="section-title" style="margin-bottom:14px">تفاصيل المدفوعات</div>
-    <div class="pay-row">
-      <div><div class="pay-name">محمد علي الحسن</div><div class="pay-method">Apple Pay · وجبة + جولة</div></div>
-      <div style="text-align:left"><div class="pay-amount">٢١٥ ريال</div><span class="pay-stat ps-paid">مكتمل</span></div>
+    <div class="sec-hdr"><div class="sec-t">تفاصيل المدفوعات</div><button class="btn btn-navy" onclick="showToast('📄 جاري تصدير PDF...')">📄 تصدير PDF</button></div>
+    <div class="pay-row"><div><div style="font-size:13px;font-weight:600">محمد علي الحسن</div><div style="font-size:11px;color:var(--gray)">Apple Pay · وجبة + جولة</div></div><div style="text-align:left"><div style="font-size:14px;font-weight:700">٢١٥ ريال</div><span class="badge b-ok">مكتمل</span></div></div>
+    <div class="pay-row"><div><div style="font-size:13px;font-weight:600">فاطمة الموسوي</div><div style="font-size:11px;color:var(--gray)">STC Pay · وجبة</div></div><div style="text-align:left"><div style="font-size:14px;font-weight:700">٤٥ ريال</div><span class="badge b-ok">مكتمل</span></div></div>
+    <div class="pay-row"><div><div style="font-size:13px;font-weight:600">زينب القريش</div><div style="font-size:11px;color:var(--gray)">كاش · جولة المسجد</div></div><div style="text-align:left"><div style="font-size:14px;font-weight:700">٥٠ ريال</div><span class="badge b-warn">معلق</span></div></div>
+    <div class="pay-row"><div><div style="font-size:13px;font-weight:600">حسن الجابر</div><div style="font-size:11px;color:var(--gray)">بطاقة · وجبة + جولتان</div></div><div style="text-align:left"><div style="font-size:14px;font-weight:700">١٨٥ ريال</div><span class="badge b-ok">مكتمل</span></div></div>
+    <div class="pay-row"><div><div style="font-size:13px;font-weight:600">أم كاظم الموسوي</div><div style="font-size:11px;color:var(--gray)">كاش · جولة جبل النور</div></div><div style="text-align:left"><div style="font-size:14px;font-weight:700">٧٠ ريال</div><span class="badge b-warn">معلق</span></div></div>
+  </div>
+</div>
+
+<!-- BUSES -->
+<div id="tab-buses" class="panel">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">إدارة الحافلات 🚌</div>
+  <div class="bus-card">
+    <div class="bus-hdr">
+      <div><div class="bus-name">🚌 حافلة A</div><div style="font-size:11px;color:var(--gray)">السائق: أحمد محمد · ٢٢ معتمر</div></div>
+      <span class="badge b-ok">في الطريق</span>
     </div>
-    <div class="pay-row">
-      <div><div class="pay-name">فاطمة الموسوي</div><div class="pay-method">STC Pay · وجبة فقط</div></div>
-      <div style="text-align:left"><div class="pay-amount">٤٥ ريال</div><span class="pay-stat ps-paid">مكتمل</span></div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:6px">المسار الحالي:</div>
+    <div style="background:var(--navyp);border-radius:10px;padding:10px;font-size:13px;margin-bottom:10px">🏨 الفندق → 🕋 المسجد الحرام → 🏨 الفندق</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">٩:٠٠</div><div style="font-size:10px;color:var(--gray)">موعد التحرك</div></div>
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">٢٢</div><div style="font-size:10px;color:var(--gray)">المقاعد</div></div>
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">٢٢</div><div style="font-size:10px;color:var(--gray)">مؤكد الحضور</div></div>
     </div>
-    <div class="pay-row">
-      <div><div class="pay-name">زينب القريش</div><div class="pay-method">كاش · جولة المسجد</div></div>
-      <div style="text-align:left"><div class="pay-amount">٥٠ ريال</div><span class="pay-stat ps-cash">معلق</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-navy" onclick="showToast('📢 تم إرسال تنبيه الحافلة A للمعتمرين')">📢 تنبيه المعتمرين</button>
+      <button class="btn btn-light" onclick="showToast('📞 جاري الاتصال بالسائق...')">📞 اتصل بالسائق</button>
     </div>
-    <div class="pay-row">
-      <div><div class="pay-name">حسن الجابر</div><div class="pay-method">بطاقة بنكية · وجبة + جولتان</div></div>
-      <div style="text-align:left"><div class="pay-amount">١٨٥ ريال</div><span class="pay-stat ps-paid">مكتمل</span></div>
+  </div>
+  <div class="bus-card">
+    <div class="bus-hdr">
+      <div><div class="bus-name">🚌 حافلة B</div><div style="font-size:11px;color:var(--gray)">السائق: خالد عمر · ٢٠ معتمر</div></div>
+      <span class="badge b-blue">في الفندق</span>
     </div>
-    <div class="pay-row">
-      <div><div class="pay-name">أم كاظم الموسوي</div><div class="pay-method">كاش · جولة جبل النور</div></div>
-      <div style="text-align:left"><div class="pay-amount">٧٠ ريال</div><span class="pay-stat ps-cash">معلق</span></div>
+    <div style="background:var(--navyp);border-radius:10px;padding:10px;font-size:13px;margin-bottom:10px">🏨 واقفة في الفندق · الموعد القادم ٢:٠٠ م</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">٢:٠٠</div><div style="font-size:10px;color:var(--gray)">الموعد القادم</div></div>
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">٢٠</div><div style="font-size:10px;color:var(--gray)">المقاعد</div></div>
+      <div style="text-align:center;background:var(--navyp);border-radius:8px;padding:8px"><div style="font-size:18px;font-weight:700">١٨</div><div style="font-size:10px;color:var(--gray)">مؤكد الحضور</div></div>
     </div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-navy" onclick="showToast('📢 تم إرسال تنبيه الحافلة B للمعتمرين')">📢 تنبيه المعتمرين</button>
+      <button class="btn btn-light" onclick="showToast('📞 جاري الاتصال بالسائق...')">📞 اتصل بالسائق</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROOMS -->
+<div id="tab-rooms" class="panel">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">إدارة غرف الفندق 🏨</div>
+  <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px"><div style="width:12px;height:12px;border-radius:3px;background:var(--ok);opacity:.5"></div>مشغولة</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px"><div style="width:12px;height:12px;border-radius:3px;background:var(--gold);opacity:.6"></div>كبار السن</div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:12px"><div style="width:12px;height:12px;border-radius:3px;border:1.5px solid var(--border)"></div>فارغة</div>
+  </div>
+  <div class="section">
+    <div class="sec-t" style="margin-bottom:12px">الطابق الثالث (٣٠١ - ٣١٠)</div>
+    <div class="room-grid">
+      <div class="room-card occupied" onclick="showToast('غرفة ٣٠١ · محمد علي الحسن')"><div class="room-num">٣٠١</div><div class="room-name">محمد الحسن</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٣٠٢ · فاطمة الموسوي')"><div class="room-num">٣٠٢</div><div class="room-name">فاطمة</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٣٠٣ · عائلة الجابر')"><div class="room-num">٣٠٣</div><div class="room-name">عائلة الجابر</div></div>
+      <div class="room-card vip" onclick="showToast('غرفة ٣٠٤ · حاج أبو علي - كبير السن')"><div class="room-num">٣٠٤</div><div class="room-name">أبو علي ⭐</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٣٠٥ · محمد عبدالله')"><div class="room-num">٣٠٥</div><div class="room-name">محمد عبدالله</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٣٠٦ · أم حسن')"><div class="room-num">٣٠٦</div><div class="room-name">أم حسن</div></div>
+      <div class="room-card empty"><div class="room-num">٣٠٧</div><div class="room-name">فارغة</div></div>
+      <div class="room-card empty"><div class="room-num">٣٠٨</div><div class="room-name">فارغة</div></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-t" style="margin-bottom:12px">الطابق الثاني (٢٠١ - ٢١٥)</div>
+    <div class="room-grid">
+      <div class="room-card occupied" onclick="showToast('غرفة ٢٠١ · حاج إبراهيم')"><div class="room-num">٢٠١</div><div class="room-name">إبراهيم</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٢٠٥ · زينب القريش')"><div class="room-num">٢٠٥</div><div class="room-name">زينب</div></div>
+      <div class="room-card vip" onclick="showToast('غرفة ٢١٠ · الحاج المسن')"><div class="room-num">٢١٠</div><div class="room-name">الشيخ محمد ⭐</div></div>
+      <div class="room-card occupied" onclick="showToast('غرفة ٢١٢ · أم كاظم')"><div class="room-num">٢١٢</div><div class="room-name">أم كاظم</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TASKS -->
+<div id="tab-tasks" class="panel">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">مهام الكادر اليومية ✅</div>
+  <div class="section">
+    <div class="sec-hdr">
+      <div class="sec-t">اليوم · الأحد ١٧ رجب</div>
+      <span class="badge b-warn" id="tasks-count">٣ متبقية</span>
+    </div>
+    <div id="tasks-list">
+      <div class="task-item"><div class="task-cb done" onclick="toggleTask(this)">✓</div><div class="task-text done">التأكد من جاهزية الحافلة A قبل الانطلاق</div><div class="task-time">٨:٠٠ ص</div></div>
+      <div class="task-item"><div class="task-cb done" onclick="toggleTask(this)">✓</div><div class="task-text done">توزيع وجبات الإفطار على المعتمرين</div><div class="task-time">٨:٣٠ ص</div></div>
+      <div class="task-item"><div class="task-cb done" onclick="toggleTask(this)">✓</div><div class="task-text done">التنسيق مع المطعم لوجبات الغداء</div><div class="task-time">١٠:٠٠ ص</div></div>
+      <div class="task-item"><div class="task-cb" onclick="toggleTask(this)"></div><div class="task-text">متابعة طلبات وجبات الغداء</div><div class="task-time">١٢:٠٠ م</div></div>
+      <div class="task-item"><div class="task-cb" onclick="toggleTask(this)"></div><div class="task-text">التأكد من عودة جميع المعتمرين للفندق</div><div class="task-time">٥:٠٠ م</div></div>
+      <div class="task-item"><div class="task-cb" onclick="toggleTask(this)"></div><div class="task-text">إعداد تقرير اليوم وإرساله للإدارة</div><div class="task-time">٩:٠٠ م</div></div>
+    </div>
+    <button class="btn btn-light" style="width:100%;margin-top:10px" onclick="addTask()">➕ إضافة مهمة</button>
+  </div>
+</div>
+
+<!-- REPORTS -->
+<div id="tab-reports" class="panel">
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">التقارير والإحصائيات 📈</div>
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-i">🍽️</div><div class="stat-v">٤٢</div><div class="stat-l">طلبات اليوم</div></div>
+    <div class="stat gold"><div class="stat-i">💰</div><div class="stat-v">١٦٥٠</div><div class="stat-l">إيرادات اليوم (ريال)</div></div>
+    <div class="stat ok"><div class="stat-i">🕌</div><div class="stat-v">١٧</div><div class="stat-l">مسجلو الجولات</div></div>
+    <div class="stat"><div class="stat-i">✅</div><div class="stat-v">٩٠٪</div><div class="stat-l">نسبة الرضا</div></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><div class="sec-t">رسم بياني للمدفوعات</div></div>
+    <div class="chart-wrap"><canvas id="payChart"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><div class="sec-t">إحصائيات الوجبات اليومية</div></div>
+    <div class="chart-wrap"><canvas id="mealChart"></canvas></div>
+  </div>
+  <div class="section">
+    <div class="sec-hdr"><div class="sec-t">تقرير نهاية الرحلة</div></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+      <div style="background:var(--navyp);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--gray);margin-bottom:4px">إجمالي المعتمرين</div><div style="font-size:20px;font-weight:700">٤٢</div></div>
+      <div style="background:var(--navyp);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--gray);margin-bottom:4px">إجمالي الإيرادات</div><div style="font-size:20px;font-weight:700;color:var(--gold)">١٦٥٠ ر</div></div>
+      <div style="background:var(--navyp);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--gray);margin-bottom:4px">الوجبات المقدمة</div><div style="font-size:20px;font-weight:700">٤٢</div></div>
+      <div style="background:var(--navyp);border-radius:10px;padding:12px;text-align:center"><div style="font-size:11px;color:var(--gray);margin-bottom:4px">الجولات المنفذة</div><div style="font-size:20px;font-weight:700">٣</div></div>
+    </div>
+    <button class="btn btn-navy" style="width:100%" onclick="showToast('📄 جاري تصدير تقرير PDF...')">📄 تصدير تقرير PDF كامل</button>
   </div>
 </div>
 
 <!-- EMERGENCY -->
 <div id="tab-emergency" class="panel">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">حالات الطوارئ 🚨</div>
-  <div class="section" style="border:1.5px solid #ffcdd2">
-    <div class="section-header">
-      <div class="section-title" style="color:var(--bad)">حالات نشطة</div>
-      <div style="font-size:12px;color:var(--bad);font-weight:600">٢ حالة</div>
-    </div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">حالات الطوارئ 🚨</div>
+  <div class="section" style="border-color:#ffcdd2">
+    <div class="sec-hdr"><div class="sec-t" style="color:var(--bad)">حالات نشطة</div><span class="badge b-bad">٢</span></div>
     <div class="emg-card" id="emg1">
       <div class="emg-icon">🏥</div>
-      <div>
-        <div class="emg-name">أم كاظم الموسوي - غرفة ٢١٢</div>
-        <div class="emg-detail">تعبانة وتحتاج مساعدة طبية · حافلة A</div>
-        <div style="font-size:11px;color:var(--bad);margin-top:4px;font-weight:600">🔴 عاجل · منذ ٥ دقائق</div>
-      </div>
-      <div class="action-btns" style="flex-direction:column;gap:6px">
-        <button class="btn-sm btn-call" onclick="showToast('جاري الاتصال...')">📞 اتصل</button>
-        <button class="btn-sm btn-ok" onclick="resolveEmgFull('emg1')">حُلّت ✓</button>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">أم كاظم الموسوي - غرفة ٢١٢</div><div style="font-size:11px;color:var(--gray)">تعبانة · حافلة A · منذ ٥ دقائق</div></div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <button class="btn btn-navy" onclick="showToast('جاري الاتصال...')">📞 اتصل</button>
+        <button class="btn btn-ok" onclick="resolveEmgFull('emg1')">حُلّت ✓</button>
       </div>
     </div>
     <div class="emg-card" id="emg2">
       <div class="emg-icon">📍</div>
-      <div>
-        <div class="emg-name">حاج علي الزهراني - غرفة ١٠٧</div>
-        <div class="emg-detail">ضائع في المسعى · حافلة B</div>
-        <div style="font-size:11px;color:var(--warn);margin-top:4px;font-weight:600">🟠 متابعة · منذ ١٢ دقيقة</div>
-      </div>
-      <div class="action-btns" style="flex-direction:column;gap:6px">
-        <button class="btn-sm btn-call" onclick="showToast('جاري الاتصال...')">📞 اتصل</button>
-        <button class="btn-sm btn-ok" onclick="resolveEmgFull('emg2')">حُلّت ✓</button>
+      <div style="flex:1"><div style="font-size:13px;font-weight:700">حاج علي الزهراني - غرفة ١٠٧</div><div style="font-size:11px;color:var(--gray)">ضائع في المسعى · حافلة B · منذ ١٢ دقيقة</div></div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <button class="btn btn-navy" onclick="showToast('جاري الاتصال...')">📞 اتصل</button>
+        <button class="btn btn-ok" onclick="resolveEmgFull('emg2')">حُلّت ✓</button>
       </div>
     </div>
   </div>
   <div class="section">
-    <div class="section-title" style="margin-bottom:12px">سجل الطوارئ السابقة</div>
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
-      <div style="font-size:20px">✅</div>
-      <div><div style="font-size:13px;font-weight:600">محمد الحسن - تعب خفيف</div><div style="font-size:11px;color:var(--gray)">حُلّت · منذ ٣ ساعات</div></div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px;padding:10px 0">
-      <div style="font-size:20px">✅</div>
-      <div><div style="font-size:13px;font-weight:600">زينب القريش - فقدان الطريق</div><div style="font-size:11px;color:var(--gray)">حُلّت · أمس</div></div>
-    </div>
+    <div class="sec-t" style="margin-bottom:10px">سجل الطوارئ السابقة</div>
+    <div class="p-row"><div style="font-size:18px">✅</div><div class="p-info"><div class="p-name">محمد الحسن - تعب خفيف</div><div class="p-det">حُلّت · منذ ٣ ساعات</div></div></div>
+    <div class="p-row"><div style="font-size:18px">✅</div><div class="p-info"><div class="p-name">زينب القريش - فقدان الطريق</div><div class="p-det">حُلّت · أمس</div></div></div>
   </div>
 </div>
 
 <!-- NOTIFY -->
 <div id="tab-notify" class="panel">
-  <div style="font-size:18px;font-weight:700;margin-bottom:16px">إرسال إشعارات 📢</div>
+  <div style="font-size:17px;font-weight:700;margin-bottom:14px">إرسال إشعارات 📢</div>
   <div class="section">
-    <div class="section-title" style="margin-bottom:14px">إشعار جديد</div>
-    <textarea style="width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:14px;font-family:inherit;resize:none;margin-bottom:10px" rows="3" id="quick-notify" placeholder="اكتب الإشعار..."></textarea>
-    <select style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:10px;font-size:13px;font-family:inherit;margin-bottom:10px">
-      <option>📢 إرسال لجميع المعتمرين (٤٢)</option>
+    <div class="sec-t" style="margin-bottom:12px">رسائل سريعة</div>
+    <div class="notify-quick">
+      <button class="nq-btn" onclick="fillNotif('🚌 الحافلة ستتحرك بعد 30 دقيقة، الرجاء التجمع أمام الفندق')"><span>🚌</span> تنبيه الحافلة</button>
+      <button class="nq-btn" onclick="fillNotif('🍽️ آخر موعد لطلب الغداء ١٢:٠٠ م، الرجاء تسجيل طلبكم')"><span>🍽️</span> تذكير الوجبة</button>
+      <button class="nq-btn" onclick="fillNotif('🕌 موعد الجولة غداً ٩:٠٠ ص، التجمع أمام مدخل الفندق')"><span>🕌</span> تذكير الجولة</button>
+      <button class="nq-btn" onclick="fillNotif('🤲 البرنامج العبادي الآن في قاعة الاجتماعات، الطابق الثاني')"><span>🤲</span> البرنامج العبادي</button>
+      <button class="nq-btn" onclick="fillNotif('⚠️ تنبيه مهم: يرجى عدم التأخر عن موعد الحافلة')"><span>⚠️</span> تنبيه عاجل</button>
+      <button class="nq-btn" onclick="fillNotif('✅ تم التحقق من جوازات السفر، أنتم جاهزون للسفر')"><span>✅</span> تأكيد إجراءات</button>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-t" style="margin-bottom:10px">إشعار مخصص</div>
+    <textarea class="form-inp" rows="3" id="custom-notif" placeholder="اكتب إشعارك هنا..." style="margin-bottom:10px"></textarea>
+    <select class="form-inp" style="margin-bottom:10px" id="notif-to">
+      <option>📢 جميع المعتمرين (٤٢)</option>
       <option>🚌 حافلة A فقط (٢٢)</option>
       <option>🚌 حافلة B فقط (٢٠)</option>
     </select>
-    <button style="width:100%;padding:13px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit" onclick="sendQuickNotif()">📤 إرسال الإشعار</button>
-  </div>
-  <div class="section">
-    <div class="section-title" style="margin-bottom:12px">إشعارات سريعة</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <button onclick="quickMsg('🚌 الحافلة ستتحرك بعد 30 دقيقة، الرجاء التجمع أمام الفندق')" style="padding:10px;background:var(--navyp);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy)">🚌 تنبيه الحافلة</button>
-      <button onclick="quickMsg('🍽️ آخر موعد لطلب الغداء ١٢:٠٠ م، الرجاء تسجيل طلبكم في التطبيق')" style="padding:10px;background:var(--navyp);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy)">🍽️ تذكير الوجبة</button>
-      <button onclick="quickMsg('🕌 موعد الجولة غداً الساعة ٩:٠٠ ص، التجمع أمام مدخل الفندق')" style="padding:10px;background:var(--navyp);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy)">🕌 تذكير الجولة</button>
-      <button onclick="quickMsg('🤲 البرنامج العبادي الآن في قاعة الاجتماعات، الطابق الثاني')" style="padding:10px;background:var(--navyp);border:none;border-radius:10px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy)">🤲 البرنامج العبادي</button>
-    </div>
+    <button class="btn btn-navy" style="width:100%;padding:12px;font-size:14px" onclick="sendCustomNotif()">📤 إرسال الإشعار</button>
   </div>
 </div>
 
-</div><!-- end main -->
-</div><!-- end layout -->
+</div>
+</div>
 
 <!-- MOBILE NAV -->
-<div class="mobile-nav">
-  <button class="mnav-i active" id="mnav-overview" onclick="showTab('overview',this,true)"><i class="ti ti-dashboard"></i><span>الرئيسية</span></button>
-  <button class="mnav-i" id="mnav-pilgrims" onclick="showTab('pilgrims',this,true)"><i class="ti ti-users"></i><span>المعتمرون</span></button>
-  <button class="mnav-i" id="mnav-meals" onclick="showTab('meals',this,true)"><i class="ti ti-tools-kitchen-2"></i><span>الوجبات</span></button>
-  <button class="mnav-i" id="mnav-emergency" onclick="showTab('emergency',this,true)"><i class="ti ti-urgent"></i><span>طوارئ</span></button>
-  <button class="mnav-i" id="mnav-notify" onclick="showTab('notify',this,true)"><i class="ti ti-bell"></i><span>إشعارات</span></button>
+<div class="mob-nav">
+  <button class="mn-i active" onclick="showTab('overview',this,true)"><i class="ti ti-dashboard"></i><span>الرئيسية</span></button>
+  <button class="mn-i" onclick="showTab('pilgrims',this,true)"><i class="ti ti-users"></i><span>المعتمرون</span></button>
+  <button class="mn-i" onclick="showTab('meals',this,true)"><i class="ti ti-tools-kitchen-2"></i><span>الوجبات</span></button>
+  <button class="mn-i" onclick="showTab('reports',this,true)"><i class="ti ti-chart-bar"></i><span>تقارير</span></button>
+  <button class="mn-i" onclick="showTab('emergency',this,true)"><i class="ti ti-urgent"></i><span>طوارئ</span></button>
 </div>
 
 <script>
-function showTab(name, el, isMobile){
+var currentLangD='ar';
+function toggleLangD(){
+  currentLangD=currentLangD==='ar'?'en':'ar';
+  var html=document.documentElement;
+  html.setAttribute('lang',currentLangD);
+  html.setAttribute('dir',currentLangD==='ar'?'rtl':'ltr');
+  document.getElementById('lang-btn-d').textContent=currentLangD==='ar'?'🇬🇧 EN':'🇸🇦 AR';
+  showToast(currentLangD==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
+}
+var pilgrims=[
+  {name:'محمد علي الحسن',room:'٣٠١',bus:'A',num:'٠٠٠١',status:'hotel',phone:'+966501234567'},
+  {name:'فاطمة حسين الموسوي',room:'٣٠٢',bus:'A',num:'٠٠٠٢',status:'haram',phone:'+966501234568'},
+  {name:'زينب عبدالله القريش',room:'٢٠٥',bus:'B',num:'٠٠٠٣',status:'hotel',phone:'+966501234569'},
+  {name:'حسن محمد الجابر',room:'١٠٩',bus:'B',num:'٠٠٠٤',status:'missing',phone:'+966501234570'},
+  {name:'أم كاظم الموسوي',room:'٢١٢',bus:'A',num:'٠٠٠٥',status:'hotel',phone:'+966501234571'},
+];
+var statusLabels={hotel:'🏨 الفندق',haram:'🕋 الحرم',bus:'🚌 الحافلة',missing:'❓ مفقود'};
+var editIdx=-1;
+
+function renderPilgrims(list){
+  var html='';
+  list.forEach(function(p,i){
+    var av=p.name.charAt(0);
+    html+='<div class="p-row" data-bus="'+p.bus+'" data-name="'+p.name+'">';
+    html+='<div class="p-av">'+av+'</div>';
+    html+='<div class="p-info"><div class="p-name">'+p.name+'</div><div class="p-det">غرفة '+p.room+' · حافلة '+p.bus+' · #'+p.num+'</div></div>';
+    html+='<select class="status-sel" onchange="changeSt(this,'+i+')">';
+    ['hotel','haram','bus','missing'].forEach(function(s){
+      html+='<option value="'+s+'"'+(p.status===s?' selected':'')+'>'+statusLabels[s]+'</option>';
+    });
+    html+='</select>';
+    html+='<div class="action-row" style="margin-right:6px">';
+    html+='<button class="btn btn-light" style="padding:5px 8px;font-size:11px" onclick="openEditModal('+i+')">✏️</button>';
+    html+='<button class="btn btn-light" style="padding:5px 8px;font-size:11px" onclick="printBC('+i+')">🖨️</button>';
+    html+='<button class="btn btn-navy" style="padding:5px 8px;font-size:11px" onclick="showToast(\'جاري الاتصال...\')">📞</button>';
+    html+='</div></div>';
+  });
+  document.getElementById('pilgrim-list').innerHTML=html;
+  document.getElementById('p-count').textContent='عرض '+list.length+' من ٤٢ معتمر';
+}
+renderPilgrims(pilgrims);
+
+function filterP(v){
+  var filtered=pilgrims.filter(function(p){return p.name.includes(v);});
+  renderPilgrims(filtered);
+}
+function filterBus(v){
+  var filtered=v?pilgrims.filter(function(p){return p.bus===v;}):pilgrims;
+  renderPilgrims(filtered);
+}
+function changeSt(sel,i){pilgrims[i].status=sel.value;showToast('✅ تم تحديث حالة المعتمر');}
+function openEditModal(i){
+  editIdx=i;var p=pilgrims[i];
+  document.getElementById('edit-name').value=p.name;
+  document.getElementById('edit-room').value=p.room;
+  document.getElementById('edit-phone').value=p.phone||'';
+  document.getElementById('edit-notes').value=p.notes||'';
+  openModal('modal-edit');
+}
+function saveEdit(){
+  if(editIdx<0)return;
+  pilgrims[editIdx].name=document.getElementById('edit-name').value;
+  pilgrims[editIdx].room=document.getElementById('edit-room').value;
+  pilgrims[editIdx].phone=document.getElementById('edit-phone').value;
+  pilgrims[editIdx].notes=document.getElementById('edit-notes').value;
+  renderPilgrims(pilgrims);
+  closeModal('modal-edit');
+  showToast('✅ تم حفظ التعديلات');
+}
+function addPilgrim(){
+  var name=document.getElementById('add-name').value;
+  if(!name){showToast('⚠️ أدخل اسم المعتمر');return;}
+  var newNum=String(pilgrims.length+1).padStart(4,'0');
+  pilgrims.push({name:name,room:document.getElementById('add-room').value||'---',bus:document.getElementById('add-bus').value,num:newNum,status:'hotel',phone:document.getElementById('add-phone').value,notes:document.getElementById('add-notes').value});
+  renderPilgrims(pilgrims);
+  closeModal('modal-add');
+  document.getElementById('add-name').value='';document.getElementById('add-room').value='';document.getElementById('add-phone').value='';document.getElementById('add-notes').value='';
+  showToast('✅ تم إضافة المعتمر بنجاح');
+}
+function printBC(i){
+  var p=pilgrims[i];
+  document.getElementById('bc-name').textContent=p.name;
+  document.getElementById('bc-info').textContent='غرفة '+p.room+' · حافلة '+p.bus;
+  document.getElementById('bc-num').textContent=p.num+' - ALJINAN';
+  document.getElementById('bc-id').textContent='#'+p.num;
+  openModal('modal-bc');
+}
+function showTab(name,el,isMob){
   document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});
   document.getElementById('tab-'+name).classList.add('active');
-  if(isMobile){
-    document.querySelectorAll('.mnav-i').forEach(function(b){b.classList.remove('active');});
-    el.classList.add('active');
-  } else {
-    document.querySelectorAll('.nav-link').forEach(function(b){b.classList.remove('active');});
-    el.classList.add('active');
-  }
+  if(isMob){document.querySelectorAll('.mn-i').forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
+  else{document.querySelectorAll('.nav-lnk').forEach(function(b){b.classList.remove('active');});el.classList.add('active');}
+  if(name==='reports'){setTimeout(initCharts,100);}
 }
-function resolveEmg(btn){
-  var card=btn.closest('.emg-card');
-  card.style.opacity='.4';
-  card.style.pointerEvents='none';
-  showToast('✅ تم حل حالة الطوارئ');
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function resolveEmg(btn){var c=btn.closest('.emg-card');c.style.opacity='.4';c.style.pointerEvents='none';showToast('✅ تم حل حالة الطوارئ');}
+function resolveEmgFull(id){var c=document.getElementById(id);c.style.opacity='.4';c.style.pointerEvents='none';showToast('✅ تم تسجيل حل الطارئ');}
+function deliverOne(btn){var r=btn.closest('.p-row');var b=r.querySelector('.badge');b.className='badge b-ok';b.textContent='سُلّم ✓';btn.disabled=true;btn.style.opacity='.5';showToast('✅ تم تسليم الوجبة');}
+function deliverAll(){document.querySelectorAll('#meals-list .p-row').forEach(function(r){var b=r.querySelector('.badge');if(b){b.className='badge b-ok';b.textContent='سُلّم ✓';}var btn=r.querySelector('.btn');if(btn){btn.disabled=true;btn.style.opacity='.5';}});showToast('✅ تم تسليم جميع الوجبات');}
+var tasksDone=3,tasksTotal=6;
+function toggleTask(cb){
+  var isD=cb.classList.contains('done');
+  var txt=cb.nextElementSibling;
+  if(isD){cb.classList.remove('done');cb.textContent='';txt.classList.remove('done');tasksDone--;}
+  else{cb.classList.add('done');cb.textContent='✓';txt.classList.add('done');tasksDone++;}
+  var rem=tasksTotal-tasksDone;
+  document.getElementById('tasks-count').textContent=rem+' متبقية';
+  document.getElementById('tasks-count').className='badge '+(rem===0?'b-ok':'b-warn');
 }
-function resolveEmgFull(id){
-  var card=document.getElementById(id);
-  card.style.opacity='.4';
-  card.style.pointerEvents='none';
-  showToast('✅ تم حل حالة الطوارئ وتسجيلها');
+function addTask(){
+  var txt=prompt('اكتب المهمة الجديدة:');
+  if(!txt)return;
+  tasksTotal++;
+  var div=document.createElement('div');div.className='task-item';
+  div.innerHTML='<div class="task-cb" onclick="toggleTask(this)"></div><div class="task-text">'+txt+'</div><div class="task-time">الآن</div>';
+  document.getElementById('tasks-list').appendChild(div);
+  showToast('✅ تم إضافة المهمة');
 }
-function deliverMeal(btn){
-  var order=btn.closest('.meal-order');
-  var status=order.querySelector('.meal-status');
-  status.className='meal-status ms-done';
-  status.textContent='سُلّم ✓';
-  btn.disabled=true;btn.style.opacity='.5';
-  showToast('✅ تم تسليم الوجبة');
+var chartsInit=false;
+function initCharts(){
+  if(chartsInit)return;chartsInit=true;
+  var pc=document.getElementById('payChart');
+  if(pc){new Chart(pc,{type:'doughnut',data:{labels:['Apple Pay','STC Pay','بطاقة','كاش'],datasets:[{data:[600,300,300,450],backgroundColor:['#1B2A4A','#C9A84C','#1a8a5a','#e67e22'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{family:'Tajawal',size:12}}}}}});}
+  var mc=document.getElementById('mealChart');
+  if(mc){new Chart(mc,{type:'bar',data:{labels:['دجاج','لحم','نباتية'],datasets:[{label:'عدد الطلبات',data:[22,14,6],backgroundColor:['#1B2A4A','#C9A84C','#1a8a5a'],borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{font:{family:'Tajawal'}}}}}});}
 }
-function markAllMeals(){
-  document.querySelectorAll('.meal-order').forEach(function(o){
-    var s=o.querySelector('.meal-status');
-    s.className='meal-status ms-done';s.textContent='سُلّم ✓';
-    var b=o.querySelector('.btn-ok');
-    if(b){b.disabled=true;b.style.opacity='.5';}
-  });
-  showToast('✅ تم تسليم جميع الوجبات');
-}
-function changeStatus(sel){
-  var bg={'hotel':'','haram':'','bus':'','missing':'#ffebee'};
-  sel.style.background=bg[sel.value]||'';
-  showToast('✅ تم تحديث حالة المعتمر');
-}
-function filterPilgrims(val){
-  document.querySelectorAll('.pilgrim-row').forEach(function(r){
-    var name=r.dataset.name||'';
-    r.style.display=name.includes(val)?'flex':'none';
-  });
-}
-function openModal(){document.getElementById('notify-modal').classList.add('open');}
-function closeModal(){document.getElementById('notify-modal').classList.remove('open');}
-function sendNotif(){
-  var txt=document.getElementById('notify-text').value;
-  if(!txt){showToast('⚠️ اكتب الإشعار أولاً');return;}
-  closeModal();
-  showToast('✅ تم إرسال الإشعار لجميع المعتمرين');
-  document.getElementById('notify-text').value='';
-}
-function sendQuickNotif(){
-  var txt=document.getElementById('quick-notify').value;
-  if(!txt){showToast('⚠️ اكتب الإشعار أولاً');return;}
-  showToast('✅ تم إرسال الإشعار');
-  document.getElementById('quick-notify').value='';
-}
-function quickMsg(msg){
-  document.getElementById('quick-notify').value=msg;
-  showToast('تم تعبئة الرسالة، اضغط إرسال');
-}
-function showToast(msg){
-  var t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show';
-  setTimeout(function(){t.className='toast';},3000);
-}
+function fillNotif(msg){document.getElementById('custom-notif').value=msg;showToast('تم تعبئة الرسالة ✍️');}
+function sendCustomNotif(){var txt=document.getElementById('custom-notif').value;if(!txt){showToast('⚠️ اكتب الإشعار أولاً');return;}document.getElementById('custom-notif').value='';showToast('✅ تم إرسال الإشعار');}
+function sendNotif(){var txt=document.getElementById('notif-text').value;if(!txt){showToast('⚠️ اكتب الإشعار أولاً');return;}closeModal('modal-notify');showToast('✅ تم إرسال الإشعار');document.getElementById('notif-text').value='';}
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},3000);}
 </script>
 </body>
 </html>
