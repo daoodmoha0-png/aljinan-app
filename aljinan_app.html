@@ -133,6 +133,13 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 .cert-seal{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:10px;background:rgba(201,168,76,.15);border-radius:10px;border:1px solid rgba(201,168,76,.3)}
 .cert-seal-t{font-size:11px;color:var(--gold)}
 .sub-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed}
+.pay-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .18s}
+.pay-opt.sel{border-color:var(--navy);background:var(--navyp)}
+.pay-opt>div:nth-child(2){flex:1}
+.pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.pay-opt.sel .pay-radio{border-color:var(--navy);background:var(--navy)}
+.pay-opt.sel .pay-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;display:block}
 .bnav{background:#fff;border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px}
 .nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px}
 .nav-i i{font-size:19px;color:var(--gray);transition:all .2s;line-height:1}
@@ -207,17 +214,134 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 
 <div id="meals-panel" class="panel">
   <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🍽️ طلب وجبة الغداء</div></div>
-  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:12px;display:flex;align-items:center;gap:10px"><div style="font-size:22px">📅</div><div><div style="font-size:13px;font-weight:600">اليوم · الأحد</div><div style="font-size:11px;color:var(--gray)">١٧ رجب ١٤٤٦ · الغداء ١:٠٠ ظ</div></div></div>
-  <div style="font-size:13px;font-weight:600;margin-bottom:8px">اختر نوع الوجبة</div>
-  <div class="mo sel" onclick="selMeal(this)"><div style="font-size:24px">🍗</div><div><div style="font-size:14px;font-weight:600">دجاج مشوي</div><div style="font-size:11px;color:var(--gray)">دجاج · خضار · حساء</div></div><div class="ck">✓</div></div>
-  <div class="mo" onclick="selMeal(this)"><div style="font-size:24px">🥩</div><div><div style="font-size:14px;font-weight:600">لحم مع الأرز</div><div style="font-size:11px;color:var(--gray)">لحم مطهو · أرز · سلطة</div></div><div class="ck"></div></div>
-  <div class="mo" onclick="selMeal(this)"><div style="font-size:24px">🥗</div><div><div style="font-size:14px;font-weight:600">وجبة نباتية</div><div style="font-size:11px;color:var(--gray)">أرز · خضار · عدس</div></div><div class="ck"></div></div>
-  <div style="font-size:13px;font-weight:600;margin-bottom:8px">الكميات</div>
-  <div class="qr"><div style="font-size:13px;font-weight:500">🍚 صحون أرز</div><div class="qc"><button class="qb" onclick="chQty('rice',-1)">−</button><span class="qv" id="rice-qty">1</span><button class="qb" onclick="chQty('rice',1)">+</button></div></div>
-  <div style="font-size:13px;font-weight:600;margin:10px 0 8px">المشروب</div>
-  <div class="dg"><div class="db sel" onclick="selDrink(this)">☕ شاي</div><div class="db" onclick="selDrink(this)">🥛 لبن</div><div class="db" onclick="selDrink(this)">💧 ماء</div><div class="db" onclick="selDrink(this)">🧃 عصير</div></div>
-  <div class="qr"><div style="font-size:13px;font-weight:500">عدد المشروبات</div><div class="qc"><button class="qb" onclick="chQty('drink',-1)">−</button><span class="qv" id="drink-qty">1</span><button class="qb" onclick="chQty('drink',1)">+</button></div></div>
-  <button class="sub-btn" onclick="submitMeal()">✅ تأكيد الطلب</button>
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px"><div style="font-size:22px">📅</div><div><div style="font-size:13px;font-weight:600">اليوم · الأحد</div><div style="font-size:11px;color:var(--gray)">١٧ رجب ١٤٤٦ · الغداء ١:٠٠ ظ · ١٥ ريال / وجبة</div></div></div>
+
+  <div style="font-size:13px;font-weight:700;margin-bottom:10px">اختر الوجبات وحدد الكمية</div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🍗</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">دجاج مشوي</div><div style="font-size:11px;color:var(--gray)">دجاج · خضار · حساء · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('chicken',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="chicken-qty">0</span>
+      <button class="qb" onclick="chMeal('chicken',1)">+</button>
+    </div>
+  </div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🥩</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">لحم مع الأرز</div><div style="font-size:11px;color:var(--gray)">لحم مطهو · أرز · سلطة · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('meat',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="meat-qty">0</span>
+      <button class="qb" onclick="chMeal('meat',1)">+</button>
+    </div>
+  </div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🥗</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">وجبة نباتية</div><div style="font-size:11px;color:var(--gray)">أرز · خضار · عدس · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('veg',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="veg-qty">0</span>
+      <button class="qb" onclick="chMeal('veg',1)">+</button>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div style="font-size:13px;font-weight:700">المشروبات</div>
+    <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="toggleNoDrink()">
+      <span style="font-size:12px;color:var(--gray)" id="no-drink-label">بدون مشروب</span>
+      <div id="no-drink-toggle" style="width:36px;height:20px;border-radius:10px;background:var(--border);position:relative;transition:all .2s">
+        <div id="no-drink-thumb" style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+      </div>
+    </div>
+  </div>
+  <div id="drinks-section">
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">☕</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">شاي</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('tea',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="tea-qty">0</span>
+      <button class="qb" onclick="chDrink('tea',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">🥛</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">لبن</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('milk',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="milk-qty">0</span>
+      <button class="qb" onclick="chDrink('milk',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">💧</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">ماء</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('water',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="water-qty">0</span>
+      <button class="qb" onclick="chDrink('water',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">🧃</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">عصير</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('juice',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="juice-qty">0</span>
+      <button class="qb" onclick="chDrink('juice',1)">+</button>
+    </div>
+  </div>
+  </div>
+
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-top:12px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:600">الإجمالي</div>
+    <div style="font-size:20px;font-weight:700;color:var(--navy)" id="total-price">٠ ريال</div>
+  </div>
+
+  <button class="sub-btn" onclick="confirmMeal()">متابعة للدفع 💳</button>
+</div>
+
+<div id="confirm-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showPanel('meals')"><i class="ti ti-arrow-right"></i></button><div class="pt">تأكيد الطلب</div></div>
+  <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">📋 ملخص طلبك</div>
+    <div id="order-summary" style="font-size:13px;color:var(--navy);line-height:2"></div>
+    <div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:13px;font-weight:600">الإجمالي</div>
+      <div style="font-size:18px;font-weight:700;color:var(--navy)" id="confirm-total">٠ ريال</div>
+    </div>
+  </div>
+
+  <div style="font-size:14px;font-weight:700;margin-bottom:12px">اختر طريقة الدفع</div>
+
+  <div id="pay-apple" class="pay-opt" onclick="selPay(this,'apple')">
+    <div style="font-size:22px">🍎</div>
+    <div><div style="font-size:14px;font-weight:700">Apple Pay</div><div style="font-size:11px;color:var(--gray)">ادفع ببصمتك أو وجهك</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-stc" class="pay-opt" onclick="selPay(this,'stc')">
+    <div style="font-size:22px">💜</div>
+    <div><div style="font-size:14px;font-weight:700">STC Pay</div><div style="font-size:11px;color:var(--gray)">الدفع عبر STC Pay</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-card" class="pay-opt" onclick="selPay(this,'card')">
+    <div style="font-size:22px">💳</div>
+    <div><div style="font-size:14px;font-weight:700">بطاقة بنكية</div><div style="font-size:11px;color:var(--gray)">Visa / Mastercard / Mada</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-cash" class="pay-opt" onclick="selPay(this,'cash')">
+    <div style="font-size:22px">💵</div>
+    <div><div style="font-size:14px;font-weight:700">دفع كاش</div><div style="font-size:11px;color:var(--gray)">ادفع نقداً عند التسليم</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <button class="sub-btn" id="pay-btn" onclick="processPayment()" disabled style="opacity:.5">تأكيد الطلب والدفع ✅</button>
 </div>
 
 <div id="tours-panel" class="panel">
@@ -372,24 +496,103 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 </div>
 </div>
 <script>
-var qty={rice:1,drink:1},notifOpen=false;
+var qty={},meals={chicken:0,meat:0,veg:0},drinks={tea:0,milk:0,water:0,juice:0},notifOpen=false,selPayMethod='';
+var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'عصير 🧃'};
+
 function showPanel(n){
   document.getElementById('home-panel').style.display='none';
-  ['meals','tours','schedule','emergency','map','duaa','cert'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   var el=document.getElementById(n+'-panel');if(el)el.classList.add('active');
   document.getElementById('scroll').scrollTop=0;updateNav(n);
 }
 function showHome(){
   document.getElementById('home-panel').style.display='block';
-  ['meals','tours','schedule','emergency','map','duaa','cert'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   document.getElementById('scroll').scrollTop=0;updateNav('home');
 }
 function navTo(n){n==='home'?showHome():showPanel(n);}
 function updateNav(n){['home','meals','duaa','map','emergency'].forEach(function(x){var el=document.getElementById('nav-'+x);if(el)el.classList.toggle('active',x===n);});}
-function selMeal(el){document.querySelectorAll('.mo').forEach(function(m){m.classList.remove('sel');m.querySelector('.ck').textContent='';});el.classList.add('sel');el.querySelector('.ck').textContent='✓';}
-function chQty(t,d){qty[t]=Math.max(1,Math.min(5,qty[t]+d));document.getElementById(t+'-qty').textContent=qty[t];}
+
+function chMeal(type,d){
+  meals[type]=Math.max(0,Math.min(10,meals[type]+d));
+  document.getElementById(type+'-qty').textContent=meals[type];
+  updateTotal();
+}
+function updateTotal(){
+  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
+  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
+  document.getElementById('total-price').textContent=ar+' ريال';
+}
+var noDrink=false;
+function toggleNoDrink(){
+  noDrink=!noDrink;
+  var sec=document.getElementById('drinks-section');
+  var tog=document.getElementById('no-drink-toggle');
+  var thumb=document.getElementById('no-drink-thumb');
+  var lbl=document.getElementById('no-drink-label');
+  if(noDrink){
+    sec.style.display='none';
+    tog.style.background='#1B2A4A';
+    thumb.style.right='auto';thumb.style.left='2px';
+    lbl.style.color='#1B2A4A';lbl.style.fontWeight='700';
+    drinks={tea:0,milk:0,water:0,juice:0};
+  } else {
+    sec.style.display='block';
+    tog.style.background='rgba(27,42,74,0.12)';
+    thumb.style.left='auto';thumb.style.right='2px';
+    lbl.style.color='#8a8fa8';lbl.style.fontWeight='400';
+  }
+}
+function chDrink(type,d){drinks[type]=Math.max(0,Math.min(10,drinks[type]+d));document.getElementById(type+'-qty').textContent=drinks[type];}
+function chQty(t,d){qty[t]=Math.max(1,Math.min(5,(qty[t]||0)+d));document.getElementById(t+'-qty').textContent=qty[t];}
 function selDrink(el){document.querySelectorAll('.db').forEach(function(d){d.classList.remove('sel');});el.classList.add('sel');}
-function submitMeal(){var meal=document.querySelector('.mo.sel div:nth-child(2) div:first-child').textContent;showToast('✅ تم إرسال الطلب: '+meal);}
+
+function confirmMeal(){
+  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
+  if(total===0){showToast('⚠️ الرجاء اختيار وجبة واحدة على الأقل');return;}
+  var summary='';
+  if(meals.chicken>0) summary+='🍗 دجاج مشوي × '+meals.chicken+'<br>';
+  if(meals.meat>0) summary+='🥩 لحم مع الأرز × '+meals.meat+'<br>';
+  if(meals.veg>0) summary+='🥗 وجبة نباتية × '+meals.veg+'<br>';
+  if(drinks.tea>0) summary+='☕ شاي × '+drinks.tea+'<br>';
+  if(drinks.milk>0) summary+='🥛 لبن × '+drinks.milk+'<br>';
+  if(drinks.water>0) summary+='💧 ماء × '+drinks.water+'<br>';
+  if(drinks.juice>0) summary+='🧃 عصير × '+drinks.juice+'<br>';
+  if(noDrink) summary+='🚫 بدون مشروب<br>';
+  document.getElementById('order-summary').innerHTML=summary;
+  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
+  document.getElementById('confirm-total').textContent=ar+' ريال';
+  selPayMethod='';
+  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
+  document.getElementById('pay-btn').disabled=true;
+  document.getElementById('pay-btn').style.opacity='0.5';
+  showPanel('confirm');
+}
+
+function selPay(el,method){
+  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
+  el.classList.add('sel');
+  selPayMethod=method;
+  document.getElementById('pay-btn').disabled=false;
+  document.getElementById('pay-btn').style.opacity='1';
+}
+
+function processPayment(){
+  var msgs={apple:'✅ تم الدفع بـ Apple Pay! جاري تأكيد طلبك...',stc:'✅ تم الدفع بـ STC Pay! جاري تأكيد طلبك...',card:'✅ تم الدفع بالبطاقة! جاري تأكيد طلبك...',cash:'✅ تم تسجيل طلبك! الدفع نقداً عند التسليم'};
+  showToast(msgs[selPayMethod]);
+  meals={chicken:0,meat:0,veg:0};
+  drinks={tea:0,milk:0,water:0,juice:0};
+  document.getElementById('chicken-qty').textContent='0';
+  document.getElementById('meat-qty').textContent='0';
+  document.getElementById('veg-qty').textContent='0';
+  document.getElementById('tea-qty').textContent='0';
+  document.getElementById('milk-qty').textContent='0';
+  document.getElementById('water-qty').textContent='0';
+  document.getElementById('juice-qty').textContent='0';
+  updateTotal();
+  setTimeout(function(){showHome();},2000);
+}
+
 function regTour(id,name){var btn=document.getElementById(id);if(btn.classList.contains('reg')){btn.classList.remove('reg');btn.textContent='سجّل الآن';showToast('تم إلغاء التسجيل في: '+name);}else{btn.classList.add('reg');btn.textContent='✓ مسجّل';showToast('✅ تم التسجيل في: '+name);}}
 function toggleNotif(){notifOpen=!notifOpen;document.getElementById('npanel').classList.toggle('open',notifOpen);if(notifOpen)document.getElementById('ndot').style.display='none';}
 function closeNotif(){notifOpen=false;document.getElementById('npanel').classList.remove('open');}
