@@ -133,12 +133,13 @@ html,body{height:100%;background:var(--bg);color:var(--navy)}
 .cert-seal{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:10px;background:rgba(201,168,76,.15);border-radius:10px;border:1px solid rgba(201,168,76,.3)}
 .cert-seal-t{font-size:11px;color:var(--gold)}
 .sub-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
-.bnav{background:#fff;border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100}
-.nav-i{flex:1;padding:10px 4px 8px;text-align:center;cursor:pointer;border:none;background:none;position:relative}
-.nav-i i{font-size:21px;display:block;margin-bottom:2px;color:var(--gray)}
-.nav-i span{font-size:10px;color:var(--gray);display:block}
-.nav-i.active i,.nav-i.active span{color:var(--navy)}
-.nav-i.active::before{content:'';position:absolute;top:0;left:25%;right:25%;height:2px;background:var(--navy);border-radius:0 0 4px 4px}
+.bnav{background:#fff;border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px}
+.nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px}
+.nav-i i{font-size:19px;color:var(--gray);transition:all .2s;line-height:1}
+.nav-i span{font-size:10px;color:var(--gray);font-weight:500;line-height:1;transition:all .2s}
+.nav-i.active{background:var(--navy)}
+.nav-i.active i{color:#fff}
+.nav-i.active span{color:#fff;font-weight:700}
 .toast{display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
 .toast.show{display:block;animation:ta 2.8s forwards}
 @keyframes ta{0%{opacity:0;transform:translateX(-50%) translateY(8px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
