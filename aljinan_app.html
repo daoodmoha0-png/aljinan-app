@@ -3,853 +3,311 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>قافلة الجنان - تطبيق المعتمرين</title>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<title>قافلة الجنان - تسجيل الدخول</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
 :root{--navy:#1B2A4A;--navy2:#2a3f6f;--navyp:#e8ecf4;--gold:#C9A84C;--gray:#8a8fa8;--bg:#f4f6fb;--white:#fff;--border:rgba(27,42,74,0.12);--ok:#1a8a5a;--bad:#c0392b}
-html,body{height:100%;background:var(--bg);color:var(--navy)}
-.app{max-width:420px;margin:0 auto;min-height:100vh;background:var(--white);display:flex;flex-direction:column}
-.hdr{background:var(--navy);padding:14px 18px 10px;color:#fff;position:relative}
-.hdr-top{display:flex;align-items:center;justify-content:space-between}
-.logo-row{display:flex;align-items:center;gap:9px}
-.logo-c{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy)}
-.hdr-t{font-size:15px;font-weight:700}
-.hdr-s{font-size:11px;opacity:.7}
-.nwrap{position:relative}
-.nbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:19px}
-.ndot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:#e74c3c;border-radius:50%;border:2px solid var(--navy)}
-.npanel{display:none;position:absolute;top:100%;left:-18px;right:-18px;background:var(--white);z-index:200;border-bottom:1px solid var(--border);max-height:300px;overflow-y:auto;color:var(--navy)}
-.npanel.open{display:block}
-.nitem{display:flex;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer}
-.nitem:hover{background:var(--navyp)}
-.ni-icon{font-size:18px;flex-shrink:0}
-.ni-t{font-size:13px;font-weight:600}
-.ni-s{font-size:11px;color:var(--gray);margin-top:1px}
-.ni-time{font-size:10px;color:var(--gray);margin-right:auto;flex-shrink:0}
-.scroll{flex:1;overflow-y:auto;padding-bottom:72px}
-.p-card{margin:14px;background:var(--navy);border-radius:16px;padding:16px;color:#fff;overflow:hidden;position:relative}
-.p-card::before{content:'';position:absolute;top:-20px;left:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.05)}
-.p-name{font-size:18px;font-weight:700;margin-bottom:3px}
-.p-info{font-size:12px;opacity:.7;margin-bottom:11px}
-.badges{display:flex;gap:7px;flex-wrap:wrap}
-.bdg{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500}
-.bg{background:var(--gold);color:var(--navy)}
-.bw{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.bc-row{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
-.bc-box{background:#fff;border-radius:8px;padding:7px}
-.bc-lines{display:flex;gap:2px;align-items:flex-end}
-.bc-lines div{background:var(--navy);width:3px}
-.p-num{font-size:22px;font-weight:700;color:var(--gold)}
-.sec-t{font-size:14px;font-weight:700;margin:0 14px 10px}
-.qa{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 14px 18px}
-.qa-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:all .18s}
-.qa-card:active{background:var(--navyp);transform:scale(.97)}
-.qa-i{font-size:28px;margin-bottom:6px}
-.qa-l{font-size:13px;font-weight:700}
-.qa-s{font-size:11px;color:var(--gray);margin-top:2px}
-.pr-wrap{padding:0 14px 16px}
-.pr-main{background:var(--navy);color:#fff;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.pr-name{font-size:14px;font-weight:600}
-.pr-next{font-size:11px;opacity:.7}
-.pr-time{font-size:18px;font-weight:700;color:var(--gold)}
-.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.pr-item{background:var(--navyp);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
-.panel{display:none;padding:0 14px 16px}
-.panel.active{display:block}
-.ph{display:flex;align-items:center;gap:10px;padding:14px 0 12px}
-.back{background:none;border:none;cursor:pointer;font-size:22px;color:var(--navy);display:flex;align-items:center}
-.pt{font-size:16px;font-weight:700}
-.mo{border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .18s;margin-bottom:9px}
-.mo.sel{border-color:var(--navy);background:var(--navyp)}
-.ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);margin-right:auto;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
-.mo.sel .ck{background:var(--navy);border-color:var(--navy);color:#fff}
-.qr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-radius:10px;margin-bottom:8px}
-.qc{display:flex;align-items:center;gap:12px}
-.qb{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:700}
-.qv{font-size:16px;font-weight:700;min-width:24px;text-align:center}
-.dg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
-.db{padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;text-align:center;transition:all .18s}
-.db.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
-.tc{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px}
-.ti{height:88px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative}
-.tbadge{position:absolute;top:8px;right:8px;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
-.tb{padding:12px}
-.tn{font-size:14px;font-weight:700;margin-bottom:5px}
-.td{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
-.tdet{font-size:11px;color:var(--gray)}
-.tf{display:flex;align-items:center;justify-content:space-between}
-.tp{font-size:16px;font-weight:700}
-.tp span{font-size:11px;color:var(--gray);font-weight:400}
-.tbtn{padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
-.tbtn.reg{background:var(--ok)}
-.sd-t{font-size:13px;font-weight:700;margin-bottom:6px;padding:0 2px}
-.si{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);align-items:flex-start}
-.si:last-child{border-bottom:none}
-.st{font-size:12px;color:var(--gray);min-width:50px;padding-top:2px}
-.dot{width:10px;height:10px;border-radius:50%;background:var(--navy);margin-top:4px;flex-shrink:0}
-.dot.p{background:var(--gold)}.dot.m{background:var(--ok)}.dot.t{background:#e67e22}
-.se{font-size:13px;font-weight:500}
-.ss{font-size:11px;color:var(--gray)}
-.ec{background:#fff5f5;border:1.5px solid #f5c6c6;border-radius:14px;padding:16px;margin-bottom:12px;text-align:center}
-.ebtn{width:80px;height:80px;border-radius:50%;background:var(--bad);border:none;color:#fff;font-size:30px;cursor:pointer;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
-.cc{display:flex;align-items:center;gap:12px;padding:12px;background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:8px}
-.cav{width:40px;height:40px;border-radius:50%;background:var(--navyp);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.cbtn{margin-right:auto;padding:7px 13px;background:var(--ok);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0}
-.map-info{background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:12px}
-.map-area{height:200px;background:#dde8f0;border-radius:14px;position:relative;overflow:hidden;margin-bottom:12px;border:1px solid var(--border)}
-.map-road-h{position:absolute;height:12px;background:#fff;left:0;right:0;top:50%;transform:translateY(-50%);opacity:.8}
-.map-road-v{position:absolute;width:12px;background:#fff;top:0;bottom:0;left:40%;opacity:.8}
-.map-hotel{position:absolute;left:38%;top:44%;width:28px;height:28px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;z-index:2}
-.map-haram{position:absolute;left:55%;top:35%;width:34px;height:34px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;z-index:2;border:3px solid var(--navy)}
-.map-user{position:absolute;left:42%;top:52%;width:20px;height:20px;background:#e74c3c;border-radius:50%;border:3px solid #fff;z-index:3;animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-.map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
-.ml{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
-.ml-dot{width:10px;height:10px;border-radius:50%}
-.dist-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.dist-card{background:var(--navyp);border-radius:12px;padding:12px;text-align:center}
-.big-btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
-.duaa-cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px}
-.dcat{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap;transition:all .18s;flex-shrink:0}
-.dcat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.dcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer}
-.d-lbl{font-size:11px;font-weight:600;color:var(--gold);margin-bottom:6px}
-.d-ar{font-size:18px;font-weight:700;line-height:1.8;color:var(--navy);text-align:right}
-.d-exp{display:none;border-top:1px solid var(--border);margin-top:10px;padding-top:10px}
-.dcard.open .d-exp{display:block}
-.d-tr{font-size:12px;color:var(--gray);line-height:1.6;margin-top:6px}
-.copy-btn{padding:6px 12px;background:var(--navyp);border:none;border-radius:8px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;margin-top:8px}
-.cert-box{background:var(--navy);border-radius:16px;padding:20px;color:#fff;text-align:center;margin-bottom:14px;overflow:hidden;position:relative}
-.cert-box::before{content:'';position:absolute;top:-30px;left:-30px;width:150px;height:150px;border-radius:50%;background:rgba(201,168,76,.08)}
-.cert-name{font-size:22px;font-weight:700;color:var(--gold);margin:8px 0 4px}
-.cert-sub{font-size:12px;opacity:.7;margin-bottom:12px}
-.cert-div{height:1px;background:rgba(255,255,255,.15);margin:12px 0}
-.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:right}
-.cdet{background:rgba(255,255,255,.07);border-radius:10px;padding:10px}
-.cdet-l{font-size:10px;opacity:.6;margin-bottom:3px}
-.cdet-v{font-size:13px;font-weight:600}
-.cert-seal{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:10px;background:rgba(201,168,76,.15);border-radius:10px;border:1px solid rgba(201,168,76,.3)}
-.cert-seal-t{font-size:11px;color:var(--gold)}
-.guide-step{border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
-.guide-step-header{display:flex;align-items:center;justify-content:space-between;padding:14px;cursor:pointer;background:#fff}
-.guide-step.done .guide-step-header{background:var(--navyp)}
-.step-num{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.guide-step.done .step-num{background:var(--ok)}
-.step-title{font-size:14px;font-weight:700}
-.step-sub{font-size:11px;color:var(--gray);margin-top:2px}
-.done-btn{padding:6px 12px;background:var(--navyp);border:none;border-radius:8px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;flex-shrink:0}
-.guide-step.done .done-btn{background:var(--ok);color:#fff}
-.guide-content{display:none;padding:14px;border-top:1px solid var(--border);background:#fafbfd}
-.guide-content.open{display:block}
-.guide-sub-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.guide-item{font-size:13px;padding:6px 0;color:var(--navy)}
-.duaa-box{background:var(--navy);color:#fff;border-radius:12px;padding:14px;font-size:16px;font-weight:600;line-height:2;text-align:center;margin:8px 0}
-.shawt-tabs{display:flex;gap:6px;margin:12px 0 8px;overflow-x:auto;padding-bottom:4px}
-.shawt-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;flex-shrink:0;transition:all .18s}
-.shawt-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
-.shawt-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;text-align:center}
-.sub-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
-.sub-btn:disabled{opacity:.5;cursor:not-allowed}
-.pay-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .18s}
-.pay-opt.sel{border-color:var(--navy);background:var(--navyp)}
-.pay-opt>div:nth-child(2){flex:1}
-.pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
-.pay-opt.sel .pay-radio{border-color:var(--navy);background:var(--navy)}
-.pay-opt.sel .pay-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;display:block}
-.bnav{background:#fff;border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px}
-.nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px}
-.nav-i i{font-size:19px;color:var(--gray);transition:all .2s;line-height:1}
-.nav-i span{font-size:10px;color:var(--gray);font-weight:500;line-height:1;transition:all .2s}
-.nav-i.active{background:var(--navy)}
-.nav-i.active i{color:#fff}
-.nav-i.active span{color:#fff;font-weight:700}
-.toast{display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
-.toast.show{display:block;animation:ta 2.8s forwards}
-@keyframes ta{0%{opacity:0;transform:translateX(-50%) translateY(8px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
-.lang-btn{padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
-html[lang="en"]{direction:ltr}
-html[lang="en"] .ar{display:none!important}
-html[lang="ar"] .en{display:none!important}
+html,body{height:100%;background:var(--navy);color:var(--white)}
+
+.page{max-width:420px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;position:relative;overflow:hidden}
+
+/* Background decorations */
+.bg-circle1{position:absolute;width:300px;height:300px;border-radius:50%;background:rgba(201,168,76,.08);top:-80px;left:-80px;pointer-events:none}
+.bg-circle2{position:absolute;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.04);bottom:100px;right:-60px;pointer-events:none}
+.bg-circle3{position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(201,168,76,.05);bottom:-40px;left:20px;pointer-events:none}
+
+/* SCREENS */
+.screen{display:none;flex-direction:column;flex:1;position:relative;z-index:1}
+.screen.active{display:flex}
+
+/* WELCOME SCREEN */
+.welcome-wrap{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px}
+.logo-big{width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.1);border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.logo-inner{width:70px;height:70px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--navy)}
+.app-name{font-size:28px;font-weight:900;text-align:center;margin-bottom:6px}
+.app-sub{font-size:14px;opacity:.7;text-align:center;margin-bottom:8px}
+.app-desc{font-size:12px;opacity:.5;text-align:center;margin-bottom:40px}
+
+.role-cards{display:flex;flex-direction:column;gap:14px;width:100%}
+.role-card{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.15);border-radius:18px;padding:18px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:all .2s}
+.role-card:hover,.role-card:active{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.3);transform:translateY(-1px)}
+.role-card.gold-card{background:rgba(201,168,76,.12);border-color:rgba(201,168,76,.3)}
+.role-card.gold-card:hover{background:rgba(201,168,76,.2)}
+.role-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.role-icon.pilgrim{background:rgba(255,255,255,.12)}
+.role-icon.staff{background:rgba(201,168,76,.2)}
+.role-title{font-size:16px;font-weight:700;margin-bottom:3px}
+.role-sub{font-size:12px;opacity:.6}
+.role-arrow{margin-right:auto;font-size:20px;opacity:.5}
+
+.divider{display:flex;align-items:center;gap:10px;padding:0 8px;margin:6px 0}
+.div-line{flex:1;height:1px;background:rgba(255,255,255,.12)}
+.div-text{font-size:11px;opacity:.4}
+
+/* LOGIN SCREEN */
+.login-header{padding:20px 24px 0;display:flex;align-items:center;gap:12px}
+.back-btn{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.login-type-badge{padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700}
+.badge-pilgrim{background:rgba(255,255,255,.15);color:#fff}
+.badge-staff{background:rgba(201,168,76,.25);color:var(--gold)}
+
+.login-body{flex:1;padding:28px 24px}
+.login-icon{font-size:52px;text-align:center;margin-bottom:14px}
+.login-title{font-size:22px;font-weight:800;text-align:center;margin-bottom:6px}
+.login-sub{font-size:13px;opacity:.6;text-align:center;margin-bottom:28px}
+
+.form-group{margin-bottom:14px}
+.form-label{font-size:13px;font-weight:600;opacity:.8;margin-bottom:6px;display:block}
+.form-input{width:100%;padding:13px 16px;border:1.5px solid rgba(255,255,255,.15);border-radius:12px;background:rgba(255,255,255,.07);color:#fff;font-size:15px;font-family:inherit;transition:all .2s}
+.form-input::placeholder{opacity:.4;color:#fff}
+.form-input:focus{outline:none;border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.1)}
+.form-input.gold-focus:focus{border-color:rgba(201,168,76,.6);background:rgba(201,168,76,.07)}
+
+.login-btn{width:100%;padding:15px;border:none;border-radius:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px;transition:all .2s}
+.login-btn.pilgrim-btn{background:#fff;color:var(--navy)}
+.login-btn.pilgrim-btn:hover{background:rgba(255,255,255,.9)}
+.login-btn.staff-btn{background:var(--gold);color:var(--navy)}
+.login-btn.staff-btn:hover{background:#d4a832}
+.login-btn:active{transform:scale(.98)}
+
+.error-msg{background:rgba(192,57,43,.2);border:1px solid rgba(192,57,43,.4);border-radius:10px;padding:10px 14px;font-size:13px;color:#ff8a80;margin-top:10px;display:none;text-align:center}
+.error-msg.show{display:block}
+
+.forgot-link{text-align:center;font-size:12px;opacity:.5;margin-top:14px;cursor:pointer}
+.forgot-link:hover{opacity:.8}
+
+/* Demo hint */
+.demo-hint{background:rgba(255,255,255,.05);border-radius:10px;padding:12px;margin-top:16px}
+.demo-hint-t{font-size:11px;font-weight:700;opacity:.6;margin-bottom:6px}
+.demo-hint-row{display:flex;justify-content:space-between;font-size:11px;opacity:.5;padding:2px 0}
+
+/* Loading */
+.loading-screen{display:none;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:14px}
+.loading-screen.show{display:flex}
+.spinner{width:48px;height:48px;border:4px solid rgba(255,255,255,.1);border-top-color:var(--gold);border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:15px;font-weight:600;opacity:.8}
+
+/* Lang button */
+.lang-toggle{position:absolute;top:16px;left:16px;z-index:10;padding:5px 12px;border-radius:20px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* Success animation */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.role-card{animation:fadeInUp .4s ease forwards}
+.role-card:nth-child(1){animation-delay:.1s}
+.role-card:nth-child(3){animation-delay:.2s}
 </style>
 </head>
 <body>
-<div class="app">
-<div class="toast" id="toast"></div>
-<div class="hdr">
-  <div class="hdr-top">
-    <div class="logo-row">
-      <div class="logo-c">ج</div>
-      <div>
-        <div class="hdr-t"><span class="ar">قافلة الجنان</span><span class="en">Al-Jinan Convoy</span></div>
-        <div class="hdr-s"><span class="ar">عمرة ١٤٤٦ هـ</span><span class="en">Umrah 1446 H</span></div>
+<div class="page">
+  <div class="bg-circle1"></div>
+  <div class="bg-circle2"></div>
+  <div class="bg-circle3"></div>
+
+  <!-- LANG TOGGLE -->
+  <button class="lang-toggle" onclick="toggleLang()" id="lang-btn">🇬🇧 EN</button>
+
+  <!-- WELCOME SCREEN -->
+  <div class="screen active" id="screen-welcome">
+    <div class="welcome-wrap">
+      <div class="logo-big">
+        <div class="logo-inner">ج</div>
       </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="lang-btn" onclick="toggleLang()" id="lang-btn">🇬🇧 EN</button>
-      <div class="nwrap">
-        <button class="nbtn" onclick="toggleNotif()"><i class="ti ti-bell"></i></button>
-        <div class="ndot" id="ndot"></div>
-        <div class="npanel" id="npanel">
-          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🚌</div><div><div class="ni-t"><span class="ar">تنبيه الحافلة</span><span class="en">Bus Alert</span></div><div class="ni-s"><span class="ar">الحافلة A2 ستتحرك بعد 30 دقيقة</span><span class="en">Bus A2 departs in 30 minutes</span></div></div><div class="ni-time">٥ د</div></div>
-          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🍽️</div><div><div class="ni-t"><span class="ar">تذكير الوجبة</span><span class="en">Meal Reminder</span></div><div class="ni-s"><span class="ar">آخر موعد طلب الغداء: ١٢:٠٠ م</span><span class="en">Last order time: 12:00 PM</span></div></div><div class="ni-time">١ س</div></div>
-          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🕌</div><div><div class="ni-t"><span class="ar">جولة جبل النور</span><span class="en">Jabal Nour Tour</span></div><div class="ni-s"><span class="ar">موعد الجولة الغد ٧:٠٠ ص</span><span class="en">Tour tomorrow at 7:00 AM</span></div></div><div class="ni-time">٢ س</div></div>
-          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">📿</div><div><div class="ni-t"><span class="ar">البرنامج العبادي</span><span class="en">Prayer Program</span></div><div class="ni-s"><span class="ar">قراءة الأدعية الساعة ٨:٠٠ م</span><span class="en">Group prayers at 8:00 PM</span></div></div><div class="ni-time">٣ س</div></div>
+      <div class="app-name"><span class="ar">قافلة الجنان</span><span class="en" style="display:none">Al-Jinan Convoy</span></div>
+      <div class="app-sub"><span class="ar">لزيارة العتبات المقدسة</span><span class="en" style="display:none">Sacred Sites Visits</span></div>
+      <div class="app-desc"><span class="ar">عمرة ١٤٤٦ هـ · رحلة رجب</span><span class="en" style="display:none">Umrah 1446 H · Rajab Trip</span></div>
+
+      <div class="role-cards">
+        <div class="role-card" onclick="goToLogin('pilgrim')">
+          <div class="role-icon pilgrim">🕌</div>
+          <div>
+            <div class="role-title"><span class="ar">أنا معتمر</span><span class="en" style="display:none">I'm a Pilgrim</span></div>
+            <div class="role-sub"><span class="ar">الوصول لخدمات العمرة</span><span class="en" style="display:none">Access Umrah services</span></div>
+          </div>
+          <div class="role-arrow">←</div>
+        </div>
+
+        <div class="divider"><div class="div-line"></div><div class="div-text"><span class="ar">أو</span><span class="en" style="display:none">or</span></div><div class="div-line"></div></div>
+
+        <div class="role-card gold-card" onclick="goToLogin('staff')">
+          <div class="role-icon staff">👨‍💼</div>
+          <div>
+            <div class="role-title" style="color:var(--gold)"><span class="ar">أنا كادر</span><span class="en" style="display:none">I'm Staff</span></div>
+            <div class="role-sub"><span class="ar">لوحة تحكم الإدارة</span><span class="en" style="display:none">Management dashboard</span></div>
+          </div>
+          <div class="role-arrow" style="color:var(--gold)">←</div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="scroll" id="scroll">
 
-<div id="home-panel">
-  <div class="p-card">
-    <div class="p-name">محمد عبدالله</div>
-    <div class="p-info"><span class="ar">قافلة الجنان · رحلة رجب ١٤٤٦</span><span class="en">Al-Jinan Convoy · Rajab 1446</span></div>
-    <div class="badges">
-      <div class="bdg bg">🕌 غرفة ٣٠٥</div>
-      <div class="bdg bw">🚌 حافلة A2</div>
-      <div class="bdg bw">معتمر #٠٠٤٢</div>
+  <!-- PILGRIM LOGIN -->
+  <div class="screen" id="screen-pilgrim">
+    <div class="login-header">
+      <button class="back-btn" onclick="goBack()">→</button>
+      <span class="login-type-badge badge-pilgrim"><span class="ar">🕌 دخول المعتمر</span><span class="en" style="display:none">🕌 Pilgrim Login</span></span>
     </div>
-    <div class="bc-row">
-      <div class="bc-box"><div class="bc-lines"><div style="height:32px"></div><div style="height:28px"></div><div style="height:36px"></div><div style="height:30px"></div><div style="height:34px"></div><div style="height:26px"></div><div style="height:38px"></div><div style="height:28px"></div><div style="height:32px"></div><div style="height:30px"></div><div style="height:36px"></div><div style="height:28px"></div><div style="height:34px"></div><div style="height:38px"></div><div style="height:26px"></div></div><div style="font-size:9px;color:#888;text-align:center;margin-top:4px">٠٠٤٢ - ALJINAN</div></div>
-      <div><div style="font-size:11px;opacity:.7;margin-bottom:4px">رقم المعتمر</div><div class="p-num">#٠٠٤٢</div><div style="font-size:10px;opacity:.6;margin-top:2px">امسح الباركود للتحقق</div></div>
-    </div>
-  </div>
-  <div class="sec-t"><span class="ar">الخدمات</span><span class="en">Services</span></div>
-  <div class="qa">
-    <div class="qa-card" onclick="showPanel('meals')"><div class="qa-i">🍽️</div><div class="qa-l"><span class="ar">طلب وجبة</span><span class="en">Order Meal</span></div><div class="qa-s"><span class="ar">اختر وجبتك</span><span class="en">Choose your meal</span></div></div>
-    <div class="qa-card" onclick="showPanel('tours')"><div class="qa-i">🕌</div><div class="qa-l"><span class="ar">الجولات</span><span class="en">Tours</span></div><div class="qa-s"><span class="ar">سجّل في جولة</span><span class="en">Register for a tour</span></div></div>
-    <div class="qa-card" onclick="showPanel('schedule')"><div class="qa-i">📅</div><div class="qa-l"><span class="ar">البرنامج</span><span class="en">Schedule</span></div><div class="qa-s"><span class="ar">جدول الرحلة</span><span class="en">Trip schedule</span></div></div>
-    <div class="qa-card" onclick="showPanel('emergency')"><div class="qa-i">🆘</div><div class="qa-l"><span class="ar">طوارئ</span><span class="en">Emergency</span></div><div class="qa-s"><span class="ar">تواصل مع الكادر</span><span class="en">Contact staff</span></div></div>
-    <div class="qa-card" onclick="showPanel('duaa')"><div class="qa-i">📿</div><div class="qa-l"><span class="ar">أدعية وأذكار</span><span class="en">Prayers & Dhikr</span></div><div class="qa-s"><span class="ar">دعاء العمرة</span><span class="en">Umrah prayers</span></div></div>
-    <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l"><span class="ar">وين أنا؟</span><span class="en">Where am I?</span></div><div class="qa-s"><span class="ar">موقعك الحالي</span><span class="en">Your location</span></div></div>
-    <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l"><span class="ar">شهادة اعتمار</span><span class="en">Umrah Certificate</span></div><div class="qa-s"><span class="ar">شهادتك الرقمية</span><span class="en">Your digital cert</span></div></div>
-    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">خطوات وأدعية</span><span class="en">Steps & prayers</span></div></div>
-  </div>
-  <div class="sec-t">أوقات الصلاة · مكة المكرمة</div>
-  <div class="pr-wrap">
-    <div class="pr-main"><div><div class="pr-name">🌅 الفجر</div><div class="pr-next">الصلاة القادمة</div></div><div class="pr-time">٤:١٨ ص</div></div>
-    <div class="pr-grid">
-      <div class="pr-item"><span style="font-size:12px;font-weight:600">☀️ الظهر</span><span style="font-size:12px;font-weight:700;color:var(--navy)">١٢:١٥</span></div>
-      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌤 العصر</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٣:٤٥</span></div>
-      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌇 المغرب</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٦:٢٦</span></div>
-      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌙 العشاء</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٧:٥٦</span></div>
-    </div>
-  </div>
-</div>
+    <div class="login-body">
+      <div class="login-icon">🤲</div>
+      <div class="login-title"><span class="ar">أهلاً بك</span><span class="en" style="display:none">Welcome</span></div>
+      <div class="login-sub"><span class="ar">أدخل رقم معتمرك وكلمة المرور للدخول</span><span class="en" style="display:none">Enter your pilgrim number and password</span></div>
 
-<div id="meals-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🍽️ طلب وجبة الغداء</div></div>
-  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px"><div style="font-size:22px">📅</div><div><div style="font-size:13px;font-weight:600">اليوم · الأحد</div><div style="font-size:11px;color:var(--gray)">١٧ رجب ١٤٤٦ · الغداء ١:٠٠ ظ · ١٥ ريال / وجبة</div></div></div>
+      <div class="form-group">
+        <label class="form-label"><span class="ar">رقم المعتمر</span><span class="en" style="display:none">Pilgrim Number</span></label>
+        <input class="form-input" id="pilgrim-id" type="text" placeholder="#0042" maxlength="6">
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span class="ar">كلمة المرور</span><span class="en" style="display:none">Password</span></label>
+        <input class="form-input" id="pilgrim-pass" type="password" placeholder="••••••">
+      </div>
 
-  <div style="font-size:13px;font-weight:700;margin-bottom:10px">اختر الوجبات وحدد الكمية</div>
+      <div class="error-msg" id="pilgrim-error">
+        <span class="ar">❌ رقم المعتمر أو كلمة المرور غير صحيحة</span>
+        <span class="en" style="display:none">❌ Invalid pilgrim number or password</span>
+      </div>
 
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:28px">🍗</div>
-    <div style="flex:1"><div style="font-size:14px;font-weight:700">دجاج مشوي</div><div style="font-size:11px;color:var(--gray)">دجاج · خضار · حساء · ١٥ ريال</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chMeal('chicken',-1)">−</button>
-      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="chicken-qty">0</span>
-      <button class="qb" onclick="chMeal('chicken',1)">+</button>
-    </div>
-  </div>
+      <button class="login-btn pilgrim-btn" onclick="loginPilgrim()">
+        <span class="ar">دخول ←</span><span class="en" style="display:none">Login →</span>
+      </button>
 
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:28px">🥩</div>
-    <div style="flex:1"><div style="font-size:14px;font-weight:700">لحم مع الأرز</div><div style="font-size:11px;color:var(--gray)">لحم مطهو · أرز · سلطة · ١٥ ريال</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chMeal('meat',-1)">−</button>
-      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="meat-qty">0</span>
-      <button class="qb" onclick="chMeal('meat',1)">+</button>
-    </div>
-  </div>
+      <div class="demo-hint">
+        <div class="demo-hint-t"><span class="ar">🔑 بيانات تجريبية</span><span class="en" style="display:none">🔑 Demo credentials</span></div>
+        <div class="demo-hint-row"><span><span class="ar">رقم المعتمر:</span><span class="en" style="display:none">Pilgrim ID:</span></span><span>0042</span></div>
+        <div class="demo-hint-row"><span><span class="ar">كلمة المرور:</span><span class="en" style="display:none">Password:</span></span><span>1234</span></div>
+      </div>
 
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:28px">🥗</div>
-    <div style="flex:1"><div style="font-size:14px;font-weight:700">وجبة نباتية</div><div style="font-size:11px;color:var(--gray)">أرز · خضار · عدس · ١٥ ريال</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chMeal('veg',-1)">−</button>
-      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="veg-qty">0</span>
-      <button class="qb" onclick="chMeal('veg',1)">+</button>
-    </div>
-  </div>
-
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div style="font-size:13px;font-weight:700">المشروبات</div>
-    <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="toggleNoDrink()">
-      <span style="font-size:12px;color:var(--gray)" id="no-drink-label">بدون مشروب</span>
-      <div id="no-drink-toggle" style="width:36px;height:20px;border-radius:10px;background:var(--border);position:relative;transition:all .2s">
-        <div id="no-drink-thumb" style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+      <div class="forgot-link">
+        <span class="ar">نسيت كلمة المرور؟ تواصل مع الكادر</span>
+        <span class="en" style="display:none">Forgot password? Contact staff</span>
       </div>
     </div>
   </div>
-  <div id="drinks-section">
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:24px">☕</div>
-    <div style="flex:1"><div style="font-size:13px;font-weight:600">شاي</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chDrink('tea',-1)">−</button>
-      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="tea-qty">0</span>
-      <button class="qb" onclick="chDrink('tea',1)">+</button>
+
+  <!-- STAFF LOGIN -->
+  <div class="screen" id="screen-staff">
+    <div class="login-header">
+      <button class="back-btn" onclick="goBack()">→</button>
+      <span class="login-type-badge badge-staff"><span class="ar">👨‍💼 دخول الكادر</span><span class="en" style="display:none">👨‍💼 Staff Login</span></span>
     </div>
-  </div>
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:24px">🥛</div>
-    <div style="flex:1"><div style="font-size:13px;font-weight:600">لبن</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chDrink('milk',-1)">−</button>
-      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="milk-qty">0</span>
-      <button class="qb" onclick="chDrink('milk',1)">+</button>
+    <div class="login-body">
+      <div class="login-icon">🔐</div>
+      <div class="login-title" style="color:var(--gold)"><span class="ar">لوحة التحكم</span><span class="en" style="display:none">Control Panel</span></div>
+      <div class="login-sub"><span class="ar">هذه الصفحة مخصصة لكادر قافلة الجنان فقط</span><span class="en" style="display:none">This page is for Al-Jinan staff only</span></div>
+
+      <div class="form-group">
+        <label class="form-label"><span class="ar">اسم المستخدم</span><span class="en" style="display:none">Username</span></label>
+        <input class="form-input gold-focus" id="staff-user" type="text" placeholder="admin">
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span class="ar">كلمة المرور</span><span class="en" style="display:none">Password</span></label>
+        <input class="form-input gold-focus" id="staff-pass" type="password" placeholder="••••••">
+      </div>
+
+      <div class="error-msg" id="staff-error">
+        <span class="ar">❌ اسم المستخدم أو كلمة المرور غير صحيحة</span>
+        <span class="en" style="display:none">❌ Invalid username or password</span>
+      </div>
+
+      <button class="login-btn staff-btn" onclick="loginStaff()">
+        <span class="ar">دخول لوحة التحكم ←</span>
+        <span class="en" style="display:none">Enter Dashboard →</span>
+      </button>
+
+      <div class="demo-hint">
+        <div class="demo-hint-t"><span class="ar">🔑 بيانات تجريبية</span><span class="en" style="display:none">🔑 Demo credentials</span></div>
+        <div class="demo-hint-row"><span><span class="ar">المستخدم:</span><span class="en" style="display:none">Username:</span></span><span>admin</span></div>
+        <div class="demo-hint-row"><span><span class="ar">كلمة المرور:</span><span class="en" style="display:none">Password:</span></span><span>1234</span></div>
+      </div>
     </div>
-  </div>
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:24px">💧</div>
-    <div style="flex:1"><div style="font-size:13px;font-weight:600">ماء</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chDrink('water',-1)">−</button>
-      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="water-qty">0</span>
-      <button class="qb" onclick="chDrink('water',1)">+</button>
-    </div>
-  </div>
-  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
-    <div style="font-size:24px">🧃</div>
-    <div style="flex:1"><div style="font-size:13px;font-weight:600">عصير</div></div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="qb" onclick="chDrink('juice',-1)">−</button>
-      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="juice-qty">0</span>
-      <button class="qb" onclick="chDrink('juice',1)">+</button>
-    </div>
-  </div>
   </div>
 
-  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-top:12px;display:flex;align-items:center;justify-content:space-between">
-    <div style="font-size:13px;font-weight:600">الإجمالي</div>
-    <div style="font-size:20px;font-weight:700;color:var(--navy)" id="total-price">٠ ريال</div>
+  <!-- LOADING SCREEN -->
+  <div class="screen" id="screen-loading">
+    <div class="loading-screen show">
+      <div class="spinner"></div>
+      <div class="loading-text" id="loading-text">جاري التحقق...</div>
+    </div>
   </div>
 
-  <button class="sub-btn" onclick="confirmMeal()">متابعة للدفع 💳</button>
 </div>
 
-<div id="confirm-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showPanel('meals')"><i class="ti ti-arrow-right"></i></button><div class="pt">تأكيد الطلب</div></div>
-  <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:14px">
-    <div style="font-size:14px;font-weight:700;margin-bottom:10px">📋 ملخص طلبك</div>
-    <div id="order-summary" style="font-size:13px;color:var(--navy);line-height:2"></div>
-    <div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
-      <div style="font-size:13px;font-weight:600">الإجمالي</div>
-      <div style="font-size:18px;font-weight:700;color:var(--navy)" id="confirm-total">٠ ريال</div>
-    </div>
-  </div>
-
-  <div style="font-size:14px;font-weight:700;margin-bottom:12px">اختر طريقة الدفع</div>
-
-  <div id="pay-apple" class="pay-opt" onclick="selPay(this,'apple')">
-    <div style="font-size:22px">🍎</div>
-    <div><div style="font-size:14px;font-weight:700">Apple Pay</div><div style="font-size:11px;color:var(--gray)">ادفع ببصمتك أو وجهك</div></div>
-    <div class="pay-radio"></div>
-  </div>
-
-  <div id="pay-stc" class="pay-opt" onclick="selPay(this,'stc')">
-    <div style="font-size:22px">💜</div>
-    <div><div style="font-size:14px;font-weight:700">STC Pay</div><div style="font-size:11px;color:var(--gray)">الدفع عبر STC Pay</div></div>
-    <div class="pay-radio"></div>
-  </div>
-
-  <div id="pay-card" class="pay-opt" onclick="selPay(this,'card')">
-    <div style="font-size:22px">💳</div>
-    <div><div style="font-size:14px;font-weight:700">بطاقة بنكية</div><div style="font-size:11px;color:var(--gray)">Visa / Mastercard / Mada</div></div>
-    <div class="pay-radio"></div>
-  </div>
-
-  <div id="pay-cash" class="pay-opt" onclick="selPay(this,'cash')">
-    <div style="font-size:22px">💵</div>
-    <div><div style="font-size:14px;font-weight:700">دفع كاش</div><div style="font-size:11px;color:var(--gray)">ادفع نقداً عند التسليم</div></div>
-    <div class="pay-radio"></div>
-  </div>
-
-  <button class="sub-btn" id="pay-btn" onclick="processPayment()" disabled style="opacity:.5">تأكيد الطلب والدفع ✅</button>
-</div>
-
-<div id="tours-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🕌 الجولات المتاحة</div></div>
-  <div class="tc"><div class="ti">🕋<div class="tbadge">متاح</div></div><div class="tb"><div class="tn">جولة المسجد الحرام والكعبة</div><div class="td"><div class="tdet">⏰ ٣ ساعات</div><div class="tdet">👥 ١٢ مقعد</div><div class="tdet">📅 الغد ٩:٠٠ ص</div></div><div class="tf"><div class="tp">٥٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t1" onclick="regTour('t1','جولة المسجد الحرام')">سجّل الآن</button></div></div></div>
-  <div class="tc"><div class="ti">⛰️<div class="tbadge" style="background:#fff;color:var(--navy)">محدود</div></div><div class="tb"><div class="tn">جبل النور وغار حراء</div><div class="td"><div class="tdet">⏰ ٤ ساعات</div><div class="tdet">👥 ٥ مقاعد</div><div class="tdet">📅 بعد الغد ٧:٠٠ ص</div></div><div class="tf"><div class="tp">٧٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t2" onclick="regTour('t2','جبل النور')">سجّل الآن</button></div></div></div>
-  <div class="tc"><div class="ti">🕌<div class="tbadge">متاح</div></div><div class="tb"><div class="tn">زيارة المسجد النبوي والروضة</div><div class="td"><div class="tdet">⏰ يوم كامل</div><div class="tdet">👥 ٢٠ مقعد</div><div class="tdet">📅 الخميس ٦:٠٠ ص</div></div><div class="tf"><div class="tp">١٥٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t3" onclick="regTour('t3','المسجد النبوي')">سجّل الآن</button></div></div></div>
-</div>
-
-<div id="schedule-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📅 البرنامج اليومي</div></div>
-  <div class="sd-t">اليوم · الأحد ١٧ رجب</div>
-  <div style="margin-bottom:14px">
-    <div class="si"><div class="st">٤:١٨ ص</div><div class="dot p"></div><div><div class="se">صلاة الفجر جماعة</div><div class="ss">مسجد الفندق · الدور الأول</div></div></div>
-    <div class="si"><div class="st">٨:٠٠ ص</div><div class="dot m"></div><div><div class="se">وجبة الإفطار</div><div class="ss">قاعة الطعام · الطابق الأرضي</div></div></div>
-    <div class="si"><div class="st">٩:٣٠ ص</div><div class="dot t"></div><div><div class="se">أداء العمرة</div><div class="ss">التجمع أمام الفندق</div></div></div>
-    <div class="si"><div class="st">١٢:١٥ م</div><div class="dot p"></div><div><div class="se">صلاة الظهر</div><div class="ss">المسجد الحرام</div></div></div>
-    <div class="si"><div class="st">١:٣٠ م</div><div class="dot m"></div><div><div class="se">وجبة الغداء</div><div class="ss">قاعة الطعام · آخر طلب ١٢:٠٠ م</div></div></div>
-    <div class="si"><div class="st">٦:٢٦ م</div><div class="dot p"></div><div><div class="se">صلاة المغرب</div><div class="ss">المسجد الحرام</div></div></div>
-    <div class="si"><div class="st">٨:٠٠ م</div><div class="dot t"></div><div><div class="se">قراءة الأدعية الجماعية</div><div class="ss">قاعة الاجتماعات · الطابق الثاني</div></div></div>
-  </div>
-  <div class="sd-t">الغد · الاثنين ١٨ رجب</div>
-  <div><div class="si"><div class="st">٩:٠٠ ص</div><div class="dot t"></div><div><div class="se">جولة المسجد الحرام</div><div class="ss">تجمع أمام الفندق · اختيارية</div></div></div><div class="si"><div class="st">٢:٠٠ م</div><div class="dot"></div><div><div class="se">وقت حر</div><div class="ss">التسوق والزيارات الشخصية</div></div></div></div>
-</div>
-
-<div id="emergency-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🆘 طوارئ ومساعدة</div></div>
-  <div class="ec"><button class="ebtn" onclick="showToast('🆘 تم إرسال موقعك! الكادر في الطريق إليك')">🆘</button><div style="font-size:15px;font-weight:700;color:var(--bad)">زر الطوارئ</div><div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.6">اضغط في حالة الضياع أو التعب أو أي طارئ<br>سيتواصل معك الكادر فوراً</div></div>
-  <div style="font-size:13px;font-weight:600;margin-bottom:8px">تواصل مع الكادر</div>
-  <div class="cc"><div class="cav">👨‍💼</div><div><div style="font-size:14px;font-weight:600">محمد عبدالله</div><div style="font-size:11px;color:var(--gray)">كادر الحركة والطوارئ ٢٤/٧</div></div><button class="cbtn" onclick="showToast('جاري الاتصال بمحمد...')">📞 اتصل</button></div>
-  <div class="cc"><div class="cav">🕌</div><div><div style="font-size:14px;font-weight:600">مكتب قافلة الجنان</div><div style="font-size:11px;color:var(--gray)">الدعم والمساعدة العامة</div></div><button class="cbtn" onclick="showToast('جاري الاتصال بالمكتب...')">📞 اتصل</button></div>
-  <div class="cc"><div class="cav">🚑</div><div><div style="font-size:14px;font-weight:600">الطوارئ الطبية</div><div style="font-size:11px;color:var(--gray)">للحالات الطبية العاجلة</div></div><button class="cbtn" style="background:var(--bad)" onclick="showToast('جاري الاتصال بالطوارئ...')">📞 اتصل</button></div>
-</div>
-
-<div id="map-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📍 موقعك الحالي</div></div>
-  <div class="map-info"><div style="font-size:13px;font-weight:600;margin-bottom:3px">📍 فندق الجنان · شارع أجياد · مكة المكرمة</div><div style="font-size:11px;color:var(--gray)">٢١.٤٢٤٦° شمال · ٣٩.٨٢٦١° شرق · آخر تحديث: الآن</div></div>
-  <div class="map-area">
-    <div class="map-road-h"></div><div class="map-road-v"></div>
-    <div class="map-hotel">🏨</div>
-    <div class="map-haram">🕋</div>
-    <div class="map-user"></div>
-    <div style="position:absolute;bottom:8px;left:8px;background:rgba(27,42,74,.7);color:#fff;font-size:10px;padding:4px 8px;border-radius:6px">خريطة مكة المكرمة</div>
-  </div>
-  <div class="map-legend">
-    <div class="ml"><div class="ml-dot" style="background:#e74c3c"></div>موقعك</div>
-    <div class="ml"><div class="ml-dot" style="background:var(--navy)"></div>الفندق</div>
-    <div class="ml"><div class="ml-dot" style="background:var(--gold)"></div>المسجد الحرام</div>
-  </div>
-  <div class="dist-grid">
-    <div class="dist-card"><div style="font-size:20px;margin-bottom:4px">🕋</div><div style="font-size:12px;font-weight:600">المسجد الحرام</div><div style="font-size:11px;color:var(--gray)">٨٠٠ متر تقريباً</div></div>
-    <div class="dist-card"><div style="font-size:20px;margin-bottom:4px">🏨</div><div style="font-size:12px;font-weight:600">فندق الجنان</div><div style="font-size:11px;color:var(--gray)">أنت هنا</div></div>
-  </div>
-  <button class="big-btn" style="background:var(--navy);color:#fff" onclick="showToast('✅ تم إرسال موقعك للكادر')">📤 أرسل موقعي للكادر</button>
-  <button class="big-btn" style="background:var(--navyp);color:var(--navy)" onclick="showToast('جاري فتح الخريطة...')">🗺️ افتح في خرائط جوجل</button>
-</div>
-
-<div id="duaa-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📿 أدعية وأذكار العمرة</div></div>
-  <div class="duaa-cats">
-    <div class="dcat active" onclick="filterDuaa(this,'all')">الكل</div>
-    <div class="dcat" onclick="filterDuaa(this,'tawaf')">الطواف</div>
-    <div class="dcat" onclick="filterDuaa(this,'sai')">السعي</div>
-    <div class="dcat" onclick="filterDuaa(this,'ihram')">الإحرام</div>
-    <div class="dcat" onclick="filterDuaa(this,'morning')">الصباح</div>
-  </div>
-  <div id="duaa-list">
-    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)">
-      <div class="d-lbl">دعاء الإحرام</div>
-      <div class="d-ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</div>
-        <div class="d-tr">لبيك اللهم لبيك، لبيك لا شريك لك لبيك، إن الحمد والنعمة لك والملك، لا شريك لك</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)">
-      <div class="d-lbl">دعاء الطواف</div>
-      <div class="d-ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
-        <div class="d-tr">ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)">
-      <div class="d-lbl">دعاء عند الحجر الأسود</div>
-      <div class="d-ar">بِسْمِ اللهِ وَاللهُ أَكْبَرُ</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">بِسْمِ اللهِ وَاللهُ أَكْبَرُ، اللَّهُمَّ إِيمَاناً بِكَ وَتَصْدِيقاً بِكِتَابِكَ وَوَفَاءً بِعَهْدِكَ وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ</div>
-        <div class="d-tr">بسم الله والله أكبر، اللهم إيماناً بك وتصديقاً بكتابك ووفاءً بعهدك واتباعاً لسنة نبيك</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-    <div class="dcard" data-cat="sai" onclick="toggleDuaa(this)">
-      <div class="d-lbl">دعاء السعي</div>
-      <div class="d-ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
-        <div class="d-tr">أبدأ بما بدأ الله به، إن الصفا والمروة من شعائر الله</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-    <div class="dcard" data-cat="morning" onclick="toggleDuaa(this)">
-      <div class="d-lbl">ذكر الصباح</div>
-      <div class="d-ar">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
-        <div class="d-tr">أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)">
-      <div class="d-lbl">دعاء دخول مكة المكرمة</div>
-      <div class="d-ar">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ</div>
-      <div class="d-exp">
-        <div class="d-ar" style="font-size:15px">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ، فَحَرِّمْنِي عَلَى النَّارِ، وَأَمِّنِّي مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ</div>
-        <div class="d-tr">اللهم هذا حرمك وأمنك، فحرمني على النار، وآمنني من عذابك يوم تبعث عبادك</div>
-        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="cert-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🏅 شهادة الاعتمار</div></div>
-  <div class="cert-box">
-    <div style="font-size:44px;margin-bottom:8px">🕌</div>
-    <div style="font-size:12px;opacity:.7;margin-bottom:4px">شهادة اعتمار رقمية</div>
-    <div class="cert-name">محمد عبدالله أوحيد</div>
-    <div class="cert-sub">أدّى مناسك العمرة المباركة بتوفيق من الله</div>
-    <div class="cert-div"></div>
-    <div class="cert-grid">
-      <div class="cdet"><div class="cdet-l">تاريخ العمرة</div><div class="cdet-v">١٧ رجب ١٤٤٦</div></div>
-      <div class="cdet"><div class="cdet-l">مكان العمرة</div><div class="cdet-v">مكة المكرمة</div></div>
-      <div class="cdet"><div class="cdet-l">القافلة</div><div class="cdet-v">قافلة الجنان</div></div>
-      <div class="cdet"><div class="cdet-l">رقم المعتمر</div><div class="cdet-v">#٠٠٤٢</div></div>
-    </div>
-    <div class="cert-seal"><div style="font-size:16px">🔏</div><div class="cert-seal-t">وثّقت بواسطة قافلة الجنان لزيارة العتبات المقدسة</div></div>
-  </div>
-  <button class="big-btn" style="background:var(--gold);color:var(--navy)" onclick="showToast('📥 جاري تحميل الشهادة...')">📥 تحميل الشهادة</button>
-  <button class="big-btn" style="background:var(--navyp);color:var(--navy)" onclick="showToast('📤 جاري مشاركة الشهادة...')">📤 مشاركة الشهادة</button>
-</div>
-
-<div id="guide-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📖 دليل العمرة المفردة</div></div>
-
-  <!-- Progress Bar -->
-  <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-      <div style="font-size:13px;font-weight:700">تقدمك في العمرة</div>
-      <div style="font-size:13px;font-weight:700;color:var(--navy)" id="progress-text">٠ / ٦</div>
-    </div>
-    <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
-      <div id="progress-bar" style="height:100%;width:0%;background:var(--navy);border-radius:4px;transition:width .4s"></div>
-    </div>
-    <div style="font-size:11px;color:var(--gray);margin-top:6px" id="progress-label">ابدأ رحلتك الروحية 🕌</div>
-  </div>
-
-  <!-- Step 1: Ihram -->
-  <div class="guide-step" id="step-1">
-    <div class="guide-step-header" onclick="toggleStep(1)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-1">١</div>
-        <div><div class="step-title">الإحرام من الميقات</div><div class="step-sub">واجبات الإحرام</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-1" onclick="event.stopPropagation();markDone(1)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-1"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-1">
-      <div class="guide-sub-title">واجبات الإحرام:</div>
-      <div class="guide-item">① لبس الإحرام</div>
-      <div class="guide-item">② النية</div>
-      <div class="duaa-box">أُحرم للعمرة المفردة استحباباً قربةً إلى اللّه تعالى</div>
-      <div class="guide-item">③ التلبية</div>
-      <div class="duaa-box" style="font-size:15px;line-height:2">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ،<br>لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ،<br>إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ،<br>لَا شَرِيكَ لَكَ</div>
-    </div>
-  </div>
-
-  <!-- Step 2: Tawaf -->
-  <div class="guide-step" id="step-2">
-    <div class="guide-step-header" onclick="toggleStep(2)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-2">٢</div>
-        <div><div class="step-title">الطواف حول الكعبة</div><div class="step-sub">٧ أشواط + أدعيتها</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-2" onclick="event.stopPropagation();markDone(2)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-2"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-2">
-      <div class="guide-sub-title">النية:</div>
-      <div class="duaa-box">أطوفُ حول هذا البيت سبعة أشواط للعمرة المفردة قربةً إلى اللّه تعالى</div>
-      <div class="guide-sub-title" style="margin-top:12px">يستحب القول عند الحجر الأسود:</div>
-      <div class="duaa-box" style="font-size:13px">أمانتي أديتها وميثاقي تعاهدته لتشهد لي بالموافاة</div>
-
-      <div class="shawt-tabs">
-        <button class="shawt-btn active" onclick="showShawt(this,1)">١</button>
-        <button class="shawt-btn" onclick="showShawt(this,2)">٢</button>
-        <button class="shawt-btn" onclick="showShawt(this,3)">٣</button>
-        <button class="shawt-btn" onclick="showShawt(this,4)">٤</button>
-        <button class="shawt-btn" onclick="showShawt(this,5)">٥</button>
-        <button class="shawt-btn" onclick="showShawt(this,6)">٦</button>
-        <button class="shawt-btn" onclick="showShawt(this,7)">٧</button>
-      </div>
-
-      <div id="shawt-1" class="shawt-content">
-        <div class="shawt-title">الشوط الأول</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِاسْمِكَ الَّذِي يُمْشَى بِهِ عَلَى ظَلَلِ الْمَاءِ، كَمَا يُمْشَى بِهِ عَلَى جُدَدِ الأَرْضِ، وَأَسْأَلُكَ بِاسْمِكَ الَّذِي يَهْتَزُّ لَهُ عَرْشُكَ، وَأَسْأَلُكَ بِاسْمِكَ الَّذِي دَعَاكَ بِهِ مُوسَى مِن جَانِبِ الطُّورِ، فَاسْتَجَبْتَ لَهُ</div>
-      </div>
-      <div id="shawt-2" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط الثاني</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنِّي إِلَيْكَ فَقِيرٌ، وَإِنِّي خَائِفٌ مُسْتَجِيرٌ، فَلَا تُغَيِّرْ جِسْمِي وَلَا تُبَدِّلْ اسْمِي. سَائِلُكَ فَقِيرُكَ مِسْكِينُكَ بِبَابِكَ، فَتَصَدَّقْ عَلَيْهِ بِالْجَنَّةِ</div>
-      </div>
-      <div id="shawt-3" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط الثالث</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ أَدْخِلْنِي الْجَنَّةَ، وَأَجِرْنِي مِنَ النَّارِ بِرَحْمَتِكَ، وَعَافِنِي مِنَ السُّقْمِ، وَأَوْسِعْ عَلَيَّ مِنَ الرِّزْقِ الْحَلَالِ، يَا ذَا الْمَنِّ وَالطَّوْلِ، يَا ذَا الْجُودِ وَالْكَرَمِ</div>
-      </div>
-      <div id="shawt-4" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط الرابع</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">يَا اللّه يَا وَلِيَّ الْعَافِيَةِ، وَخَالِقَ الْعَافِيَةِ، وَرَازِقَ الْعَافِيَةِ، وَالْمُنْعِمَ بِالْعَافِيَةِ، عَلَيَّ وَعَلَى جَمِيعِ خَلْقِكَ، يَا رَحْمَانَ الدُّنْيَا وَالآخِرَةِ وَرَحِيمَهُمَا</div>
-      </div>
-      <div id="shawt-5" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط الخامس</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">الحَمـدُ للَّه الَّذِي شَرَّفَكَ وَعَظَّمَكَ، والحمدُ للَّه الَّذِي بَعَثَ مُحَمَّداً نبيَّاً، وَجَعَلَ عَلِيَّاً إِمَاماً، اللَّهُمَّ اهدِ لَهُ خِيَارَ خَلْقِكَ<br><br>رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
-      </div>
-      <div id="shawt-6" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط السادس</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ الْبَيْتُ بَيْتُكَ، وَالعَبْدُ عَبْدُكَ، وَهَذَا مَقَامُ الْعَائِذِ بِكَ مِنَ النَّارِ، اللَّهُمَّ مِنْ قِبَلِكَ الرَّوْحُ وَالْفَرَجُ وَالْعَافِيَةُ، إِنَّ عَمَلِي ضَعِيفٌ فَضَاعِفْهُ لِي</div>
-      </div>
-      <div id="shawt-7" class="shawt-content" style="display:none">
-        <div class="shawt-title">الشوط السابع</div>
-        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنَّ عِنْدِي أَفْوَاجاً مِنْ ذُنُوبٍ، وَأَفْوَاجاً مِنْ خَطَايَا، وَعِنْدَكَ أَفْوَاجٌ مِنْ رَحْمَةٍ، وَأَفْوَاجٌ مِنْ مَغْفِرَةٍ<br>اللَّهُمَّ قَنِّعْنِي بِمَا رَزَقْتَنِي، وَبَارِكْ لِي فِيمَا آلَيْتَنِي</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Step 3: Salat Tawaf -->
-  <div class="guide-step" id="step-3">
-    <div class="guide-step-header" onclick="toggleStep(3)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-3">٣</div>
-        <div><div class="step-title">صلاة الطواف</div><div class="step-sub">ركعتان خلف مقام إبراهيم</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-3" onclick="event.stopPropagation();markDone(3)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-3"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-3">
-      <div class="guide-sub-title">النية:</div>
-      <div class="duaa-box">أُصَلِّي رَكْعَتَيْ طَوَافِ الْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
-      <div class="guide-item" style="margin-top:10px">🕌 الصلاة خلف مقام إبراهيم</div>
-    </div>
-  </div>
-
-  <!-- Step 4: Sai -->
-  <div class="guide-step" id="step-4">
-    <div class="guide-step-header" onclick="toggleStep(4)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-4">٤</div>
-        <div><div class="step-title">السعي بين الصفا والمروة</div><div class="step-sub">٧ أشواط</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-4" onclick="event.stopPropagation();markDone(4)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-4"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-4">
-      <div class="guide-sub-title">النية:</div>
-      <div class="duaa-box">أَسْعَى بَيْنَ الصَّفَا وَالْمَرْوَةِ سَبْعَةَ أَشْوَاطٍ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
-      <div class="guide-sub-title" style="margin-top:10px">دعاء بداية السعي:</div>
-      <div class="duaa-box">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
-      <div class="guide-item" style="margin-top:8px">يُستحب الصلاة على محمد وآل محمد حال السعي</div>
-    </div>
-  </div>
-
-  <!-- Step 5: Taqseer -->
-  <div class="guide-step" id="step-5">
-    <div class="guide-step-header" onclick="toggleStep(5)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-5">٥</div>
-        <div><div class="step-title">التقصير</div><div class="step-sub">الإحلال من الإحرام</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-5" onclick="event.stopPropagation();markDone(5)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-5"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-5">
-      <div class="guide-sub-title">النية:</div>
-      <div class="duaa-box">أَقْصُرُ لِلإِحْلَالِ مِنْ إِحْرَامِ الْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
-      <div class="guide-item" style="margin-top:8px;color:var(--bad)">⚠️ عدم التقصير للغير قبل تقصير المكلف لنفسه</div>
-    </div>
-  </div>
-
-  <!-- Step 6: Tawaf Nisa -->
-  <div class="guide-step" id="step-6">
-    <div class="guide-step-header" onclick="toggleStep(6)">
-      <div style="display:flex;align-items:center;gap:10px">
-        <div class="step-num" id="stepnum-6">٦</div>
-        <div><div class="step-title">طواف النساء وصلاته</div><div class="step-sub">٧ أشواط + ركعتان</div></div>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <button class="done-btn" id="done-6" onclick="event.stopPropagation();markDone(6)">تم ✓</button>
-        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-6"></i>
-      </div>
-    </div>
-    <div class="guide-content" id="content-6">
-      <div class="guide-sub-title">نية الطواف:</div>
-      <div class="duaa-box">أَطُوفُ حَوْلَ هَذَا الْبَيْتِ سَبْعَةَ أَشْوَاطٍ طَوَافَ النِّسَاءِ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ</div>
-      <div class="guide-sub-title" style="margin-top:10px">نية صلاة الطواف:</div>
-      <div class="duaa-box">أُصَلِّي رَكْعَتَيْ طَوَافِ النِّسَاءِ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
-    </div>
-  </div>
-
-  <!-- Completion -->
-  <div id="guide-complete" style="display:none;background:var(--navy);border-radius:16px;padding:20px;text-align:center;margin-top:16px;color:#fff">
-    <div style="font-size:48px;margin-bottom:8px">🕌</div>
-    <div style="font-size:18px;font-weight:700;color:var(--gold);margin-bottom:6px">تقبّل الله عمرتك</div>
-    <div style="font-size:13px;opacity:.8">اكتملت جميع أعمال العمرة المفردة<br>تقبّل الله منك وجعلها في ميزان حسناتك</div>
-  </div>
-</div>
-<div class="bnav">
-  <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span><span class="ar">الرئيسية</span><span class="en">Home</span></span></button>
-  <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span><span class="ar">وجباتي</span><span class="en">Meals</span></span></button>
-  <button class="nav-i" id="nav-duaa" onclick="navTo('duaa')"><i class="ti ti-book"></i><span><span class="ar">أدعية</span><span class="en">Prayers</span></span></button>
-  <button class="nav-i" id="nav-map" onclick="navTo('map')"><i class="ti ti-map-pin"></i><span><span class="ar">موقعي</span><span class="en">Location</span></span></button>
-  <button class="nav-i" id="nav-emergency" onclick="navTo('emergency')"><i class="ti ti-urgent"></i><span><span class="ar">طوارئ</span><span class="en">Emergency</span></span></button>
-</div>
-</div>
 <script>
 var currentLang='ar';
-function toggleLang(){
-  currentLang=currentLang==='ar'?'en':'ar';
-  var html=document.documentElement;
-  html.setAttribute('lang',currentLang);
-  html.setAttribute('dir',currentLang==='ar'?'rtl':'ltr');
-  document.getElementById('lang-btn').textContent=currentLang==='ar'?'🇬🇧 EN':'🇸🇦 AR';
-  showToast(currentLang==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
-},drinks={tea:0,milk:0,water:0,juice:0},notifOpen=false,selPayMethod='';
-var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'عصير 🧃'};
+var currentScreen='welcome';
 
-function showPanel(n){
-  document.getElementById('home-panel').style.display='none';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
-  var el=document.getElementById(n+'-panel');if(el)el.classList.add('active');
-  document.getElementById('scroll').scrollTop=0;updateNav(n);
+function showScreen(name){
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('screen-'+name).classList.add('active');
+  currentScreen=name;
 }
-function showHome(){
-  document.getElementById('home-panel').style.display='block';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
-  document.getElementById('scroll').scrollTop=0;updateNav('home');
-}
-function navTo(n){n==='home'?showHome():showPanel(n);}
-function updateNav(n){['home','meals','duaa','map','emergency'].forEach(function(x){var el=document.getElementById('nav-'+x);if(el)el.classList.toggle('active',x===n);});}
 
-function chMeal(type,d){
-  meals[type]=Math.max(0,Math.min(10,meals[type]+d));
-  document.getElementById(type+'-qty').textContent=meals[type];
-  updateTotal();
+function goToLogin(type){
+  showScreen(type);
 }
-function updateTotal(){
-  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
-  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
-  document.getElementById('total-price').textContent=ar+' ريال';
+
+function goBack(){
+  showScreen('welcome');
+  document.getElementById('pilgrim-error').classList.remove('show');
+  document.getElementById('staff-error').classList.remove('show');
 }
-var noDrink=false;
-function toggleNoDrink(){
-  noDrink=!noDrink;
-  var sec=document.getElementById('drinks-section');
-  var tog=document.getElementById('no-drink-toggle');
-  var thumb=document.getElementById('no-drink-thumb');
-  var lbl=document.getElementById('no-drink-label');
-  if(noDrink){
-    sec.style.display='none';
-    tog.style.background='#1B2A4A';
-    thumb.style.right='auto';thumb.style.left='2px';
-    lbl.style.color='#1B2A4A';lbl.style.fontWeight='700';
-    drinks={tea:0,milk:0,water:0,juice:0};
+
+function loginPilgrim(){
+  var id=document.getElementById('pilgrim-id').value.replace('#','').trim();
+  var pass=document.getElementById('pilgrim-pass').value.trim();
+  if(id==='0042' && pass==='1234'){
+    showScreen('loading');
+    document.getElementById('loading-text').textContent=currentLang==='ar'?'مرحباً بك يا محمد 🤲...':'Welcome Mohammed 🤲...';
+    setTimeout(function(){
+      window.location.href='aljinan_app.html';
+    },1800);
   } else {
-    sec.style.display='block';
-    tog.style.background='rgba(27,42,74,0.12)';
-    thumb.style.left='auto';thumb.style.right='2px';
-    lbl.style.color='#8a8fa8';lbl.style.fontWeight='400';
+    document.getElementById('pilgrim-error').classList.add('show');
+    document.getElementById('pilgrim-id').style.borderColor='rgba(192,57,43,.5)';
+    document.getElementById('pilgrim-pass').style.borderColor='rgba(192,57,43,.5)';
+    setTimeout(function(){
+      document.getElementById('pilgrim-id').style.borderColor='';
+      document.getElementById('pilgrim-pass').style.borderColor='';
+    },2000);
   }
 }
-function chDrink(type,d){drinks[type]=Math.max(0,Math.min(10,drinks[type]+d));document.getElementById(type+'-qty').textContent=drinks[type];}
-function chQty(t,d){qty[t]=Math.max(1,Math.min(5,(qty[t]||0)+d));document.getElementById(t+'-qty').textContent=qty[t];}
-function selDrink(el){document.querySelectorAll('.db').forEach(function(d){d.classList.remove('sel');});el.classList.add('sel');}
 
-function confirmMeal(){
-  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
-  if(total===0){showToast('⚠️ الرجاء اختيار وجبة واحدة على الأقل');return;}
-  var summary='';
-  if(meals.chicken>0) summary+='🍗 دجاج مشوي × '+meals.chicken+'<br>';
-  if(meals.meat>0) summary+='🥩 لحم مع الأرز × '+meals.meat+'<br>';
-  if(meals.veg>0) summary+='🥗 وجبة نباتية × '+meals.veg+'<br>';
-  if(drinks.tea>0) summary+='☕ شاي × '+drinks.tea+'<br>';
-  if(drinks.milk>0) summary+='🥛 لبن × '+drinks.milk+'<br>';
-  if(drinks.water>0) summary+='💧 ماء × '+drinks.water+'<br>';
-  if(drinks.juice>0) summary+='🧃 عصير × '+drinks.juice+'<br>';
-  if(noDrink) summary+='🚫 بدون مشروب<br>';
-  document.getElementById('order-summary').innerHTML=summary;
-  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
-  document.getElementById('confirm-total').textContent=ar+' ريال';
-  selPayMethod='';
-  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
-  document.getElementById('pay-btn').disabled=true;
-  document.getElementById('pay-btn').style.opacity='0.5';
-  showPanel('confirm');
+function loginStaff(){
+  var user=document.getElementById('staff-user').value.trim();
+  var pass=document.getElementById('staff-pass').value.trim();
+  if(user==='admin' && pass==='1234'){
+    showScreen('loading');
+    document.getElementById('loading-text').textContent=currentLang==='ar'?'مرحباً محمد، جاري تحميل لوحة التحكم...':'Welcome Mohammed, loading dashboard...';
+    setTimeout(function(){
+      window.location.href='aljinan_dashboard.html';
+    },1800);
+  } else {
+    document.getElementById('staff-error').classList.add('show');
+    document.getElementById('staff-user').style.borderColor='rgba(192,57,43,.5)';
+    document.getElementById('staff-pass').style.borderColor='rgba(192,57,43,.5)';
+    setTimeout(function(){
+      document.getElementById('staff-user').style.borderColor='';
+      document.getElementById('staff-pass').style.borderColor='';
+    },2000);
+  }
 }
 
-function selPay(el,method){
-  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
-  el.classList.add('sel');
-  selPayMethod=method;
-  document.getElementById('pay-btn').disabled=false;
-  document.getElementById('pay-btn').style.opacity='1';
-}
+// Enter key support
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'){
+    if(currentScreen==='pilgrim') loginPilgrim();
+    else if(currentScreen==='staff') loginStaff();
+  }
+});
 
-function processPayment(){
-  var msgs={apple:'✅ تم الدفع بـ Apple Pay! جاري تأكيد طلبك...',stc:'✅ تم الدفع بـ STC Pay! جاري تأكيد طلبك...',card:'✅ تم الدفع بالبطاقة! جاري تأكيد طلبك...',cash:'✅ تم تسجيل طلبك! الدفع نقداً عند التسليم'};
-  showToast(msgs[selPayMethod]);
-  meals={chicken:0,meat:0,veg:0};
-  drinks={tea:0,milk:0,water:0,juice:0};
-  document.getElementById('chicken-qty').textContent='0';
-  document.getElementById('meat-qty').textContent='0';
-  document.getElementById('veg-qty').textContent='0';
-  document.getElementById('tea-qty').textContent='0';
-  document.getElementById('milk-qty').textContent='0';
-  document.getElementById('water-qty').textContent='0';
-  document.getElementById('juice-qty').textContent='0';
-  updateTotal();
-  setTimeout(function(){showHome();},2000);
+function toggleLang(){
+  currentLang=currentLang==='ar'?'en':'ar';
+  var isEn=currentLang==='en';
+  document.getElementById('lang-btn').textContent=isEn?'🇸🇦 AR':'🇬🇧 EN';
+  document.documentElement.setAttribute('dir',isEn?'ltr':'rtl');
+  document.querySelectorAll('.ar').forEach(function(el){el.style.display=isEn?'none':'';});
+  document.querySelectorAll('.en').forEach(function(el){el.style.display=isEn?'':'none';});
 }
-
-function regTour(id,name){var btn=document.getElementById(id);if(btn.classList.contains('reg')){btn.classList.remove('reg');btn.textContent='سجّل الآن';showToast('تم إلغاء التسجيل في: '+name);}else{btn.classList.add('reg');btn.textContent='✓ مسجّل';showToast('✅ تم التسجيل في: '+name);}}
-function toggleNotif(){notifOpen=!notifOpen;document.getElementById('npanel').classList.toggle('open',notifOpen);if(notifOpen)document.getElementById('ndot').style.display='none';}
-function closeNotif(){notifOpen=false;document.getElementById('npanel').classList.remove('open');}
-function toggleDuaa(el){var was=el.classList.contains('open');document.querySelectorAll('.dcard').forEach(function(c){c.classList.remove('open');});if(!was)el.classList.add('open');}
-function filterDuaa(btn,cat){document.querySelectorAll('.dcat').forEach(function(c){c.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.dcard').forEach(function(c){c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';});}
-var doneSteps={};
-function toggleStep(n){
-  var c=document.getElementById('content-'+n);
-  var ch=document.getElementById('chevron-'+n);
-  var isOpen=c.classList.contains('open');
-  document.querySelectorAll('.guide-content').forEach(function(x){x.classList.remove('open');});
-  document.querySelectorAll('[id^="chevron-"]').forEach(function(x){x.style.transform='rotate(0deg)';});
-  if(!isOpen){c.classList.add('open');ch.style.transform='rotate(180deg)';}
-}
-function markDone(n){
-  doneSteps[n]=true;
-  var step=document.getElementById('step-'+n);
-  var btn=document.getElementById('done-'+n);
-  step.classList.add('done');
-  btn.textContent='✓ تم';
-  updateGuideProgress();
-  showToast('✅ تم الانتهاء من الخطوة '+n);
-}
-function updateGuideProgress(){
-  var count=Object.keys(doneSteps).length;
-  var pct=Math.round((count/6)*100);
-  document.getElementById('progress-bar').style.width=pct+'%';
-  document.getElementById('progress-text').textContent=toArabicNum(count)+' / ٦';
-  var labels=['ابدأ رحلتك الروحية 🕌','أحسنت! استمر 💪','في منتصف الطريق 🌟','اقتربت من الإكمال ✨','خطوتان فقط 🤲','خطوة أخيرة! 🏁','اكتملت عمرتك 🎉'];
-  document.getElementById('progress-label').textContent=labels[count];
-  if(count===6){document.getElementById('guide-complete').style.display='block';}
-}
-function toArabicNum(n){return n.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦');}
-function showShawt(btn,n){
-  document.querySelectorAll('.shawt-btn').forEach(function(b){b.classList.remove('active');});
-  document.querySelectorAll('.shawt-content').forEach(function(c){c.style.display='none';});
-  btn.classList.add('active');
-  document.getElementById('shawt-'+n).style.display='block';
-}
-function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},3000);}
 </script>
 </body>
 </html>
