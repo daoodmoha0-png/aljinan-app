@@ -198,10 +198,10 @@ body.dark .nitem:hover{background:#1e2d42}
 .pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
 .pay-opt.sel .pay-radio{border-color:var(--navy);background:var(--navy)}
 .pay-opt.sel .pay-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;display:block}
-.bnav{background:#fff;border-top:1px solid var(--border);display:flex;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px}
-.nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px}
+.bnav{background:#fff;border-top:1px solid var(--border);display:flex;flex-direction:row!important;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px;width:100%}
+.nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px;min-width:0}
 .nav-i i{font-size:19px;color:var(--gray);transition:all .2s;line-height:1}
-.nav-i span{font-size:10px;color:var(--gray);font-weight:500;line-height:1;transition:all .2s}
+.nav-i span{font-size:10px;color:var(--gray);font-weight:500;line-height:1;transition:all .2s;white-space:nowrap}
 .nav-i.active{background:var(--navy)}
 .nav-i.active i{color:#fff}
 .nav-i.active span{color:#fff;font-weight:700}
@@ -276,10 +276,9 @@ html[lang="ar"] .en{display:none!important}
     <div class="qa-card" onclick="showPanel('tours')"><div class="qa-i">🕌</div><div class="qa-l"><span class="ar">الجولات</span><span class="en">Tours</span></div><div class="qa-s"><span class="ar">سجّل في جولة</span><span class="en">Register for a tour</span></div></div>
     <div class="qa-card" onclick="showPanel('schedule')"><div class="qa-i">📅</div><div class="qa-l"><span class="ar">البرنامج</span><span class="en">Schedule</span></div><div class="qa-s"><span class="ar">جدول الرحلة</span><span class="en">Trip schedule</span></div></div>
     <div class="qa-card" onclick="showPanel('emergency')"><div class="qa-i">🆘</div><div class="qa-l"><span class="ar">طوارئ</span><span class="en">Emergency</span></div><div class="qa-s"><span class="ar">تواصل مع الكادر</span><span class="en">Contact staff</span></div></div>
-    <div class="qa-card" onclick="showPanel('duaa')"><div class="qa-i">📿</div><div class="qa-l"><span class="ar">أدعية وأذكار</span><span class="en">Prayers & Dhikr</span></div><div class="qa-s"><span class="ar">دعاء العمرة</span><span class="en">Umrah prayers</span></div></div>
     <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l"><span class="ar">وين أنا؟</span><span class="en">Where am I?</span></div><div class="qa-s"><span class="ar">موقعك الحالي</span><span class="en">Your location</span></div></div>
     <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l"><span class="ar">شهادة اعتمار</span><span class="en">Umrah Certificate</span></div><div class="qa-s"><span class="ar">شهادتك الرقمية</span><span class="en">Your digital cert</span></div></div>
-    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">خطوات وأدعية</span><span class="en">Steps & prayers</span></div></div>
+    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">أدعية وخطوات</span><span class="en">Prayers & steps</span></div></div>
     <div class="qa-card" onclick="showPanel('review')" style="border-color:#9b59b6;background:#faf5ff"><div class="qa-i">⭐</div><div class="qa-l" style="color:#7d3c98"><span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div><div class="qa-s"><span class="ar">شاركنا رأيك</span><span class="en">Share your feedback</span></div></div>
   </div>
   <div class="sec-t">أوقات الصلاة · مكة المكرمة</div>
@@ -603,7 +602,23 @@ html[lang="ar"] .en{display:none!important}
 <div id="guide-panel" class="panel">
   <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📖 دليل العمرة المفردة</div></div>
 
-  <!-- Progress Bar -->
+  <!-- Tasbih Counter -->
+  <div style="background:var(--navy);border-radius:16px;padding:14px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:11px;opacity:.7;margin-bottom:4px"><span class="ar">📿 عداد التسبيح</span><span class="en">📿 Tasbih Counter</span></div>
+    <div style="font-size:44px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px" id="tasbih-count">0</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px" id="tasbih-type">سُبْحَانَ اللَّهِ</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap">
+      <button onclick="setTasbihType('سُبْحَانَ اللَّهِ',this)" id="tsb1" style="padding:5px 10px;border-radius:20px;background:rgba(201,168,76,.4);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">سبحان الله</button>
+      <button onclick="setTasbihType('الْحَمْدُ لِلَّهِ',this)" id="tsb2" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الحمد لله</button>
+      <button onclick="setTasbihType('اللَّهُ أَكْبَرُ',this)" id="tsb3" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الله أكبر</button>
+      <button onclick="setTasbihType('لَا إِلَهَ إِلَّا اللَّهُ',this)" id="tsb4" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">لا إله إلا الله</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+      <button onclick="resetTasbih()" style="padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">إعادة</button>
+      <button onclick="incrementTasbih()" style="width:66px;height:66px;border-radius:50%;background:var(--gold);border:none;color:var(--navy);font-size:28px;cursor:pointer;font-weight:900;font-family:inherit;transition:transform .1s" onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform='scale(1)'">+</button>
+    </div>
+    <div style="font-size:11px;opacity:.5;margin-top:6px" id="tasbih-progress">٠ / ٣٣</div>
+  </div>
   <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:16px">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
       <div style="font-size:13px;font-weight:700">تقدمك في العمرة</div>
@@ -913,7 +928,7 @@ html[lang="ar"] .en{display:none!important}
 </div>
   <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span><span class="ar">الرئيسية</span><span class="en">Home</span></span></button>
   <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span><span class="ar">وجباتي</span><span class="en">Meals</span></span></button>
-  <button class="nav-i" id="nav-duaa" onclick="navTo('duaa')"><i class="ti ti-book"></i><span><span class="ar">أدعية</span><span class="en">Prayers</span></span></button>
+  <button class="nav-i" id="nav-guide" onclick="navTo('guide')"><i class="ti ti-book"></i><span><span class="ar">الدليل</span><span class="en">Guide</span></span></button>
   <button class="nav-i" id="nav-map" onclick="navTo('map')"><i class="ti ti-map-pin"></i><span><span class="ar">موقعي</span><span class="en">Location</span></span></button>
   <button class="nav-i" id="nav-emergency" onclick="navTo('emergency')"><i class="ti ti-urgent"></i><span><span class="ar">طوارئ</span><span class="en">Emergency</span></span></button>
 </div>
@@ -943,7 +958,7 @@ function showHome(){
   document.getElementById('scroll').scrollTop=0;updateNav('home');
 }
 function navTo(n){n==='home'?showHome():showPanel(n);}
-function updateNav(n){['home','meals','duaa','map','emergency'].forEach(function(x){var el=document.getElementById('nav-'+x);if(el)el.classList.toggle('active',x===n);});}
+function updateNav(n){['home','meals','guide','map','emergency'].forEach(function(x){var el=document.getElementById('nav-'+x);if(el)el.classList.toggle('active',x===n);});}
 
 function chMeal(type,d){
   meals[type]=Math.max(0,Math.min(10,meals[type]+d));
