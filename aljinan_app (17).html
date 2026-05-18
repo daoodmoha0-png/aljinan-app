@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>قافلة الجنان - تطبيق المعتمرين</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
+:root{--navy:#1B2A4A;--navy2:#2a3f6f;--navyp:#e8ecf4;--gold:#C9A84C;--gray:#8a8fa8;--bg:#f4f6fb;--white:#fff;--border:rgba(27,42,74,0.12);--ok:#1a8a5a;--bad:#c0392b}
+html,body{height:100%;background:var(--bg);color:var(--navy)}
+
+/* DARK MODE */
+body.dark{--bg:#0f1923;--white:#1a2535;--navy:#e8ecf4;--navyp:#1e2d42;--border:rgba(255,255,255,0.08);--gray:#6b7a8d}
+body.dark .p-card{background:#1e3a5f}
+body.dark .hdr{background:#0d1b2a}
+body.dark .bnav{background:#1a2535;border-top-color:rgba(255,255,255,.08)}
+body.dark .nav-i.active{background:#1e3a5f}
+body.dark .toast{background:#1a8a5a}
+body.dark .qa-card{background:#1a2535;border-color:rgba(255,255,255,.08);color:#e8ecf4}
+body.dark .qa-card:active{background:#1e2d42}
+body.dark input,body.dark select,body.dark textarea{background:#1e2d42;color:#e8ecf4;border-color:rgba(255,255,255,.15)}
+body.dark .pr-item{background:#1e2d42}
+body.dark .mo{background:#1a2535;border-color:rgba(255,255,255,.1)}
+body.dark .mo.sel{background:#1e3a5f;border-color:#5b9bd5}
+body.dark .db{background:#1a2535;border-color:rgba(255,255,255,.1);color:#e8ecf4}
+body.dark .qr{background:#1e2d42}
+body.dark .pay-opt{background:#1a2535;border-color:rgba(255,255,255,.1)}
+body.dark .dcard{background:#1a2535;border-color:rgba(255,255,255,.08);color:#e8ecf4}
+body.dark .guide-step{border-color:rgba(255,255,255,.08)}
+body.dark .guide-step-header{background:#1a2535}
+body.dark .guide-content{background:#151f2e}
+body.dark .cert-box{background:#0d1b2a}
+body.dark .map-info{background:#1e2d42}
+body.dark .cc{background:#1a2535;border-color:rgba(255,255,255,.08)}
+body.dark .tc{border-color:rgba(255,255,255,.08)}
+body.dark .tb{background:#1a2535}
+body.dark .si{border-color:rgba(255,255,255,.08)}
+body.dark .npanel{background:#1a2535;color:#e8ecf4}
+body.dark .nitem{border-color:rgba(255,255,255,.08)}
+body.dark .nitem:hover{background:#1e2d42}
+
+/* REVIEW */
+.star-row{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.star{font-size:36px;cursor:pointer;transition:transform .15s;filter:grayscale(1);opacity:.4}
+.star.active{filter:none;opacity:1;transform:scale(1.1)}
+.review-category{background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:10px}
+.review-cat-title{font-size:13px;font-weight:700;margin-bottom:8px}
+.review-stars{display:flex;gap:6px}
+.review-star{font-size:22px;cursor:pointer;filter:grayscale(1);opacity:.4;transition:all .15s}
+.review-star.active{filter:none;opacity:1}
+.app{max-width:420px;margin:0 auto;min-height:100vh;background:var(--white);display:flex;flex-direction:column}
+.hdr{background:var(--navy);padding:14px 18px 10px;color:#fff;position:relative}
+.hdr-top{display:flex;align-items:center;justify-content:space-between}
+.logo-row{display:flex;align-items:center;gap:9px}
+.logo-c{width:36px;height:36px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--navy)}
+.hdr-t{font-size:15px;font-weight:700}
+.hdr-s{font-size:11px;opacity:.7}
+.nwrap{position:relative}
+.nbtn{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:19px}
+.ndot{position:absolute;top:4px;right:4px;width:8px;height:8px;background:#e74c3c;border-radius:50%;border:2px solid var(--navy)}
+.npanel{display:none;position:absolute;top:100%;left:-18px;right:-18px;background:var(--white);z-index:200;border-bottom:1px solid var(--border);max-height:300px;overflow-y:auto;color:var(--navy)}
+.npanel.open{display:block}
+.nitem{display:flex;gap:10px;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer}
+.nitem:hover{background:var(--navyp)}
+.ni-icon{font-size:18px;flex-shrink:0}
+.ni-t{font-size:13px;font-weight:600}
+.ni-s{font-size:11px;color:var(--gray);margin-top:1px}
+.ni-time{font-size:10px;color:var(--gray);margin-right:auto;flex-shrink:0}
+.scroll{flex:1;overflow-y:auto;padding-bottom:72px}
+.p-card{margin:14px;background:var(--navy);border-radius:16px;padding:16px;color:#fff;overflow:hidden;position:relative}
+.p-card::before{content:'';position:absolute;top:-20px;left:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.05)}
+.p-name{font-size:18px;font-weight:700;margin-bottom:3px}
+.p-info{font-size:12px;opacity:.7;margin-bottom:11px}
+.badges{display:flex;gap:7px;flex-wrap:wrap}
+.bdg{padding:5px 11px;border-radius:20px;font-size:12px;font-weight:500}
+.bg{background:var(--gold);color:var(--navy)}
+.bw{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.bc-row{display:flex;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.15)}
+.bc-box{background:#fff;border-radius:8px;padding:7px}
+.bc-lines{display:flex;gap:2px;align-items:flex-end}
+.bc-lines div{background:var(--navy);width:3px}
+.p-num{font-size:22px;font-weight:700;color:var(--gold)}
+.sec-t{font-size:14px;font-weight:700;margin:0 14px 10px}
+.qa{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 14px 18px}
+.qa-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;text-align:center;transition:all .18s}
+.qa-card:active{background:var(--navyp);transform:scale(.97)}
+.qa-i{font-size:28px;margin-bottom:6px}
+.qa-l{font-size:13px;font-weight:700}
+.qa-s{font-size:11px;color:var(--gray);margin-top:2px}
+.pr-wrap{padding:0 14px 16px}
+.pr-main{background:var(--navy);color:#fff;border-radius:12px;padding:14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.pr-name{font-size:14px;font-weight:600}
+.pr-next{font-size:11px;opacity:.7}
+.pr-time{font-size:18px;font-weight:700;color:var(--gold)}
+.pr-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pr-item{background:var(--navyp);border-radius:10px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
+.panel{display:none;padding:0 14px 16px}
+.panel.active{display:block}
+.ph{display:flex;align-items:center;gap:10px;padding:14px 0 12px}
+.back{background:none;border:none;cursor:pointer;font-size:22px;color:var(--navy);display:flex;align-items:center}
+.pt{font-size:16px;font-weight:700}
+.mo{border:1.5px solid var(--border);border-radius:12px;padding:12px;cursor:pointer;display:flex;align-items:center;gap:12px;transition:all .18s;margin-bottom:9px}
+.mo.sel{border-color:var(--navy);background:var(--navyp)}
+.ck{width:22px;height:22px;border-radius:50%;border:2px solid var(--border);margin-right:auto;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.mo.sel .ck{background:var(--navy);border-color:var(--navy);color:#fff}
+.qr{display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-radius:10px;margin-bottom:8px}
+.qc{display:flex;align-items:center;gap:12px}
+.qb{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);background:#fff;cursor:pointer;font-size:20px;display:flex;align-items:center;justify-content:center;color:var(--navy);font-weight:700}
+.qv{font-size:16px;font-weight:700;min-width:24px;text-align:center}
+.dg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
+.db{padding:10px;border:1.5px solid var(--border);border-radius:10px;background:#fff;cursor:pointer;font-size:13px;font-weight:500;text-align:center;transition:all .18s}
+.db.sel{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tc{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:12px}
+.ti{height:88px;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:34px;position:relative}
+.tbadge{position:absolute;top:8px;right:8px;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.tb{padding:12px}
+.tn{font-size:14px;font-weight:700;margin-bottom:5px}
+.td{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.tdet{font-size:11px;color:var(--gray)}
+.tf{display:flex;align-items:center;justify-content:space-between}
+.tp{font-size:16px;font-weight:700}
+.tp span{font-size:11px;color:var(--gray);font-weight:400}
+.tbtn{padding:8px 16px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.tbtn.reg{background:var(--ok)}
+.sd-t{font-size:13px;font-weight:700;margin-bottom:6px;padding:0 2px}
+.si{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);align-items:flex-start}
+.si:last-child{border-bottom:none}
+.st{font-size:12px;color:var(--gray);min-width:50px;padding-top:2px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--navy);margin-top:4px;flex-shrink:0}
+.dot.p{background:var(--gold)}.dot.m{background:var(--ok)}.dot.t{background:#e67e22}
+.se{font-size:13px;font-weight:500}
+.ss{font-size:11px;color:var(--gray)}
+.ec{background:#fff5f5;border:1.5px solid #f5c6c6;border-radius:14px;padding:16px;margin-bottom:12px;text-align:center}
+.ebtn{width:80px;height:80px;border-radius:50%;background:var(--bad);border:none;color:#fff;font-size:30px;cursor:pointer;margin:0 auto 10px;display:flex;align-items:center;justify-content:center}
+.cc{display:flex;align-items:center;gap:12px;padding:12px;background:var(--white);border:1px solid var(--border);border-radius:12px;margin-bottom:8px}
+.cav{width:40px;height:40px;border-radius:50%;background:var(--navyp);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.cbtn{margin-right:auto;padding:7px 13px;background:var(--ok);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0}
+.map-info{background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:12px}
+.map-area{height:200px;background:#dde8f0;border-radius:14px;position:relative;overflow:hidden;margin-bottom:12px;border:1px solid var(--border)}
+.map-road-h{position:absolute;height:12px;background:#fff;left:0;right:0;top:50%;transform:translateY(-50%);opacity:.8}
+.map-road-v{position:absolute;width:12px;background:#fff;top:0;bottom:0;left:40%;opacity:.8}
+.map-hotel{position:absolute;left:38%;top:44%;width:28px;height:28px;background:var(--navy);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;z-index:2}
+.map-haram{position:absolute;left:55%;top:35%;width:34px;height:34px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;z-index:2;border:3px solid var(--navy)}
+.map-user{position:absolute;left:42%;top:52%;width:20px;height:20px;background:#e74c3c;border-radius:50%;border:3px solid #fff;z-index:3;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.map-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.ml{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray)}
+.ml-dot{width:10px;height:10px;border-radius:50%}
+.dist-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.dist-card{background:var(--navyp);border-radius:12px;padding:12px;text-align:center}
+.big-btn{width:100%;padding:13px;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-bottom:8px}
+.duaa-cats{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:14px}
+.dcat{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:500;white-space:nowrap;transition:all .18s;flex-shrink:0}
+.dcat.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.dcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;cursor:pointer}
+.d-lbl{font-size:11px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.d-ar{font-size:18px;font-weight:700;line-height:1.8;color:var(--navy);text-align:right}
+.d-exp{display:none;border-top:1px solid var(--border);margin-top:10px;padding-top:10px}
+.dcard.open .d-exp{display:block}
+.d-tr{font-size:12px;color:var(--gray);line-height:1.6;margin-top:6px}
+.copy-btn{padding:6px 12px;background:var(--navyp);border:none;border-radius:8px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;margin-top:8px}
+.cert-box{background:var(--navy);border-radius:16px;padding:20px;color:#fff;text-align:center;margin-bottom:14px;overflow:hidden;position:relative}
+.cert-box::before{content:'';position:absolute;top:-30px;left:-30px;width:150px;height:150px;border-radius:50%;background:rgba(201,168,76,.08)}
+.cert-name{font-size:22px;font-weight:700;color:var(--gold);margin:8px 0 4px}
+.cert-sub{font-size:12px;opacity:.7;margin-bottom:12px}
+.cert-div{height:1px;background:rgba(255,255,255,.15);margin:12px 0}
+.cert-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;text-align:right}
+.cdet{background:rgba(255,255,255,.07);border-radius:10px;padding:10px}
+.cdet-l{font-size:10px;opacity:.6;margin-bottom:3px}
+.cdet-v{font-size:13px;font-weight:600}
+.cert-seal{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding:10px;background:rgba(201,168,76,.15);border-radius:10px;border:1px solid rgba(201,168,76,.3)}
+.cert-seal-t{font-size:11px;color:var(--gold)}
+.guide-step{border:1px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.guide-step-header{display:flex;align-items:center;justify-content:space-between;padding:14px;cursor:pointer;background:#fff}
+.guide-step.done .guide-step-header{background:var(--navyp)}
+.step-num{width:32px;height:32px;border-radius:50%;background:var(--navy);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.guide-step.done .step-num{background:var(--ok)}
+.step-title{font-size:14px;font-weight:700}
+.step-sub{font-size:11px;color:var(--gray);margin-top:2px}
+.done-btn{padding:6px 12px;background:var(--navyp);border:none;border-radius:8px;font-size:12px;font-weight:600;color:var(--navy);cursor:pointer;font-family:inherit;flex-shrink:0}
+.guide-step.done .done-btn{background:var(--ok);color:#fff}
+.guide-content{display:none;padding:14px;border-top:1px solid var(--border);background:#fafbfd}
+.guide-content.open{display:block}
+.guide-sub-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.guide-item{font-size:13px;padding:6px 0;color:var(--navy)}
+.duaa-box{background:var(--navy);color:#fff;border-radius:12px;padding:14px;font-size:16px;font-weight:600;line-height:2;text-align:center;margin:8px 0}
+.shawt-tabs{display:flex;gap:6px;margin:12px 0 8px;overflow-x:auto;padding-bottom:4px}
+.shawt-btn{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:13px;font-weight:600;font-family:inherit;flex-shrink:0;transition:all .18s}
+.shawt-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.shawt-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:8px;text-align:center}
+.sub-btn{width:100%;padding:14px;background:var(--navy);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:8px}
+.sub-btn:disabled{opacity:.5;cursor:not-allowed}
+.pay-opt{display:flex;align-items:center;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:14px;margin-bottom:10px;cursor:pointer;transition:all .18s}
+.pay-opt.sel{border-color:var(--navy);background:var(--navyp)}
+.pay-opt>div:nth-child(2){flex:1}
+.pay-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .18s}
+.pay-opt.sel .pay-radio{border-color:var(--navy);background:var(--navy)}
+.pay-opt.sel .pay-radio::after{content:'';width:8px;height:8px;border-radius:50%;background:#fff;display:block}
+.bnav{background:#fff;border-top:1px solid var(--border);display:flex;flex-direction:row!important;position:sticky;bottom:0;z-index:100;padding:8px 10px 10px;gap:6px;width:100%}
+.nav-i{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;border:none;background:none;position:relative;transition:all .2s;padding:7px 2px;border-radius:14px;min-width:0}
+.nav-i i{font-size:19px;color:var(--gray);transition:all .2s;line-height:1}
+.nav-i span{font-size:10px;color:var(--gray);font-weight:500;line-height:1;transition:all .2s;white-space:nowrap}
+.nav-i.active{background:var(--navy)}
+.nav-i.active i{color:#fff}
+.nav-i.active span{color:#fff;font-weight:700}
+.toast{display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ok);color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.show{display:block;animation:ta 2.8s forwards}
+@keyframes ta{0%{opacity:0;transform:translateX(-50%) translateY(8px)}15%{opacity:1;transform:translateX(-50%) translateY(0)}80%{opacity:1}100%{opacity:0}}
+.lang-btn{padding:5px 11px;border-radius:20px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+html[lang="en"]{direction:ltr}
+html[lang="en"] .ar{display:none!important}
+html[lang="ar"] .en{display:none!important}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="toast" id="toast"></div>
+<div class="hdr">
+  <div class="hdr-top">
+    <div class="logo-row">
+      <div class="logo-c" style="overflow:hidden;padding:0"><img src="data:image/jpeg;base64,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ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/0f38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigApD0paQ9KzmADpS0g6UyiAElFR1JWgBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB//9L9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKredjZG/wB56sZFcprfifSfDNu99rl3HZ26fxM1JQuB06Shm21LXL+HvE+jeKrJNV0C5W5t/ublrqKYBRUdSUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//T/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooqOgB46VH5opapyu8Vu0j/KyVnTA5zxl4u0bwXoV3ruuTrBb2qOxZvav5rv2tP2vfEfxg8ZXejeHLySHQbJtiqrffr64/4KO/tLTvdRfCvwxc/fV/PZW/55V+KbpseKNF2fN8zV9bluWw5OeofOY7HThP3D+m//AIJyarJqXwO+fcxhnRPmb/Yr9Ba/NL/gmddAfBi4sofn8u8/9kr9La+extPkme1hqvPAKkqOpK5zpCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1P38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKjqSigCOvBf2g/ifYfC34cat4hupFR0idF3f9NK92mmRE31+C//AAU1+OqalqkXwy0af919+fa1duCpc8zixtXkgflX4/8AG2pePPFGoeI75v8AS7qXf/upXF73+dHb77b6jTy3ZJ4/vVI7+SyV93SpclE+M9pzzP6G/wDgmBext8OLuxRvm83d/wCOV+rNfj9/wS2mk/4RbUd6ttdq/YGvhMy+M+zwX8MKkqOpK4jtCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//1f38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKrvv7feqxUdAHFeO9aTQPC+oarvVPIidvmr+SD43+Lbrxt8S9V8R3cvnJdSvtX+75Vf0Z/t2ePJPAfwR1O7tH2TyLtr+Wy5mkub2WTdvlkbfX1GSUoHy+b1Qd9/yRr+9T71e6fBP4D+MfjT4otNG8OWbTW7t+/k2/IlR/Ar4P6/8Y/GVp4c0q2bY7fv5Ntf0+fA34BeEfgv4StNH0O2jS92p58+352ruzfMuT3Dmy3A85lfs3fs96J8A/CkWiWLNNcOu+WRm+TfX1DVNPLRtiVa/hr4mrU55n1tKnyRsNqSo/46koNAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//W/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAqu/3kkqxVd/46APx/wD+Co/i37H4VtNA835L37y1+D+lWE9/fxabAu+Wdti1+on/AAVB8Vf2x48tNDjb5bL/AOIrwv8AYW+EsHxN+LVqmpLvt4283/v1X2OC9yifJY736x+x/wCwn+z/AKb8MPhzZazfWOzVdUi81mb+Gv0FrK0uyjsLdLGBNkUC7V21sH1r5PE1eeZ9JhqXJAZt20/AplPyK5vZnTz3FooorQAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9f9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAGrVW5+RHf/AGatLWZqL/6FLs/uPRT+MzqfAz+XD9vPWJNS/aA1uDzd8SKm1a9g/wCCbXjbR9B+Ja6bqM6wve79rNXzP+11cvefHXxBPJ/eSvD/AAN4qvvB/ia08R6azQvayo+5a+6p0v3J8lUq/vj+z+FxNEs39+rA6V8x/sxfGzSfjN8OrDVYZl/tCCJFuE3fdevp2viatLlmfW06nPAKkqOn5Fc/tDQWio6krQAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9D9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAEHSuf8QTJaaXdzyfdSKugHSvMPi7qqaP4D1a+k/ggerpfGZ1fgZ/K3+0/rdpr3xk13UbFVSLzdny18/o6Ovzt/vLXUeOb/AO3+KNVn/je6n/8AQ65NPu+fIuxK/TsFS/cnwmN+M+yP2Rf2jdV+C3jyJ57mT+yrqVElj3fJX9O3gfxroXjzQbfxH4cuVubS7Xcvzfdr+MFH2N96v00/Yn/bJuvhXq1v4R8Yzt/Yl02xWZvuV83m+W/bPXy3HH9G/wA+77/zf3asEZrl/DHiXSfF+kW+uaJOs1vOu5GX+5XUE4r42pT5Jn1HxC1JRRWokgooooGFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/9H9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAExmvlP9sLxCPDfwV13UmfZsgevqrJr8wf+ClvjxNE+EkvhkN82qb0rpwVLnmcWOxHJA/n40fTf+Et8R3Gnb9j3U77W/wCB1Y8c+BtS+HviGXw5rCt5vyMu6uf8PX8+lataarA3zwMj1+tHxC+Eum/tG/ACy+JXhWJX8RaXF+/219/9Z5Ich8t9W5/fPyDRN7pIn30X5lqP59yJ/wAtfv8A+5Vi8s57C9uLHUlaG4Rv4qrwvOkWzbv3/wAVdNL34HDU+M/Tj9jD9tjUfhjf2/grxrOz6O7eUskjfdr+gvwr4v0PxnolvrugXK3NrP8ANuVq/i8TzHX7L/c+6y19ufsx/tk+NPgnqlvpt9PJf6Ju2Sxs33a+bzLKOc+gwOOP6j4ndyv92ro9q8Z+Efxi8K/Fzwza+IPD9yj+evzRhvu17FXyX1fkPoKdXnJKjoooNB69KWiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP//S/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBD0r8U/8Agq8l+mm6DPCreQkj72/4BX7WZ4zX56f8FFvCVprXwJ1LVHi33FirstduWVeSscWOpc0D+ZN/kZI/7nz1+iH7DH7SCfDfxKng7xA2/wAP6v8AutrV+ebpsby5P46sWdy9nfpdwNsltfnWvu8ThuejznyNPE8k+Q/XT9uT9kiP7P8A8Le+HsCzWsy751j/AOmtfkG8Lp9xdksH3lav3k/Yb/ac0P4keEv+FQ+PJY5pUi8qLzm++lfPf7aX7D114YupfiF8OYG+xP8AO0ca/cryMNjpwnyTO6phuf3z8m0ff+/j+R/4lqwiIjeft+Sia28mV475WhlT7y7ar7Psyv5b74nr6X44Hk/BM94+C37QPjv4Ia9b6joGoSfZN29o91f0Vfs1ftceEPjnotvHJcx2esRr+8gZvvV/K66R+Unlr89dZ4S8Z+I/A2r2+q+FbySzuIW3/K1eHjsthM9LDY7kP7P43gf51/jqT7w+SvyW/ZD/AG/dN8dQ2vgr4kyrbasfkinkb5G/36/Vmwv7G/tUvtOlWaKT+JW318bicPyH1OGxHPA0Efc3+1Vmo9/zVJXOdAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//T/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBByK8T+O/gm18f/DjWNAuF3meB9te2DpWfeJHNF5E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c+Dnjmy1jSp5ETd+9Xd8jV/UP8EfjN4c+MHgu18R6Jcq8si/vV/uvXxOZ5dyTPrsDieeB7in8X9+pKjRNtSb68k9YkooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP//W/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAqOpKKACo6kooAjqu8O+LY/8AwKrFJtFAvZnw9+0r+xr4K+NmmXFzZQrYats+SRV/jr+dn40/A3xx8HPEsuj+JrORIYP9VMq/I1f2CbXrxr4tfBbwP8Y/DlxofivT47lXTYsjL8616+BzacPjPKx2B5z+PSbemyR1+d/4qK/Qz9pn9hPxx8HJbvXPDkTaron312/O6p/1zjr895ke2Z4512On3lr7XDYmjOB8ticNOEyPZv8A4a0LPVb7Tb2LUdNnaG4g+aJlrPfzERJEqR5pPN+SJU/2a1qU+cPach+yn7H/AO3hfP8AZPh78WJ/OinXZFOzfcr3T9q79i3wl8YPD8vj74ctGmobfNZoP+Wtfz72zvbb5IJfuNu+Wv1A/Y8/bm1z4e3tl4E8cM1zo8zJEjM33K+fxWFnRn+7PSw2J9rD3z81/EPhvWfCWuXGh6rA0NxZNsZW+SsPfvbfB8kqV/Qp+1X+yd4H+PHhJ/ih8PVRNTeLzd0H8dfgHr2g6loOo3Gh6xE1te2Uro275K7sDjuc4sThjHR5pn/fN8/8Vffn7D37RWpfCX4g2mh6jcs+iai2xlZvkSvgOb55fu7PlqxDcyJdI8DeS6NvVlrtx2G54GWCxPJPkP7VtG1O01fTodRsXV7eddystauyvyj/AOCd/wC0xH408Nf8K28SXLf2hpy7YN38SV+qvnIirX5viKXJM+2w2J5y5RVdJk3bKf5o37K5/aHSSYFGBRuFM3JVcyAkoooqgCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9f9/KKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKj3JQBJVfZ/B/C9P+R1qNYnCb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iigAooooAKKKKACiiigCPZSKiI3FS0VmBHtSjZUlR0ADpuo2pUlR1oAfJUlR1JQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/1P38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKY/3KAH0VXR6sUAFFFFABRRVdH+agCxRRRQAUUUUAFFFFABRUb/ItJE+9c0AS0UUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/V/fyiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiik70ALVd33Nsp8v3aqQ/63fQBY2bamVtwzSP9yq0L/8ALOgC5RRUdAA9RxfeNSPUcX3jQBYooooAKKKKACiiigBG+6aYlSUi9KAFqOpKjoAkooooAKKKKACiiigAqOpKjoAkooooAKKKKACiiigAooooAjehKHoSgAooooAkooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/1v38ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooqN6AI5qIkTbRUmygA+So/46Nr1JQA9elLUdSUAFFFFABRRRQAUUUUAFFFFABRRRQAVHUlR0ASUUUUAFFFFAEb0VJUdAElR0JRQBJRRRQBG9FFFABRRRQBJRRRQAjdKYlSVGlAElFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf//Z" style="width:36px;height:36px;object-fit:cover;border-radius:50%"></div>
+      <div>
+        <div class="hdr-t"><span class="ar">قافلة الجنان</span><span class="en">Al-Jinan Convoy</span></div>
+        <div class="hdr-s"><span class="ar">عمرة ١٤٤٦ هـ</span><span class="en">Umrah 1446 H</span></div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="lang-btn" onclick="toggleLang()" id="lang-btn">🇬🇧 EN</button>
+      <div class="nwrap">
+        <button class="nbtn" onclick="toggleNotif()"><i class="ti ti-bell"></i></button>
+        <div class="ndot" id="ndot"></div>
+        <div class="npanel" id="npanel">
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🚌</div><div><div class="ni-t"><span class="ar">تنبيه الحافلة</span><span class="en">Bus Alert</span></div><div class="ni-s"><span class="ar">الحافلة A2 ستتحرك بعد 30 دقيقة</span><span class="en">Bus A2 departs in 30 minutes</span></div></div><div class="ni-time">٥ د</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🍽️</div><div><div class="ni-t"><span class="ar">تذكير الوجبة</span><span class="en">Meal Reminder</span></div><div class="ni-s"><span class="ar">آخر موعد طلب الغداء: ١٢:٠٠ م</span><span class="en">Last order time: 12:00 PM</span></div></div><div class="ni-time">١ س</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">🕌</div><div><div class="ni-t"><span class="ar">جولة جبل النور</span><span class="en">Jabal Nour Tour</span></div><div class="ni-s"><span class="ar">موعد الجولة الغد ٧:٠٠ ص</span><span class="en">Tour tomorrow at 7:00 AM</span></div></div><div class="ni-time">٢ س</div></div>
+          <div class="nitem" onclick="closeNotif()"><div class="ni-icon">📿</div><div><div class="ni-t"><span class="ar">البرنامج العبادي</span><span class="en">Prayer Program</span></div><div class="ni-s"><span class="ar">قراءة الأدعية الساعة ٨:٠٠ م</span><span class="en">Group prayers at 8:00 PM</span></div></div><div class="ni-time">٣ س</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="scroll" id="scroll">
+
+<div id="home-panel">
+  <div class="p-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="user-avatar" style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;overflow:hidden" onclick="showPanel('settings')">👤</div>
+        <div>
+          <div class="p-name" id="user-display-name">محمد عبدالله</div>
+          <div class="p-info"><span class="ar">قافلة الجنان · رحلة رجب ١٤٤٦</span><span class="en">Al-Jinan Convoy · Rajab 1446</span></div>
+        </div>
+      </div>
+      <button onclick="showPanel('settings')" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">⚙️</button>
+    </div>
+    <div class="badges">
+      <div class="bdg bg">🕌 غرفة ٣٠٥</div>
+      <div class="bdg bw">🚌 حافلة A2</div>
+      <div class="bdg bw">معتمر #٠٠٤٢</div>
+    </div>
+    <div class="bc-row">
+      <div class="bc-box"><div class="bc-lines"><div style="height:32px"></div><div style="height:28px"></div><div style="height:36px"></div><div style="height:30px"></div><div style="height:34px"></div><div style="height:26px"></div><div style="height:38px"></div><div style="height:28px"></div><div style="height:32px"></div><div style="height:30px"></div><div style="height:36px"></div><div style="height:28px"></div><div style="height:34px"></div><div style="height:38px"></div><div style="height:26px"></div></div><div style="font-size:9px;color:#888;text-align:center;margin-top:4px">٠٠٤٢ - ALJINAN</div></div>
+      <div><div style="font-size:11px;opacity:.7;margin-bottom:4px"><span class="ar">رقم المعتمر</span><span class="en">Pilgrim No.</span></div><div class="p-num">#٠٠٤٢</div><div style="font-size:10px;opacity:.6;margin-top:2px"><span class="ar">امسح الباركود للتحقق</span><span class="en">Scan barcode to verify</span></div></div>
+    </div>
+    <!-- Prayer Alert -->
+    <div id="prayer-alert" style="margin-top:12px;padding:8px 12px;background:rgba(201,168,76,.2);border-radius:10px;border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px">🔔</span>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700;color:var(--gold)" id="next-prayer-name">صلاة الظهر</div><div style="font-size:11px;opacity:.8" id="next-prayer-time">بعد ٤٥ دقيقة · ١٢:١٥ م</div></div>
+    </div>
+  </div>
+  <div class="sec-t"><span class="ar">الخدمات</span><span class="en">Services</span></div>
+  <div class="qa">
+    <div class="qa-card" onclick="showPanel('meals')"><div class="qa-i">🍽️</div><div class="qa-l"><span class="ar">طلب وجبة</span><span class="en">Order Meal</span></div><div class="qa-s"><span class="ar">اختر وجبتك</span><span class="en">Choose your meal</span></div></div>
+    <div class="qa-card" onclick="showPanel('tours')"><div class="qa-i">🕌</div><div class="qa-l"><span class="ar">الجولات</span><span class="en">Tours</span></div><div class="qa-s"><span class="ar">سجّل في جولة</span><span class="en">Register for a tour</span></div></div>
+    <div class="qa-card" onclick="showPanel('schedule')"><div class="qa-i">📅</div><div class="qa-l"><span class="ar">البرنامج</span><span class="en">Schedule</span></div><div class="qa-s"><span class="ar">جدول الرحلة</span><span class="en">Trip schedule</span></div></div>
+    <div class="qa-card" onclick="showPanel('emergency')"><div class="qa-i">🆘</div><div class="qa-l"><span class="ar">طوارئ</span><span class="en">Emergency</span></div><div class="qa-s"><span class="ar">تواصل مع الكادر</span><span class="en">Contact staff</span></div></div>
+    <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l"><span class="ar">وين أنا؟</span><span class="en">Where am I?</span></div><div class="qa-s"><span class="ar">موقعك الحالي</span><span class="en">Your location</span></div></div>
+    <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l"><span class="ar">شهادة اعتمار</span><span class="en">Umrah Certificate</span></div><div class="qa-s"><span class="ar">شهادتك الرقمية</span><span class="en">Your digital cert</span></div></div>
+    <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">أدعية وخطوات</span><span class="en">Prayers & steps</span></div></div>
+    <div class="qa-card" onclick="showPanel('review')" style="border-color:#9b59b6;background:#faf5ff"><div class="qa-i">⭐</div><div class="qa-l" style="color:#7d3c98"><span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div><div class="qa-s"><span class="ar">شاركنا رأيك</span><span class="en">Share your feedback</span></div></div>
+  </div>
+  <div class="sec-t">أوقات الصلاة · مكة المكرمة</div>
+  <div class="pr-wrap">
+    <div class="pr-main"><div><div class="pr-name">🌅 الفجر</div><div class="pr-next">الصلاة القادمة</div></div><div class="pr-time">٤:١٨ ص</div></div>
+    <div class="pr-grid">
+      <div class="pr-item"><span style="font-size:12px;font-weight:600">☀️ الظهر</span><span style="font-size:12px;font-weight:700;color:var(--navy)">١٢:١٥</span></div>
+      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌤 العصر</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٣:٤٥</span></div>
+      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌇 المغرب</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٦:٢٦</span></div>
+      <div class="pr-item"><span style="font-size:12px;font-weight:600">🌙 العشاء</span><span style="font-size:12px;font-weight:700;color:var(--navy)">٧:٥٦</span></div>
+    </div>
+  </div>
+</div>
+
+<div id="meals-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🍽️ طلب وجبة الغداء</div></div>
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:10px"><div style="font-size:22px">📅</div><div><div style="font-size:13px;font-weight:600">اليوم · الأحد</div><div style="font-size:11px;color:var(--gray)">١٧ رجب ١٤٤٦ · الغداء ١:٠٠ ظ · ١٥ ريال / وجبة</div></div></div>
+
+  <div style="font-size:13px;font-weight:700;margin-bottom:10px">اختر الوجبات وحدد الكمية</div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🍗</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">دجاج مشوي</div><div style="font-size:11px;color:var(--gray)">دجاج · خضار · حساء · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('chicken',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="chicken-qty">0</span>
+      <button class="qb" onclick="chMeal('chicken',1)">+</button>
+    </div>
+  </div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:10px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🥩</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">لحم مع الأرز</div><div style="font-size:11px;color:var(--gray)">لحم مطهو · أرز · سلطة · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('meat',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="meat-qty">0</span>
+      <button class="qb" onclick="chMeal('meat',1)">+</button>
+    </div>
+  </div>
+
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:28px">🥗</div>
+    <div style="flex:1"><div style="font-size:14px;font-weight:700">وجبة نباتية</div><div style="font-size:11px;color:var(--gray)">أرز · خضار · عدس · ١٥ ريال</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chMeal('veg',-1)">−</button>
+      <span style="font-size:16px;font-weight:700;min-width:20px;text-align:center" id="veg-qty">0</span>
+      <button class="qb" onclick="chMeal('veg',1)">+</button>
+    </div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div style="font-size:13px;font-weight:700">المشروبات</div>
+    <div style="display:flex;align-items:center;gap:8px;cursor:pointer" onclick="toggleNoDrink()">
+      <span style="font-size:12px;color:var(--gray)" id="no-drink-label">بدون مشروب</span>
+      <div id="no-drink-toggle" style="width:36px;height:20px;border-radius:10px;background:var(--border);position:relative;transition:all .2s">
+        <div id="no-drink-thumb" style="width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transition:all .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+      </div>
+    </div>
+  </div>
+  <div id="drinks-section">
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">☕</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">شاي</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('tea',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="tea-qty">0</span>
+      <button class="qb" onclick="chDrink('tea',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">🥛</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">لبن</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('milk',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="milk-qty">0</span>
+      <button class="qb" onclick="chDrink('milk',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:8px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">💧</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">ماء</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('water',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="water-qty">0</span>
+      <button class="qb" onclick="chDrink('water',1)">+</button>
+    </div>
+  </div>
+  <div style="border:1.5px solid var(--border);border-radius:14px;padding:12px;margin-bottom:14px;display:flex;align-items:center;gap:12px">
+    <div style="font-size:24px">🧃</div>
+    <div style="flex:1"><div style="font-size:13px;font-weight:600">عصير</div></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <button class="qb" onclick="chDrink('juice',-1)">−</button>
+      <span style="font-size:15px;font-weight:700;min-width:20px;text-align:center" id="juice-qty">0</span>
+      <button class="qb" onclick="chDrink('juice',1)">+</button>
+    </div>
+  </div>
+  </div>
+
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-top:12px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:600">الإجمالي</div>
+    <div style="font-size:20px;font-weight:700;color:var(--navy)" id="total-price">٠ ريال</div>
+  </div>
+
+  <button class="sub-btn" onclick="confirmMeal()">متابعة للدفع 💳</button>
+</div>
+
+<div id="confirm-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showPanel('meals')"><i class="ti ti-arrow-right"></i></button><div class="pt">تأكيد الطلب</div></div>
+  <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:14px">
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px">📋 ملخص طلبك</div>
+    <div id="order-summary" style="font-size:13px;color:var(--navy);line-height:2"></div>
+    <div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:13px;font-weight:600">الإجمالي</div>
+      <div style="font-size:18px;font-weight:700;color:var(--navy)" id="confirm-total">٠ ريال</div>
+    </div>
+  </div>
+
+  <div style="font-size:14px;font-weight:700;margin-bottom:12px">اختر طريقة الدفع</div>
+
+  <div id="pay-apple" class="pay-opt" onclick="selPay(this,'apple')">
+    <div style="font-size:22px">🍎</div>
+    <div><div style="font-size:14px;font-weight:700">Apple Pay</div><div style="font-size:11px;color:var(--gray)">ادفع ببصمتك أو وجهك</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-stc" class="pay-opt" onclick="selPay(this,'stc')">
+    <div style="font-size:22px">💜</div>
+    <div><div style="font-size:14px;font-weight:700">STC Pay</div><div style="font-size:11px;color:var(--gray)">الدفع عبر STC Pay</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-card" class="pay-opt" onclick="selPay(this,'card')">
+    <div style="font-size:22px">💳</div>
+    <div><div style="font-size:14px;font-weight:700">بطاقة بنكية</div><div style="font-size:11px;color:var(--gray)">Visa / Mastercard / Mada</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <div id="pay-cash" class="pay-opt" onclick="selPay(this,'cash')">
+    <div style="font-size:22px">💵</div>
+    <div><div style="font-size:14px;font-weight:700">دفع كاش</div><div style="font-size:11px;color:var(--gray)">ادفع نقداً عند التسليم</div></div>
+    <div class="pay-radio"></div>
+  </div>
+
+  <button class="sub-btn" id="pay-btn" onclick="processPayment()" disabled style="opacity:.5">تأكيد الطلب والدفع ✅</button>
+</div>
+
+<div id="tours-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🕌 الجولات المتاحة</div></div>
+  <div class="tc"><div class="ti">🕋<div class="tbadge">متاح</div></div><div class="tb"><div class="tn">جولة المسجد الحرام والكعبة</div><div class="td"><div class="tdet">⏰ ٣ ساعات</div><div class="tdet">👥 ١٢ مقعد</div><div class="tdet">📅 الغد ٩:٠٠ ص</div></div><div class="tf"><div class="tp">٥٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t1" onclick="regTour('t1','جولة المسجد الحرام')">سجّل الآن</button></div></div></div>
+  <div class="tc"><div class="ti">⛰️<div class="tbadge" style="background:#fff;color:var(--navy)">محدود</div></div><div class="tb"><div class="tn">جبل النور وغار حراء</div><div class="td"><div class="tdet">⏰ ٤ ساعات</div><div class="tdet">👥 ٥ مقاعد</div><div class="tdet">📅 بعد الغد ٧:٠٠ ص</div></div><div class="tf"><div class="tp">٧٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t2" onclick="regTour('t2','جبل النور')">سجّل الآن</button></div></div></div>
+  <div class="tc"><div class="ti">🕌<div class="tbadge">متاح</div></div><div class="tb"><div class="tn">زيارة المسجد النبوي والروضة</div><div class="td"><div class="tdet">⏰ يوم كامل</div><div class="tdet">👥 ٢٠ مقعد</div><div class="tdet">📅 الخميس ٦:٠٠ ص</div></div><div class="tf"><div class="tp">١٥٠ ريال <span>/ شخص</span></div><button class="tbtn" id="t3" onclick="regTour('t3','المسجد النبوي')">سجّل الآن</button></div></div></div>
+</div>
+
+<div id="schedule-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📅 البرنامج اليومي</div></div>
+  <div class="sd-t">اليوم · الأحد ١٧ رجب</div>
+  <div style="margin-bottom:14px">
+    <div class="si"><div class="st">٤:١٨ ص</div><div class="dot p"></div><div><div class="se">صلاة الفجر جماعة</div><div class="ss">مسجد الفندق · الدور الأول</div></div></div>
+    <div class="si"><div class="st">٨:٠٠ ص</div><div class="dot m"></div><div><div class="se">وجبة الإفطار</div><div class="ss">قاعة الطعام · الطابق الأرضي</div></div></div>
+    <div class="si"><div class="st">٩:٣٠ ص</div><div class="dot t"></div><div><div class="se">أداء العمرة</div><div class="ss">التجمع أمام الفندق</div></div></div>
+    <div class="si"><div class="st">١٢:١٥ م</div><div class="dot p"></div><div><div class="se">صلاة الظهر</div><div class="ss">المسجد الحرام</div></div></div>
+    <div class="si"><div class="st">١:٣٠ م</div><div class="dot m"></div><div><div class="se">وجبة الغداء</div><div class="ss">قاعة الطعام · آخر طلب ١٢:٠٠ م</div></div></div>
+    <div class="si"><div class="st">٦:٢٦ م</div><div class="dot p"></div><div><div class="se">صلاة المغرب</div><div class="ss">المسجد الحرام</div></div></div>
+    <div class="si"><div class="st">٨:٠٠ م</div><div class="dot t"></div><div><div class="se">قراءة الأدعية الجماعية</div><div class="ss">قاعة الاجتماعات · الطابق الثاني</div></div></div>
+  </div>
+  <div class="sd-t">الغد · الاثنين ١٨ رجب</div>
+  <div><div class="si"><div class="st">٩:٠٠ ص</div><div class="dot t"></div><div><div class="se">جولة المسجد الحرام</div><div class="ss">تجمع أمام الفندق · اختيارية</div></div></div><div class="si"><div class="st">٢:٠٠ م</div><div class="dot"></div><div><div class="se">وقت حر</div><div class="ss">التسوق والزيارات الشخصية</div></div></div></div>
+</div>
+
+<div id="emergency-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🆘 طوارئ ومساعدة</div></div>
+  <div class="ec"><button class="ebtn" onclick="showToast('🆘 تم إرسال موقعك! الكادر في الطريق إليك')">🆘</button><div style="font-size:15px;font-weight:700;color:var(--bad)">زر الطوارئ</div><div style="font-size:12px;color:var(--gray);margin-top:4px;line-height:1.6">اضغط في حالة الضياع أو التعب أو أي طارئ<br>سيتواصل معك الكادر فوراً</div></div>
+  <div style="font-size:13px;font-weight:600;margin-bottom:8px">تواصل مع الكادر</div>
+  <div class="cc"><div class="cav">👨‍💼</div><div><div style="font-size:14px;font-weight:600">محمد عبدالله</div><div style="font-size:11px;color:var(--gray)">كادر الحركة والطوارئ ٢٤/٧</div></div><button class="cbtn" onclick="showToast('جاري الاتصال بمحمد...')">📞 اتصل</button></div>
+  <div class="cc"><div class="cav">🕌</div><div><div style="font-size:14px;font-weight:600">مكتب قافلة الجنان</div><div style="font-size:11px;color:var(--gray)">الدعم والمساعدة العامة</div></div><button class="cbtn" onclick="showToast('جاري الاتصال بالمكتب...')">📞 اتصل</button></div>
+  <div class="cc"><div class="cav">🚑</div><div><div style="font-size:14px;font-weight:600">الطوارئ الطبية</div><div style="font-size:11px;color:var(--gray)">للحالات الطبية العاجلة</div></div><button class="cbtn" style="background:var(--bad)" onclick="showToast('جاري الاتصال بالطوارئ...')">📞 اتصل</button></div>
+</div>
+
+<div id="map-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📍 موقعك الحالي</div></div>
+  <div class="map-info"><div style="font-size:13px;font-weight:600;margin-bottom:3px">📍 فندق الجنان · شارع أجياد · مكة المكرمة</div><div style="font-size:11px;color:var(--gray)">٢١.٤٢٤٦° شمال · ٣٩.٨٢٦١° شرق · آخر تحديث: الآن</div></div>
+  <div class="map-area">
+    <div class="map-road-h"></div><div class="map-road-v"></div>
+    <div class="map-hotel">🏨</div>
+    <div class="map-haram">🕋</div>
+    <div class="map-user"></div>
+    <div style="position:absolute;bottom:8px;left:8px;background:rgba(27,42,74,.7);color:#fff;font-size:10px;padding:4px 8px;border-radius:6px">خريطة مكة المكرمة</div>
+  </div>
+  <div class="map-legend">
+    <div class="ml"><div class="ml-dot" style="background:#e74c3c"></div>موقعك</div>
+    <div class="ml"><div class="ml-dot" style="background:var(--navy)"></div>الفندق</div>
+    <div class="ml"><div class="ml-dot" style="background:var(--gold)"></div>المسجد الحرام</div>
+  </div>
+  <div class="dist-grid">
+    <div class="dist-card"><div style="font-size:20px;margin-bottom:4px">🕋</div><div style="font-size:12px;font-weight:600">المسجد الحرام</div><div style="font-size:11px;color:var(--gray)">٨٠٠ متر تقريباً</div></div>
+    <div class="dist-card"><div style="font-size:20px;margin-bottom:4px">🏨</div><div style="font-size:12px;font-weight:600">فندق الجنان</div><div style="font-size:11px;color:var(--gray)">أنت هنا</div></div>
+  </div>
+  <button class="big-btn" style="background:var(--navy);color:#fff" onclick="showToast('✅ تم إرسال موقعك للكادر')">📤 أرسل موقعي للكادر</button>
+  <button class="big-btn" style="background:var(--navyp);color:var(--navy)" onclick="showToast('جاري فتح الخريطة...')">🗺️ افتح في خرائط جوجل</button>
+</div>
+
+<div id="duaa-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📿 <span class="ar">أدعية وأذكار</span><span class="en">Prayers & Dhikr</span></div></div>
+  <!-- Tasbih Counter -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:12px;opacity:.7;margin-bottom:4px"><span class="ar">عداد التسبيح</span><span class="en">Tasbih Counter</span></div>
+    <div style="font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px" id="tasbih-count">0</div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px" id="tasbih-type">سُبْحَانَ اللَّهِ</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
+      <button onclick="setTasbihType('سُبْحَانَ اللَّهِ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(201,168,76,.4);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">سبحان الله</button>
+      <button onclick="setTasbihType('الْحَمْدُ لِلَّهِ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الحمد لله</button>
+      <button onclick="setTasbihType('اللَّهُ أَكْبَرُ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الله أكبر</button>
+      <button onclick="setTasbihType('لَا إِلَهَ إِلَّا اللَّهُ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">لا إله إلا الله</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+      <button onclick="resetTasbih()" style="padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit"><span class="ar">إعادة</span><span class="en">Reset</span></button>
+      <button onclick="incrementTasbih()" style="width:72px;height:72px;border-radius:50%;background:var(--gold);border:none;color:var(--navy);font-size:30px;cursor:pointer;font-weight:900;font-family:inherit;transition:transform .1s" onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform='scale(1)'">+</button>
+    </div>
+    <div style="font-size:11px;opacity:.5;margin-top:8px" id="tasbih-progress">٠ / ٣٣</div>
+  </div>
+  <!-- Categories -->
+  <div class="duaa-cats">
+    <div class="dcat active" onclick="filterDuaa(this,'all')"><span class="ar">الكل</span><span class="en">All</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'ihram')"><span class="ar">الإحرام</span><span class="en">Ihram</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'tawaf')"><span class="ar">الطواف</span><span class="en">Tawaf</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'sai')"><span class="ar">السعي</span><span class="en">Sa'i</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'morning')"><span class="ar">الصباح</span><span class="en">Morning</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'evening')"><span class="ar">المساء</span><span class="en">Evening</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'general')"><span class="ar">عامة</span><span class="en">General</span></div>
+  </div>
+  <div id="duaa-list">
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الإحرام</div><div class="d-ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</div><div class="d-tr">لبيك اللهم لبيك، لبيك لا شريك لك لبيك</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء دخول مكة</div><div class="d-ar">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ، فَحَرِّمْنِي عَلَى النَّارِ، وَأَمِّنِّي مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ</div><div class="d-tr">اللهم هذا حرمك وأمنك فحرمني على النار</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الطواف</div><div class="d-ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</div><div class="d-exp"><div class="d-ar" style="font-size:15px">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div><div class="d-tr">ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء عند الحجر الأسود</div><div class="d-ar">بِسْمِ اللهِ وَاللهُ أَكْبَرُ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">بِسْمِ اللهِ وَاللهُ أَكْبَرُ، اللَّهُمَّ إِيمَاناً بِكَ وَتَصْدِيقاً بِكِتَابِكَ وَوَفَاءً بِعَهْدِكَ وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ</div><div class="d-tr">بسم الله والله أكبر، اللهم إيماناً بك وتصديقاً بكتابك</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="sai" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء السعي</div><div class="d-ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div><div class="d-tr">أبدأ بما بدأ الله به، إن الصفا والمروة من شعائر الله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="morning" onclick="toggleDuaa(this)"><div class="d-lbl">ذكر الصباح</div><div class="d-ar">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div><div class="d-tr">أصبحنا وأصبح الملك لله والحمد لله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="evening" onclick="toggleDuaa(this)"><div class="d-lbl">ذكر المساء</div><div class="d-ar">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div><div class="d-tr">أمسينا وأمسى الملك لله والحمد لله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الكرب</div><div class="d-ar">لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ</div><div class="d-tr">لا إله إلا أنت سبحانك إني كنت من الظالمين</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء المغفرة</div><div class="d-ar">رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ، إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ</div><div class="d-tr">رب اغفر لي وتب علي إنك أنت التواب الرحيم</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">آية الكرسي</div><div class="d-ar">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ</div><div class="d-exp"><div class="d-ar" style="font-size:14px;line-height:2">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ</div><div class="d-tr">الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+  </div>
+</div>
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)">
+      <div class="d-lbl">دعاء الإحرام</div>
+      <div class="d-ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</div>
+        <div class="d-tr">لبيك اللهم لبيك، لبيك لا شريك لك لبيك، إن الحمد والنعمة لك والملك، لا شريك لك</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)">
+      <div class="d-lbl">دعاء الطواف</div>
+      <div class="d-ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
+        <div class="d-tr">ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)">
+      <div class="d-lbl">دعاء عند الحجر الأسود</div>
+      <div class="d-ar">بِسْمِ اللهِ وَاللهُ أَكْبَرُ</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">بِسْمِ اللهِ وَاللهُ أَكْبَرُ، اللَّهُمَّ إِيمَاناً بِكَ وَتَصْدِيقاً بِكِتَابِكَ وَوَفَاءً بِعَهْدِكَ وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ</div>
+        <div class="d-tr">بسم الله والله أكبر، اللهم إيماناً بك وتصديقاً بكتابك ووفاءً بعهدك واتباعاً لسنة نبيك</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+    <div class="dcard" data-cat="sai" onclick="toggleDuaa(this)">
+      <div class="d-lbl">دعاء السعي</div>
+      <div class="d-ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
+        <div class="d-tr">أبدأ بما بدأ الله به، إن الصفا والمروة من شعائر الله</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+    <div class="dcard" data-cat="morning" onclick="toggleDuaa(this)">
+      <div class="d-lbl">ذكر الصباح</div>
+      <div class="d-ar">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div>
+        <div class="d-tr">أصبحنا وأصبح الملك لله، والحمد لله، لا إله إلا الله وحده لا شريك له</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)">
+      <div class="d-lbl">دعاء دخول مكة المكرمة</div>
+      <div class="d-ar">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ</div>
+      <div class="d-exp">
+        <div class="d-ar" style="font-size:15px">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ، فَحَرِّمْنِي عَلَى النَّارِ، وَأَمِّنِّي مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ</div>
+        <div class="d-tr">اللهم هذا حرمك وأمنك، فحرمني على النار، وآمنني من عذابك يوم تبعث عبادك</div>
+        <button class="copy-btn" onclick="event.stopPropagation();showToast('تم نسخ الدعاء 📿')">نسخ الدعاء</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cert-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">🏅 شهادة الاعتمار</div></div>
+  <div class="cert-box">
+    <div style="font-size:44px;margin-bottom:8px">🕌</div>
+    <div style="font-size:12px;opacity:.7;margin-bottom:4px">شهادة اعتمار رقمية</div>
+    <div class="cert-name">محمد عبدالله أوحيد</div>
+    <div class="cert-sub">أدّى مناسك العمرة المباركة بتوفيق من الله</div>
+    <div class="cert-div"></div>
+    <div class="cert-grid">
+      <div class="cdet"><div class="cdet-l">تاريخ العمرة</div><div class="cdet-v">١٧ رجب ١٤٤٦</div></div>
+      <div class="cdet"><div class="cdet-l">مكان العمرة</div><div class="cdet-v">مكة المكرمة</div></div>
+      <div class="cdet"><div class="cdet-l">القافلة</div><div class="cdet-v">قافلة الجنان</div></div>
+      <div class="cdet"><div class="cdet-l">رقم المعتمر</div><div class="cdet-v">#٠٠٤٢</div></div>
+    </div>
+    <div class="cert-seal"><div style="font-size:16px">🔏</div><div class="cert-seal-t">وثّقت بواسطة قافلة الجنان لزيارة العتبات المقدسة</div></div>
+  </div>
+  <button class="big-btn" style="background:var(--gold);color:var(--navy)" onclick="showToast('📥 جاري تحميل الشهادة...')">📥 تحميل الشهادة</button>
+  <button class="big-btn" style="background:var(--navyp);color:var(--navy)" onclick="showToast('📤 جاري مشاركة الشهادة...')">📤 مشاركة الشهادة</button>
+</div>
+
+<div id="guide-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📖 دليل العمرة المفردة</div></div>
+
+  <!-- Tasbih Counter -->
+  <div style="background:var(--navy);border-radius:16px;padding:14px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:11px;opacity:.7;margin-bottom:4px"><span class="ar">📿 عداد التسبيح</span><span class="en">📿 Tasbih Counter</span></div>
+    <div style="font-size:44px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:6px" id="tasbih-count">0</div>
+    <div style="font-size:13px;font-weight:700;margin-bottom:10px" id="tasbih-type">سُبْحَانَ اللَّهِ</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:10px;flex-wrap:wrap">
+      <button onclick="setTasbihType('سُبْحَانَ اللَّهِ',this)" id="tsb1" style="padding:5px 10px;border-radius:20px;background:rgba(201,168,76,.4);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">سبحان الله</button>
+      <button onclick="setTasbihType('الْحَمْدُ لِلَّهِ',this)" id="tsb2" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الحمد لله</button>
+      <button onclick="setTasbihType('اللَّهُ أَكْبَرُ',this)" id="tsb3" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الله أكبر</button>
+      <button onclick="setTasbihType('لَا إِلَهَ إِلَّا اللَّهُ',this)" id="tsb4" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">لا إله إلا الله</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+      <button onclick="resetTasbih()" style="padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit">إعادة</button>
+      <button onclick="incrementTasbih()" style="width:66px;height:66px;border-radius:50%;background:var(--gold);border:none;color:var(--navy);font-size:28px;cursor:pointer;font-weight:900;font-family:inherit;transition:transform .1s" onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform='scale(1)'">+</button>
+    </div>
+    <div style="font-size:11px;opacity:.5;margin-top:6px" id="tasbih-progress">٠ / ٣٣</div>
+  </div>
+  <div style="background:var(--navyp);border-radius:14px;padding:14px;margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+      <div style="font-size:13px;font-weight:700">تقدمك في العمرة</div>
+      <div style="font-size:13px;font-weight:700;color:var(--navy)" id="progress-text">٠ / ٦</div>
+    </div>
+    <div style="height:8px;background:var(--border);border-radius:4px;overflow:hidden">
+      <div id="progress-bar" style="height:100%;width:0%;background:var(--navy);border-radius:4px;transition:width .4s"></div>
+    </div>
+    <div style="font-size:11px;color:var(--gray);margin-top:6px" id="progress-label">ابدأ رحلتك الروحية 🕌</div>
+  </div>
+
+  <!-- Step 1: Ihram -->
+  <div class="guide-step" id="step-1">
+    <div class="guide-step-header" onclick="toggleStep(1)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-1">١</div>
+        <div><div class="step-title">الإحرام من الميقات</div><div class="step-sub">واجبات الإحرام</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-1" onclick="event.stopPropagation();markDone(1)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-1"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-1">
+      <div class="guide-sub-title">واجبات الإحرام:</div>
+      <div class="guide-item">① لبس الإحرام</div>
+      <div class="guide-item">② النية</div>
+      <div class="duaa-box">أُحرم للعمرة المفردة استحباباً قربةً إلى اللّه تعالى</div>
+      <div class="guide-item">③ التلبية</div>
+      <div class="duaa-box" style="font-size:15px;line-height:2">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ،<br>لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ،<br>إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ،<br>لَا شَرِيكَ لَكَ</div>
+    </div>
+  </div>
+
+  <!-- Step 2: Tawaf -->
+  <div class="guide-step" id="step-2">
+    <div class="guide-step-header" onclick="toggleStep(2)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-2">٢</div>
+        <div><div class="step-title">الطواف حول الكعبة</div><div class="step-sub">٧ أشواط + أدعيتها</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-2" onclick="event.stopPropagation();markDone(2)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-2"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-2">
+      <div class="guide-sub-title">النية:</div>
+      <div class="duaa-box">أطوفُ حول هذا البيت سبعة أشواط للعمرة المفردة قربةً إلى اللّه تعالى</div>
+      <div class="guide-sub-title" style="margin-top:12px">يستحب القول عند الحجر الأسود:</div>
+      <div class="duaa-box" style="font-size:13px">أمانتي أديتها وميثاقي تعاهدته لتشهد لي بالموافاة</div>
+
+      <div class="shawt-tabs">
+        <button class="shawt-btn active" onclick="showShawt(this,1)">١</button>
+        <button class="shawt-btn" onclick="showShawt(this,2)">٢</button>
+        <button class="shawt-btn" onclick="showShawt(this,3)">٣</button>
+        <button class="shawt-btn" onclick="showShawt(this,4)">٤</button>
+        <button class="shawt-btn" onclick="showShawt(this,5)">٥</button>
+        <button class="shawt-btn" onclick="showShawt(this,6)">٦</button>
+        <button class="shawt-btn" onclick="showShawt(this,7)">٧</button>
+      </div>
+
+      <div id="shawt-1" class="shawt-content">
+        <div class="shawt-title">الشوط الأول</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنِّي أَسْأَلُكَ بِاسْمِكَ الَّذِي يُمْشَى بِهِ عَلَى ظَلَلِ الْمَاءِ، كَمَا يُمْشَى بِهِ عَلَى جُدَدِ الأَرْضِ، وَأَسْأَلُكَ بِاسْمِكَ الَّذِي يَهْتَزُّ لَهُ عَرْشُكَ، وَأَسْأَلُكَ بِاسْمِكَ الَّذِي دَعَاكَ بِهِ مُوسَى مِن جَانِبِ الطُّورِ، فَاسْتَجَبْتَ لَهُ</div>
+      </div>
+      <div id="shawt-2" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط الثاني</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنِّي إِلَيْكَ فَقِيرٌ، وَإِنِّي خَائِفٌ مُسْتَجِيرٌ، فَلَا تُغَيِّرْ جِسْمِي وَلَا تُبَدِّلْ اسْمِي. سَائِلُكَ فَقِيرُكَ مِسْكِينُكَ بِبَابِكَ، فَتَصَدَّقْ عَلَيْهِ بِالْجَنَّةِ</div>
+      </div>
+      <div id="shawt-3" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط الثالث</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ أَدْخِلْنِي الْجَنَّةَ، وَأَجِرْنِي مِنَ النَّارِ بِرَحْمَتِكَ، وَعَافِنِي مِنَ السُّقْمِ، وَأَوْسِعْ عَلَيَّ مِنَ الرِّزْقِ الْحَلَالِ، يَا ذَا الْمَنِّ وَالطَّوْلِ، يَا ذَا الْجُودِ وَالْكَرَمِ</div>
+      </div>
+      <div id="shawt-4" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط الرابع</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">يَا اللّه يَا وَلِيَّ الْعَافِيَةِ، وَخَالِقَ الْعَافِيَةِ، وَرَازِقَ الْعَافِيَةِ، وَالْمُنْعِمَ بِالْعَافِيَةِ، عَلَيَّ وَعَلَى جَمِيعِ خَلْقِكَ، يَا رَحْمَانَ الدُّنْيَا وَالآخِرَةِ وَرَحِيمَهُمَا</div>
+      </div>
+      <div id="shawt-5" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط الخامس</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">الحَمـدُ للَّه الَّذِي شَرَّفَكَ وَعَظَّمَكَ، والحمدُ للَّه الَّذِي بَعَثَ مُحَمَّداً نبيَّاً، وَجَعَلَ عَلِيَّاً إِمَاماً، اللَّهُمَّ اهدِ لَهُ خِيَارَ خَلْقِكَ<br><br>رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div>
+      </div>
+      <div id="shawt-6" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط السادس</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ الْبَيْتُ بَيْتُكَ، وَالعَبْدُ عَبْدُكَ، وَهَذَا مَقَامُ الْعَائِذِ بِكَ مِنَ النَّارِ، اللَّهُمَّ مِنْ قِبَلِكَ الرَّوْحُ وَالْفَرَجُ وَالْعَافِيَةُ، إِنَّ عَمَلِي ضَعِيفٌ فَضَاعِفْهُ لِي</div>
+      </div>
+      <div id="shawt-7" class="shawt-content" style="display:none">
+        <div class="shawt-title">الشوط السابع</div>
+        <div class="duaa-box" style="font-size:13px;line-height:1.9">اللَّهُمَّ إِنَّ عِنْدِي أَفْوَاجاً مِنْ ذُنُوبٍ، وَأَفْوَاجاً مِنْ خَطَايَا، وَعِنْدَكَ أَفْوَاجٌ مِنْ رَحْمَةٍ، وَأَفْوَاجٌ مِنْ مَغْفِرَةٍ<br>اللَّهُمَّ قَنِّعْنِي بِمَا رَزَقْتَنِي، وَبَارِكْ لِي فِيمَا آلَيْتَنِي</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 3: Salat Tawaf -->
+  <div class="guide-step" id="step-3">
+    <div class="guide-step-header" onclick="toggleStep(3)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-3">٣</div>
+        <div><div class="step-title">صلاة الطواف</div><div class="step-sub">ركعتان خلف مقام إبراهيم</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-3" onclick="event.stopPropagation();markDone(3)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-3"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-3">
+      <div class="guide-sub-title">النية:</div>
+      <div class="duaa-box">أُصَلِّي رَكْعَتَيْ طَوَافِ الْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
+      <div class="guide-item" style="margin-top:10px">🕌 الصلاة خلف مقام إبراهيم</div>
+    </div>
+  </div>
+
+  <!-- Step 4: Sai -->
+  <div class="guide-step" id="step-4">
+    <div class="guide-step-header" onclick="toggleStep(4)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-4">٤</div>
+        <div><div class="step-title">السعي بين الصفا والمروة</div><div class="step-sub">٧ أشواط</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-4" onclick="event.stopPropagation();markDone(4)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-4"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-4">
+      <div class="guide-sub-title">النية:</div>
+      <div class="duaa-box">أَسْعَى بَيْنَ الصَّفَا وَالْمَرْوَةِ سَبْعَةَ أَشْوَاطٍ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
+      <div class="guide-sub-title" style="margin-top:10px">دعاء بداية السعي:</div>
+      <div class="duaa-box">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div>
+      <div class="guide-item" style="margin-top:8px">يُستحب الصلاة على محمد وآل محمد حال السعي</div>
+    </div>
+  </div>
+
+  <!-- Step 5: Taqseer -->
+  <div class="guide-step" id="step-5">
+    <div class="guide-step-header" onclick="toggleStep(5)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-5">٥</div>
+        <div><div class="step-title">التقصير</div><div class="step-sub">الإحلال من الإحرام</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-5" onclick="event.stopPropagation();markDone(5)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-5"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-5">
+      <div class="guide-sub-title">النية:</div>
+      <div class="duaa-box">أَقْصُرُ لِلإِحْلَالِ مِنْ إِحْرَامِ الْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
+      <div class="guide-item" style="margin-top:8px;color:var(--bad)">⚠️ عدم التقصير للغير قبل تقصير المكلف لنفسه</div>
+    </div>
+  </div>
+
+  <!-- Step 6: Tawaf Nisa -->
+  <div class="guide-step" id="step-6">
+    <div class="guide-step-header" onclick="toggleStep(6)">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="step-num" id="stepnum-6">٦</div>
+        <div><div class="step-title">طواف النساء وصلاته</div><div class="step-sub">٧ أشواط + ركعتان</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <button class="done-btn" id="done-6" onclick="event.stopPropagation();markDone(6)">تم ✓</button>
+        <i class="ti ti-chevron-down" style="font-size:16px;color:var(--gray)" id="chevron-6"></i>
+      </div>
+    </div>
+    <div class="guide-content" id="content-6">
+      <div class="guide-sub-title">نية الطواف:</div>
+      <div class="duaa-box">أَطُوفُ حَوْلَ هَذَا الْبَيْتِ سَبْعَةَ أَشْوَاطٍ طَوَافَ النِّسَاءِ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ</div>
+      <div class="guide-sub-title" style="margin-top:10px">نية صلاة الطواف:</div>
+      <div class="duaa-box">أُصَلِّي رَكْعَتَيْ طَوَافِ النِّسَاءِ لِلْعُمْرَةِ الْمُفْرَدَةِ قُرْبَةً إِلَى اللَّهِ تَعَالَى</div>
+    </div>
+  </div>
+
+  <!-- Completion -->
+  <div id="guide-complete" style="display:none;background:var(--navy);border-radius:16px;padding:20px;text-align:center;margin-top:16px;color:#fff">
+    <div style="font-size:48px;margin-bottom:8px">🕌</div>
+    <div style="font-size:18px;font-weight:700;color:var(--gold);margin-bottom:6px">تقبّل الله عمرتك</div>
+    <div style="font-size:13px;opacity:.8">اكتملت جميع أعمال العمرة المفردة<br>تقبّل الله منك وجعلها في ميزان حسناتك</div>
+  </div>
+<div id="settings-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">⚙️ <span class="ar">الإعدادات</span><span class="en">Settings</span></div></div>
+
+  <!-- Profile -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div id="settings-avatar" style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 10px;cursor:pointer" onclick="changePhoto()">👤</div>
+    <div style="font-size:11px;opacity:.6;margin-bottom:6px"><span class="ar">اضغط لتغيير الصورة</span><span class="en">Tap to change photo</span></div>
+    <input id="settings-name-inp" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 14px;color:#fff;font-size:15px;font-family:inherit;width:100%;text-align:center" value="محمد عبدالله" placeholder="اسمك">
+    <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+  </div>
+
+  <!-- Settings Options -->
+  <div style="background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px">
+    <div style="padding:14px;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px"><span class="ar">🌍 اللغة</span><span class="en">🌍 Language</span></div>
+      <div style="display:flex;gap:8px">
+        <button id="lang-ar-btn" onclick="setLang('ar')" style="flex:1;padding:10px;border-radius:10px;background:var(--navy);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🇸🇦 العربية</button>
+        <button id="lang-en-btn" onclick="setLang('en')" style="flex:1;padding:10px;border-radius:10px;background:var(--navyp);color:var(--navy);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🇬🇧 English</button>
+      </div>
+    </div>
+    <div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:700">🌙 <span class="ar">الوضع الليلي</span><span class="en">Dark Mode</span></div><div style="font-size:11px;color:var(--gray)"><span class="ar">يتفعل تلقائياً ٨م - ٦ص</span><span class="en">Auto: 8PM - 6AM</span></div></div>
+      <div id="dark-indicator" style="padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--navyp);color:var(--navy)">تلقائي</div>
+    </div>
+    <div style="padding:14px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:700">🔔 <span class="ar">تنبيهات الصلاة</span><span class="en">Prayer Alerts</span></div><div style="font-size:11px;color:var(--gray)"><span class="ar">تنبيه قبل الصلاة بـ ١٥ دقيقة</span><span class="en">Alert 15 mins before prayer</span></div></div>
+      <div onclick="togglePrayerAlert()" id="prayer-toggle" style="width:44px;height:24px;border-radius:12px;background:var(--ok);cursor:pointer;position:relative;transition:all .2s"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transition:all .2s"></div></div>
+    </div>
+  </div>
+
+  <button class="sub-btn" onclick="saveSettings()"><span class="ar">💾 حفظ الإعدادات</span><span class="en">💾 Save Settings</span></button>
+</div>
+
+<!-- REAL MAP -->
+<div id="map-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📍 <span class="ar">موقعك الحالي</span><span class="en">Your Location</span></div></div>
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:12px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:3px">📍 <span class="ar">فندق الجنان · شارع أجياد · مكة المكرمة</span><span class="en">Al-Jinan Hotel · Ajyad St · Makkah</span></div>
+    <div style="font-size:11px;color:var(--gray)">٢١.٤٢٤٦° N · ٣٩.٨٢٦١° E</div>
+  </div>
+  <!-- Google Maps Embed - مكة المكرمة -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border);height:220px">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3713.5!2d39.8261!3d21.4246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c204b77b3c0a15%3A0x2f5b4da9f57d9be0!2z2KfZhNmF2LPYrNixINin2YTYrdix2KfZhQ!5e0!3m2!1sar!2ssa!4v1"
+      width="100%" height="220" style="border:0;display:block" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+    <div style="background:var(--navyp);border-radius:12px;padding:12px;text-align:center;cursor:pointer" onclick="openGoogleMaps('haram')">
+      <div style="font-size:20px;margin-bottom:4px">🕋</div>
+      <div style="font-size:12px;font-weight:600"><span class="ar">المسجد الحرام</span><span class="en">Al-Masjid Al-Haram</span></div>
+      <div style="font-size:11px;color:var(--gray)"><span class="ar">٨٠٠ متر</span><span class="en">800m away</span></div>
+    </div>
+    <div style="background:var(--navyp);border-radius:12px;padding:12px;text-align:center;cursor:pointer" onclick="openGoogleMaps('hotel')">
+      <div style="font-size:20px;margin-bottom:4px">🏨</div>
+      <div style="font-size:12px;font-weight:600"><span class="ar">فندق الجنان</span><span class="en">Al-Jinan Hotel</span></div>
+      <div style="font-size:11px;color:var(--gray)"><span class="ar">أنت هنا</span><span class="en">You are here</span></div>
+    </div>
+  </div>
+  <button class="big-btn" style="background:var(--navy);color:#fff" onclick="showToast('✅ تم إرسال موقعك للكادر')">📤 <span class="ar">أرسل موقعي للكادر</span><span class="en">Send Location to Staff</span></button>
+  <button class="big-btn" style="background:var(--navyp);color:var(--navy);margin-top:8px" onclick="openGoogleMaps('haram')">🗺️ <span class="ar">اتجاهات للمسجد الحرام</span><span class="en">Directions to Al-Haram</span></button>
+</div>
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">⭐ <span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div></div>
+
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:48px;margin-bottom:8px">🕌</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px"><span class="ar">كيف كانت تجربتك؟</span><span class="en">How was your experience?</span></div>
+    <div style="font-size:12px;color:var(--gray)"><span class="ar">رأيك يهمنا لتحسين خدماتنا</span><span class="en">Your feedback helps us improve</span></div>
+  </div>
+
+  <!-- Overall Rating -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:13px;opacity:.8;margin-bottom:10px"><span class="ar">التقييم العام للرحلة</span><span class="en">Overall Trip Rating</span></div>
+    <div class="star-row" id="overall-stars">
+      <span class="star" onclick="rateOverall(1)">⭐</span>
+      <span class="star" onclick="rateOverall(2)">⭐</span>
+      <span class="star" onclick="rateOverall(3)">⭐</span>
+      <span class="star" onclick="rateOverall(4)">⭐</span>
+      <span class="star" onclick="rateOverall(5)">⭐</span>
+    </div>
+    <div style="font-size:13px;color:var(--gold);font-weight:600" id="overall-label"><span class="ar">اضغط لتقييم</span><span class="en">Tap to rate</span></div>
+  </div>
+
+  <!-- Category Ratings -->
+  <div style="font-size:13px;font-weight:700;margin-bottom:10px"><span class="ar">تقييم تفصيلي</span><span class="en">Detailed Rating</span></div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🚌 <span class="ar">خدمة الحافلات</span><span class="en">Bus Service</span></div>
+    <div class="review-stars" id="stars-bus">
+      <span class="review-star" onclick="rateCat('bus',1)">⭐</span><span class="review-star" onclick="rateCat('bus',2)">⭐</span><span class="review-star" onclick="rateCat('bus',3)">⭐</span><span class="review-star" onclick="rateCat('bus',4)">⭐</span><span class="review-star" onclick="rateCat('bus',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🍽️ <span class="ar">جودة الوجبات</span><span class="en">Meal Quality</span></div>
+    <div class="review-stars" id="stars-food">
+      <span class="review-star" onclick="rateCat('food',1)">⭐</span><span class="review-star" onclick="rateCat('food',2)">⭐</span><span class="review-star" onclick="rateCat('food',3)">⭐</span><span class="review-star" onclick="rateCat('food',4)">⭐</span><span class="review-star" onclick="rateCat('food',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🏨 <span class="ar">الفندق والغرف</span><span class="en">Hotel & Rooms</span></div>
+    <div class="review-stars" id="stars-hotel">
+      <span class="review-star" onclick="rateCat('hotel',1)">⭐</span><span class="review-star" onclick="rateCat('hotel',2)">⭐</span><span class="review-star" onclick="rateCat('hotel',3)">⭐</span><span class="review-star" onclick="rateCat('hotel',4)">⭐</span><span class="review-star" onclick="rateCat('hotel',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">👨‍💼 <span class="ar">خدمة الكادر</span><span class="en">Staff Service</span></div>
+    <div class="review-stars" id="stars-staff">
+      <span class="review-star" onclick="rateCat('staff',1)">⭐</span><span class="review-star" onclick="rateCat('staff',2)">⭐</span><span class="review-star" onclick="rateCat('staff',3)">⭐</span><span class="review-star" onclick="rateCat('staff',4)">⭐</span><span class="review-star" onclick="rateCat('staff',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🕌 <span class="ar">الجولات الدينية</span><span class="en">Religious Tours</span></div>
+    <div class="review-stars" id="stars-tours">
+      <span class="review-star" onclick="rateCat('tours',1)">⭐</span><span class="review-star" onclick="rateCat('tours',2)">⭐</span><span class="review-star" onclick="rateCat('tours',3)">⭐</span><span class="review-star" onclick="rateCat('tours',4)">⭐</span><span class="review-star" onclick="rateCat('tours',5)">⭐</span>
+    </div>
+  </div>
+
+  <!-- Comment -->
+  <div style="font-size:13px;font-weight:700;margin:14px 0 8px"><span class="ar">تعليق إضافي</span><span class="en">Additional Comment</span></div>
+  <textarea id="review-comment" style="width:100%;padding:12px;border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-family:inherit;resize:none;background:var(--white);color:var(--navy)" rows="3" placeholder="اكتب تعليقك هنا..."></textarea>
+
+  <!-- Submit -->
+  <button class="sub-btn" onclick="submitReview()" style="background:#7d3c98;margin-top:12px">
+    <span class="ar">إرسال التقييم ⭐</span><span class="en">Submit Review ⭐</span>
+  </button>
+</div>
+  <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span><span class="ar">الرئيسية</span><span class="en">Home</span></span></button>
+  <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span><span class="ar">وجباتي</span><span class="en">Meals</span></span></button>
+  <button class="nav-i" id="nav-guide" onclick="navTo('guide')"><i class="ti ti-book"></i><span><span class="ar">الدليل</span><span class="en">Guide</span></span></button>
+  <button class="nav-i" id="nav-map" onclick="navTo('map')"><i class="ti ti-map-pin"></i><span><span class="ar">موقعي</span><span class="en">Location</span></span></button>
+  <button class="nav-i" id="nav-emergency" onclick="navTo('emergency')"><i class="ti ti-urgent"></i><span><span class="ar">طوارئ</span><span class="en">Emergency</span></span></button>
+</div>
+</div>
+<script>
+var currentLang='ar';
+function toggleLang(){
+  currentLang=currentLang==='ar'?'en':'ar';
+  var html=document.documentElement;
+  html.setAttribute('lang',currentLang);
+  html.setAttribute('dir',currentLang==='ar'?'rtl':'ltr');
+  document.getElementById('lang-btn').textContent=currentLang==='ar'?'🇬🇧 EN':'🇸🇦 AR';
+  showToast(currentLang==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
+}
+var qty={},meals={chicken:0,meat:0,veg:0},drinks={tea:0,milk:0,water:0,juice:0},notifOpen=false,selPayMethod='';
+var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'عصير 🧃'};
+
+function showPanel(n){
+  document.getElementById('home-panel').style.display='none';
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review','settings'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  var el=document.getElementById(n+'-panel');if(el)el.classList.add('active');
+  document.getElementById('scroll').scrollTop=0;updateNav(n);
+}
+function showHome(){
+  document.getElementById('home-panel').style.display='block';
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review','settings'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  document.getElementById('scroll').scrollTop=0;updateNav('home');
+}
+function navTo(n){n==='home'?showHome():showPanel(n);}
+function updateNav(n){['home','meals','guide','map','emergency'].forEach(function(x){var el=document.getElementById('nav-'+x);if(el)el.classList.toggle('active',x===n);});}
+
+function chMeal(type,d){
+  meals[type]=Math.max(0,Math.min(10,meals[type]+d));
+  document.getElementById(type+'-qty').textContent=meals[type];
+  updateTotal();
+}
+function updateTotal(){
+  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
+  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
+  document.getElementById('total-price').textContent=ar+' ريال';
+}
+var noDrink=false;
+function toggleNoDrink(){
+  noDrink=!noDrink;
+  var sec=document.getElementById('drinks-section');
+  var tog=document.getElementById('no-drink-toggle');
+  var thumb=document.getElementById('no-drink-thumb');
+  var lbl=document.getElementById('no-drink-label');
+  if(noDrink){
+    sec.style.display='none';
+    tog.style.background='#1B2A4A';
+    thumb.style.right='auto';thumb.style.left='2px';
+    lbl.style.color='#1B2A4A';lbl.style.fontWeight='700';
+    drinks={tea:0,milk:0,water:0,juice:0};
+  } else {
+    sec.style.display='block';
+    tog.style.background='rgba(27,42,74,0.12)';
+    thumb.style.left='auto';thumb.style.right='2px';
+    lbl.style.color='#8a8fa8';lbl.style.fontWeight='400';
+  }
+}
+function chDrink(type,d){drinks[type]=Math.max(0,Math.min(10,drinks[type]+d));document.getElementById(type+'-qty').textContent=drinks[type];}
+function chQty(t,d){qty[t]=Math.max(1,Math.min(5,(qty[t]||0)+d));document.getElementById(t+'-qty').textContent=qty[t];}
+function selDrink(el){document.querySelectorAll('.db').forEach(function(d){d.classList.remove('sel');});el.classList.add('sel');}
+
+function confirmMeal(){
+  var total=(meals.chicken*15)+(meals.meat*15)+(meals.veg*15);
+  if(total===0){showToast('⚠️ الرجاء اختيار وجبة واحدة على الأقل');return;}
+  var summary='';
+  if(meals.chicken>0) summary+='🍗 دجاج مشوي × '+meals.chicken+'<br>';
+  if(meals.meat>0) summary+='🥩 لحم مع الأرز × '+meals.meat+'<br>';
+  if(meals.veg>0) summary+='🥗 وجبة نباتية × '+meals.veg+'<br>';
+  if(drinks.tea>0) summary+='☕ شاي × '+drinks.tea+'<br>';
+  if(drinks.milk>0) summary+='🥛 لبن × '+drinks.milk+'<br>';
+  if(drinks.water>0) summary+='💧 ماء × '+drinks.water+'<br>';
+  if(drinks.juice>0) summary+='🧃 عصير × '+drinks.juice+'<br>';
+  if(noDrink) summary+='🚫 بدون مشروب<br>';
+  document.getElementById('order-summary').innerHTML=summary;
+  var ar=total.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦').replace(/7/g,'٧').replace(/8/g,'٨').replace(/9/g,'٩');
+  document.getElementById('confirm-total').textContent=ar+' ريال';
+  selPayMethod='';
+  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
+  document.getElementById('pay-btn').disabled=true;
+  document.getElementById('pay-btn').style.opacity='0.5';
+  showPanel('confirm');
+}
+
+function selPay(el,method){
+  document.querySelectorAll('.pay-opt').forEach(function(p){p.classList.remove('sel');});
+  el.classList.add('sel');
+  selPayMethod=method;
+  document.getElementById('pay-btn').disabled=false;
+  document.getElementById('pay-btn').style.opacity='1';
+}
+
+function processPayment(){
+  var msgs={apple:'✅ تم الدفع بـ Apple Pay! جاري تأكيد طلبك...',stc:'✅ تم الدفع بـ STC Pay! جاري تأكيد طلبك...',card:'✅ تم الدفع بالبطاقة! جاري تأكيد طلبك...',cash:'✅ تم تسجيل طلبك! الدفع نقداً عند التسليم'};
+  showToast(msgs[selPayMethod]);
+  meals={chicken:0,meat:0,veg:0};
+  drinks={tea:0,milk:0,water:0,juice:0};
+  document.getElementById('chicken-qty').textContent='0';
+  document.getElementById('meat-qty').textContent='0';
+  document.getElementById('veg-qty').textContent='0';
+  document.getElementById('tea-qty').textContent='0';
+  document.getElementById('milk-qty').textContent='0';
+  document.getElementById('water-qty').textContent='0';
+  document.getElementById('juice-qty').textContent='0';
+  updateTotal();
+  setTimeout(function(){showHome();},2000);
+}
+
+function regTour(id,name){var btn=document.getElementById(id);if(btn.classList.contains('reg')){btn.classList.remove('reg');btn.textContent='سجّل الآن';showToast('تم إلغاء التسجيل في: '+name);}else{btn.classList.add('reg');btn.textContent='✓ مسجّل';showToast('✅ تم التسجيل في: '+name);}}
+function toggleNotif(){notifOpen=!notifOpen;document.getElementById('npanel').classList.toggle('open',notifOpen);if(notifOpen)document.getElementById('ndot').style.display='none';}
+function closeNotif(){notifOpen=false;document.getElementById('npanel').classList.remove('open');}
+function toggleDuaa(el){var was=el.classList.contains('open');document.querySelectorAll('.dcard').forEach(function(c){c.classList.remove('open');});if(!was)el.classList.add('open');}
+function filterDuaa(btn,cat){document.querySelectorAll('.dcat').forEach(function(c){c.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.dcard').forEach(function(c){c.style.display=(cat==='all'||c.dataset.cat===cat)?'block':'none';});}
+var doneSteps={};
+function toggleStep(n){
+  var c=document.getElementById('content-'+n);
+  var ch=document.getElementById('chevron-'+n);
+  var isOpen=c.classList.contains('open');
+  document.querySelectorAll('.guide-content').forEach(function(x){x.classList.remove('open');});
+  document.querySelectorAll('[id^="chevron-"]').forEach(function(x){x.style.transform='rotate(0deg)';});
+  if(!isOpen){c.classList.add('open');ch.style.transform='rotate(180deg)';}
+}
+function markDone(n){
+  doneSteps[n]=true;
+  var step=document.getElementById('step-'+n);
+  var btn=document.getElementById('done-'+n);
+  step.classList.add('done');
+  btn.textContent='✓ تم';
+  updateGuideProgress();
+  showToast('✅ تم الانتهاء من الخطوة '+n);
+}
+function updateGuideProgress(){
+  var count=Object.keys(doneSteps).length;
+  var pct=Math.round((count/6)*100);
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('progress-text').textContent=toArabicNum(count)+' / ٦';
+  var labels=['ابدأ رحلتك الروحية 🕌','أحسنت! استمر 💪','في منتصف الطريق 🌟','اقتربت من الإكمال ✨','خطوتان فقط 🤲','خطوة أخيرة! 🏁','اكتملت عمرتك 🎉'];
+  document.getElementById('progress-label').textContent=labels[count];
+  if(count===6){document.getElementById('guide-complete').style.display='block';}
+}
+function toArabicNum(n){return n.toString().replace(/0/g,'٠').replace(/1/g,'١').replace(/2/g,'٢').replace(/3/g,'٣').replace(/4/g,'٤').replace(/5/g,'٥').replace(/6/g,'٦');}
+function showShawt(btn,n){
+  document.querySelectorAll('.shawt-btn').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.shawt-content').forEach(function(c){c.style.display='none';});
+  btn.classList.add('active');
+  document.getElementById('shawt-'+n).style.display='block';
+}
+/* TASBIH */
+var tasbihCount=0;
+function incrementTasbih(){
+  tasbihCount++;
+  document.getElementById('tasbih-count').textContent=tasbihCount;
+  var prog=tasbihCount%33;
+  document.getElementById('tasbih-progress').textContent=prog+' / ٣٣';
+  if(tasbihCount%33===0&&tasbihCount>0){showToast('✅ اكتملت ٣٣ '+document.getElementById('tasbih-type').textContent);}
+}
+function resetTasbih(){tasbihCount=0;document.getElementById('tasbih-count').textContent='0';document.getElementById('tasbih-progress').textContent='٠ / ٣٣';}
+function setTasbihType(type,btn){
+  document.getElementById('tasbih-type').textContent=type;
+  document.querySelectorAll('.duaa-panel button[onclick^="setTasbih"]').forEach(function(b){b.style.background='rgba(255,255,255,.15)';});
+  if(btn)btn.style.background='rgba(201,168,76,.4)';
+  resetTasbih();
+}
+
+/* COPY DUAA */
+function copyDuaa(btn){
+  var card=btn.closest('.dcard');
+  var text=card.querySelector('.d-ar').textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(text);}
+  showToast('تم نسخ الدعاء 📿');
+}
+
+/* PRAYER ALERT */
+var prayerAlertOn=true;
+var prayers=[
+  {name:'الفجر',nameEn:'Fajr',time:'4:18',hour:4,min:18},
+  {name:'الظهر',nameEn:'Dhuhr',time:'12:15',hour:12,min:15},
+  {name:'العصر',nameEn:'Asr',time:'15:45',hour:15,min:45},
+  {name:'المغرب',nameEn:'Maghrib',time:'18:26',hour:18,min:26},
+  {name:'العشاء',nameEn:'Isha',time:'19:56',hour:19,min:56}
+];
+function updatePrayerAlert(){
+  var now=new Date();
+  var h=now.getHours(),m=now.getMinutes();
+  var next=null;
+  for(var i=0;i<prayers.length;i++){
+    if(h<prayers[i].hour||(h===prayers[i].hour&&m<prayers[i].min)){next=prayers[i];break;}
+  }
+  if(!next)next=prayers[0];
+  var el=document.getElementById('prayer-alert');
+  var nameEl=document.getElementById('next-prayer-name');
+  var timeEl=document.getElementById('next-prayer-time');
+  if(el&&nameEl&&timeEl){
+    var diffMin=(next.hour*60+next.min)-(h*60+m);
+    if(diffMin<0)diffMin+=24*60;
+    var lang=document.documentElement.getAttribute('lang')||'ar';
+    nameEl.textContent=lang==='ar'?'صلاة '+next.name:'Prayer: '+next.nameEn;
+    timeEl.textContent=lang==='ar'?'بعد '+diffMin+' دقيقة · '+next.time:'In '+diffMin+' mins · '+next.time;
+    if(prayerAlertOn&&diffMin<=15&&diffMin>0){showToast('🔔 صلاة '+next.name+' بعد '+diffMin+' دقيقة');}
+  }
+}
+updatePrayerAlert();
+setInterval(updatePrayerAlert,60000);
+
+function togglePrayerAlert(){
+  prayerAlertOn=!prayerAlertOn;
+  var tog=document.getElementById('prayer-toggle');
+  tog.style.background=prayerAlertOn?'var(--ok)':'var(--gray)';
+  tog.querySelector('div').style.right=prayerAlertOn?'2px':'auto';
+  tog.querySelector('div').style.left=prayerAlertOn?'auto':'2px';
+  showToast(prayerAlertOn?'🔔 تم تفعيل تنبيهات الصلاة':'🔕 تم إيقاف التنبيهات');
+}
+
+/* SETTINGS */
+function saveSettings(){
+  var name=document.getElementById('settings-name-inp').value;
+  if(name){
+    document.getElementById('user-display-name').textContent=name;
+    document.getElementById('cert-pilgrim-name')&&(document.getElementById('cert-pilgrim-name').textContent=name);
+  }
+  showToast('✅ تم حفظ الإعدادات');
+  showHome();
+}
+function changePhoto(){document.getElementById('photo-input').click();}
+function handlePhoto(input){
+  if(input.files&&input.files[0]){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var img='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+      document.getElementById('settings-avatar').innerHTML=img;
+      document.getElementById('user-avatar').innerHTML=img;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function setLang(lang){
+  currentLang=lang;
+  var html=document.documentElement;
+  html.setAttribute('lang',lang);
+  html.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+  document.getElementById('lang-btn').textContent=lang==='ar'?'🇬🇧 EN':'🇸🇦 AR';
+  document.getElementById('lang-ar-btn').style.background=lang==='ar'?'var(--navy)':'var(--navyp)';
+  document.getElementById('lang-ar-btn').style.color=lang==='ar'?'#fff':'var(--navy)';
+  document.getElementById('lang-en-btn').style.background=lang==='en'?'var(--navy)':'var(--navyp)';
+  document.getElementById('lang-en-btn').style.color=lang==='en'?'#fff':'var(--navy)';
+  showToast(lang==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
+}
+
+/* MAP */
+function openGoogleMaps(dest){
+  var urls={
+    haram:'https://maps.google.com/maps?q=المسجد+الحرام+مكة+المكرمة',
+    hotel:'https://maps.google.com/maps?q=21.4246,39.8261'
+  };
+  window.open(urls[dest]||urls.haram,'_blank');
+}
+
+function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},3000);}
+
+/* AUTO DARK MODE */
+function applyDarkMode(){
+  var h=new Date().getHours();
+  var isDark=(h>=20||h<6);
+  document.body.classList.toggle('dark',isDark);
+}
+applyDarkMode();
+setInterval(applyDarkMode,60000);
+
+/* REVIEW */
+var ratings={overall:0,bus:0,food:0,hotel:0,staff:0,tours:0};
+var overallLabels={ar:['','ضعيفة 😔','مقبولة 😐','جيدة 🙂','ممتازة 😊','رائعة جداً 🤩'],en:['','Poor 😔','Fair 😐','Good 🙂','Great 😊','Excellent 🤩']};
+
+function rateOverall(n){
+  ratings.overall=n;
+  var stars=document.querySelectorAll('#overall-stars .star');
+  stars.forEach(function(s,i){s.classList.toggle('active',i<n);});
+  var lang=document.documentElement.getAttribute('lang')||'ar';
+  document.getElementById('overall-label').textContent=overallLabels[lang][n];
+}
+
+function rateCat(cat,n){
+  ratings[cat]=n;
+  var stars=document.querySelectorAll('#stars-'+cat+' .review-star');
+  stars.forEach(function(s,i){s.classList.toggle('active',i<n);});
+}
+
+function submitReview(){
+  if(ratings.overall===0){showToast('⚠️ الرجاء إضافة التقييم العام أولاً');return;}
+  showToast('✅ شكراً! تم إرسال تقييمك بنجاح 🙏');
+  setTimeout(function(){showHome();},2000);
+}
+</script>
+</body>
+</html>
