@@ -10,6 +10,46 @@
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Tajawal',sans-serif}
 :root{--navy:#1B2A4A;--navy2:#2a3f6f;--navyp:#e8ecf4;--gold:#C9A84C;--gray:#8a8fa8;--bg:#f4f6fb;--white:#fff;--border:rgba(27,42,74,0.12);--ok:#1a8a5a;--bad:#c0392b}
 html,body{height:100%;background:var(--bg);color:var(--navy)}
+
+/* DARK MODE */
+body.dark{--bg:#0f1923;--white:#1a2535;--navy:#e8ecf4;--navyp:#1e2d42;--border:rgba(255,255,255,0.08);--gray:#6b7a8d}
+body.dark .p-card{background:#1e3a5f}
+body.dark .hdr{background:#0d1b2a}
+body.dark .bnav{background:#1a2535;border-top-color:rgba(255,255,255,.08)}
+body.dark .nav-i.active{background:#1e3a5f}
+body.dark .toast{background:#1a8a5a}
+body.dark .qa-card{background:#1a2535;border-color:rgba(255,255,255,.08);color:#e8ecf4}
+body.dark .qa-card:active{background:#1e2d42}
+body.dark input,body.dark select,body.dark textarea{background:#1e2d42;color:#e8ecf4;border-color:rgba(255,255,255,.15)}
+body.dark .pr-item{background:#1e2d42}
+body.dark .mo{background:#1a2535;border-color:rgba(255,255,255,.1)}
+body.dark .mo.sel{background:#1e3a5f;border-color:#5b9bd5}
+body.dark .db{background:#1a2535;border-color:rgba(255,255,255,.1);color:#e8ecf4}
+body.dark .qr{background:#1e2d42}
+body.dark .pay-opt{background:#1a2535;border-color:rgba(255,255,255,.1)}
+body.dark .dcard{background:#1a2535;border-color:rgba(255,255,255,.08);color:#e8ecf4}
+body.dark .guide-step{border-color:rgba(255,255,255,.08)}
+body.dark .guide-step-header{background:#1a2535}
+body.dark .guide-content{background:#151f2e}
+body.dark .cert-box{background:#0d1b2a}
+body.dark .map-info{background:#1e2d42}
+body.dark .cc{background:#1a2535;border-color:rgba(255,255,255,.08)}
+body.dark .tc{border-color:rgba(255,255,255,.08)}
+body.dark .tb{background:#1a2535}
+body.dark .si{border-color:rgba(255,255,255,.08)}
+body.dark .npanel{background:#1a2535;color:#e8ecf4}
+body.dark .nitem{border-color:rgba(255,255,255,.08)}
+body.dark .nitem:hover{background:#1e2d42}
+
+/* REVIEW */
+.star-row{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.star{font-size:36px;cursor:pointer;transition:transform .15s;filter:grayscale(1);opacity:.4}
+.star.active{filter:none;opacity:1;transform:scale(1.1)}
+.review-category{background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:10px}
+.review-cat-title{font-size:13px;font-weight:700;margin-bottom:8px}
+.review-stars{display:flex;gap:6px}
+.review-star{font-size:22px;cursor:pointer;filter:grayscale(1);opacity:.4;transition:all .15s}
+.review-star.active{filter:none;opacity:1}
 .app{max-width:420px;margin:0 auto;min-height:100vh;background:var(--white);display:flex;flex-direction:column}
 .hdr{background:var(--navy);padding:14px 18px 10px;color:#fff;position:relative}
 .hdr-top{display:flex;align-items:center;justify-content:space-between}
@@ -227,6 +267,7 @@ html[lang="ar"] .en{display:none!important}
     <div class="qa-card" onclick="showPanel('map')"><div class="qa-i">📍</div><div class="qa-l"><span class="ar">وين أنا؟</span><span class="en">Where am I?</span></div><div class="qa-s"><span class="ar">موقعك الحالي</span><span class="en">Your location</span></div></div>
     <div class="qa-card" onclick="showPanel('cert')"><div class="qa-i">🏅</div><div class="qa-l"><span class="ar">شهادة اعتمار</span><span class="en">Umrah Certificate</span></div><div class="qa-s"><span class="ar">شهادتك الرقمية</span><span class="en">Your digital cert</span></div></div>
     <div class="qa-card" onclick="showPanel('guide')" style="border-color:var(--gold);background:#fffbf0"><div class="qa-i">📖</div><div class="qa-l" style="color:var(--gold)"><span class="ar">دليل العمرة</span><span class="en">Umrah Guide</span></div><div class="qa-s"><span class="ar">خطوات وأدعية</span><span class="en">Steps & prayers</span></div></div>
+    <div class="qa-card" onclick="showPanel('review')" style="border-color:#9b59b6;background:#faf5ff"><div class="qa-i">⭐</div><div class="qa-l" style="color:#7d3c98"><span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div><div class="qa-s"><span class="ar">شاركنا رأيك</span><span class="en">Share your feedback</span></div></div>
   </div>
   <div class="sec-t">أوقات الصلاة · مكة المكرمة</div>
   <div class="pr-wrap">
@@ -695,8 +736,75 @@ html[lang="ar"] .en{display:none!important}
     <div style="font-size:18px;font-weight:700;color:var(--gold);margin-bottom:6px">تقبّل الله عمرتك</div>
     <div style="font-size:13px;opacity:.8">اكتملت جميع أعمال العمرة المفردة<br>تقبّل الله منك وجعلها في ميزان حسناتك</div>
   </div>
+<div id="review-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">⭐ <span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div></div>
+
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:48px;margin-bottom:8px">🕌</div>
+    <div style="font-size:16px;font-weight:700;margin-bottom:4px"><span class="ar">كيف كانت تجربتك؟</span><span class="en">How was your experience?</span></div>
+    <div style="font-size:12px;color:var(--gray)"><span class="ar">رأيك يهمنا لتحسين خدماتنا</span><span class="en">Your feedback helps us improve</span></div>
+  </div>
+
+  <!-- Overall Rating -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:13px;opacity:.8;margin-bottom:10px"><span class="ar">التقييم العام للرحلة</span><span class="en">Overall Trip Rating</span></div>
+    <div class="star-row" id="overall-stars">
+      <span class="star" onclick="rateOverall(1)">⭐</span>
+      <span class="star" onclick="rateOverall(2)">⭐</span>
+      <span class="star" onclick="rateOverall(3)">⭐</span>
+      <span class="star" onclick="rateOverall(4)">⭐</span>
+      <span class="star" onclick="rateOverall(5)">⭐</span>
+    </div>
+    <div style="font-size:13px;color:var(--gold);font-weight:600" id="overall-label"><span class="ar">اضغط لتقييم</span><span class="en">Tap to rate</span></div>
+  </div>
+
+  <!-- Category Ratings -->
+  <div style="font-size:13px;font-weight:700;margin-bottom:10px"><span class="ar">تقييم تفصيلي</span><span class="en">Detailed Rating</span></div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🚌 <span class="ar">خدمة الحافلات</span><span class="en">Bus Service</span></div>
+    <div class="review-stars" id="stars-bus">
+      <span class="review-star" onclick="rateCat('bus',1)">⭐</span><span class="review-star" onclick="rateCat('bus',2)">⭐</span><span class="review-star" onclick="rateCat('bus',3)">⭐</span><span class="review-star" onclick="rateCat('bus',4)">⭐</span><span class="review-star" onclick="rateCat('bus',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🍽️ <span class="ar">جودة الوجبات</span><span class="en">Meal Quality</span></div>
+    <div class="review-stars" id="stars-food">
+      <span class="review-star" onclick="rateCat('food',1)">⭐</span><span class="review-star" onclick="rateCat('food',2)">⭐</span><span class="review-star" onclick="rateCat('food',3)">⭐</span><span class="review-star" onclick="rateCat('food',4)">⭐</span><span class="review-star" onclick="rateCat('food',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🏨 <span class="ar">الفندق والغرف</span><span class="en">Hotel & Rooms</span></div>
+    <div class="review-stars" id="stars-hotel">
+      <span class="review-star" onclick="rateCat('hotel',1)">⭐</span><span class="review-star" onclick="rateCat('hotel',2)">⭐</span><span class="review-star" onclick="rateCat('hotel',3)">⭐</span><span class="review-star" onclick="rateCat('hotel',4)">⭐</span><span class="review-star" onclick="rateCat('hotel',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">👨‍💼 <span class="ar">خدمة الكادر</span><span class="en">Staff Service</span></div>
+    <div class="review-stars" id="stars-staff">
+      <span class="review-star" onclick="rateCat('staff',1)">⭐</span><span class="review-star" onclick="rateCat('staff',2)">⭐</span><span class="review-star" onclick="rateCat('staff',3)">⭐</span><span class="review-star" onclick="rateCat('staff',4)">⭐</span><span class="review-star" onclick="rateCat('staff',5)">⭐</span>
+    </div>
+  </div>
+
+  <div class="review-category">
+    <div class="review-cat-title">🕌 <span class="ar">الجولات الدينية</span><span class="en">Religious Tours</span></div>
+    <div class="review-stars" id="stars-tours">
+      <span class="review-star" onclick="rateCat('tours',1)">⭐</span><span class="review-star" onclick="rateCat('tours',2)">⭐</span><span class="review-star" onclick="rateCat('tours',3)">⭐</span><span class="review-star" onclick="rateCat('tours',4)">⭐</span><span class="review-star" onclick="rateCat('tours',5)">⭐</span>
+    </div>
+  </div>
+
+  <!-- Comment -->
+  <div style="font-size:13px;font-weight:700;margin:14px 0 8px"><span class="ar">تعليق إضافي</span><span class="en">Additional Comment</span></div>
+  <textarea id="review-comment" style="width:100%;padding:12px;border:1.5px solid var(--border);border-radius:12px;font-size:13px;font-family:inherit;resize:none;background:var(--white);color:var(--navy)" rows="3" placeholder="اكتب تعليقك هنا..."></textarea>
+
+  <!-- Submit -->
+  <button class="sub-btn" onclick="submitReview()" style="background:#7d3c98;margin-top:12px">
+    <span class="ar">إرسال التقييم ⭐</span><span class="en">Submit Review ⭐</span>
+  </button>
 </div>
-<div class="bnav">
   <button class="nav-i active" id="nav-home" onclick="navTo('home')"><i class="ti ti-home"></i><span><span class="ar">الرئيسية</span><span class="en">Home</span></span></button>
   <button class="nav-i" id="nav-meals" onclick="navTo('meals')"><i class="ti ti-tools-kitchen-2"></i><span><span class="ar">وجباتي</span><span class="en">Meals</span></span></button>
   <button class="nav-i" id="nav-duaa" onclick="navTo('duaa')"><i class="ti ti-book"></i><span><span class="ar">أدعية</span><span class="en">Prayers</span></span></button>
@@ -719,13 +827,13 @@ var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'�
 
 function showPanel(n){
   document.getElementById('home-panel').style.display='none';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   var el=document.getElementById(n+'-panel');if(el)el.classList.add('active');
   document.getElementById('scroll').scrollTop=0;updateNav(n);
 }
 function showHome(){
   document.getElementById('home-panel').style.display='block';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   document.getElementById('scroll').scrollTop=0;updateNav('home');
 }
 function navTo(n){n==='home'?showHome():showPanel(n);}
@@ -851,6 +959,39 @@ function showShawt(btn,n){
   document.getElementById('shawt-'+n).style.display='block';
 }
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},3000);}
+
+/* AUTO DARK MODE */
+function applyDarkMode(){
+  var h=new Date().getHours();
+  var isDark=(h>=20||h<6);
+  document.body.classList.toggle('dark',isDark);
+}
+applyDarkMode();
+setInterval(applyDarkMode,60000);
+
+/* REVIEW */
+var ratings={overall:0,bus:0,food:0,hotel:0,staff:0,tours:0};
+var overallLabels={ar:['','ضعيفة 😔','مقبولة 😐','جيدة 🙂','ممتازة 😊','رائعة جداً 🤩'],en:['','Poor 😔','Fair 😐','Good 🙂','Great 😊','Excellent 🤩']};
+
+function rateOverall(n){
+  ratings.overall=n;
+  var stars=document.querySelectorAll('#overall-stars .star');
+  stars.forEach(function(s,i){s.classList.toggle('active',i<n);});
+  var lang=document.documentElement.getAttribute('lang')||'ar';
+  document.getElementById('overall-label').textContent=overallLabels[lang][n];
+}
+
+function rateCat(cat,n){
+  ratings[cat]=n;
+  var stars=document.querySelectorAll('#stars-'+cat+' .review-star');
+  stars.forEach(function(s,i){s.classList.toggle('active',i<n);});
+}
+
+function submitReview(){
+  if(ratings.overall===0){showToast('⚠️ الرجاء إضافة التقييم العام أولاً');return;}
+  showToast('✅ شكراً! تم إرسال تقييمك بنجاح 🙏');
+  setTimeout(function(){showHome();},2000);
+}
 </script>
 </body>
 </html>
