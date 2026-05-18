@@ -245,8 +245,16 @@ html[lang="ar"] .en{display:none!important}
 
 <div id="home-panel">
   <div class="p-card">
-    <div class="p-name">محمد عبدالله</div>
-    <div class="p-info"><span class="ar">قافلة الجنان · رحلة رجب ١٤٤٦</span><span class="en">Al-Jinan Convoy · Rajab 1446</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div id="user-avatar" style="width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.4);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;overflow:hidden" onclick="showPanel('settings')">👤</div>
+        <div>
+          <div class="p-name" id="user-display-name">محمد عبدالله</div>
+          <div class="p-info"><span class="ar">قافلة الجنان · رحلة رجب ١٤٤٦</span><span class="en">Al-Jinan Convoy · Rajab 1446</span></div>
+        </div>
+      </div>
+      <button onclick="showPanel('settings')" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.15);border:none;color:#fff;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center">⚙️</button>
+    </div>
     <div class="badges">
       <div class="bdg bg">🕌 غرفة ٣٠٥</div>
       <div class="bdg bw">🚌 حافلة A2</div>
@@ -254,7 +262,12 @@ html[lang="ar"] .en{display:none!important}
     </div>
     <div class="bc-row">
       <div class="bc-box"><div class="bc-lines"><div style="height:32px"></div><div style="height:28px"></div><div style="height:36px"></div><div style="height:30px"></div><div style="height:34px"></div><div style="height:26px"></div><div style="height:38px"></div><div style="height:28px"></div><div style="height:32px"></div><div style="height:30px"></div><div style="height:36px"></div><div style="height:28px"></div><div style="height:34px"></div><div style="height:38px"></div><div style="height:26px"></div></div><div style="font-size:9px;color:#888;text-align:center;margin-top:4px">٠٠٤٢ - ALJINAN</div></div>
-      <div><div style="font-size:11px;opacity:.7;margin-bottom:4px">رقم المعتمر</div><div class="p-num">#٠٠٤٢</div><div style="font-size:10px;opacity:.6;margin-top:2px">امسح الباركود للتحقق</div></div>
+      <div><div style="font-size:11px;opacity:.7;margin-bottom:4px"><span class="ar">رقم المعتمر</span><span class="en">Pilgrim No.</span></div><div class="p-num">#٠٠٤٢</div><div style="font-size:10px;opacity:.6;margin-top:2px"><span class="ar">امسح الباركود للتحقق</span><span class="en">Scan barcode to verify</span></div></div>
+    </div>
+    <!-- Prayer Alert -->
+    <div id="prayer-alert" style="margin-top:12px;padding:8px 12px;background:rgba(201,168,76,.2);border-radius:10px;border:1px solid rgba(201,168,76,.4);display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px">🔔</span>
+      <div style="flex:1"><div style="font-size:12px;font-weight:700;color:var(--gold)" id="next-prayer-name">صلاة الظهر</div><div style="font-size:11px;opacity:.8" id="next-prayer-time">بعد ٤٥ دقيقة · ١٢:١٥ م</div></div>
     </div>
   </div>
   <div class="sec-t"><span class="ar">الخدمات</span><span class="en">Services</span></div>
@@ -469,15 +482,47 @@ html[lang="ar"] .en{display:none!important}
 </div>
 
 <div id="duaa-panel" class="panel">
-  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📿 أدعية وأذكار العمرة</div></div>
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📿 <span class="ar">أدعية وأذكار</span><span class="en">Prayers & Dhikr</span></div></div>
+  <!-- Tasbih Counter -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div style="font-size:12px;opacity:.7;margin-bottom:4px"><span class="ar">عداد التسبيح</span><span class="en">Tasbih Counter</span></div>
+    <div style="font-size:52px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:8px" id="tasbih-count">0</div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px" id="tasbih-type">سُبْحَانَ اللَّهِ</div>
+    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
+      <button onclick="setTasbihType('سُبْحَانَ اللَّهِ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(201,168,76,.4);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">سبحان الله</button>
+      <button onclick="setTasbihType('الْحَمْدُ لِلَّهِ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الحمد لله</button>
+      <button onclick="setTasbihType('اللَّهُ أَكْبَرُ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">الله أكبر</button>
+      <button onclick="setTasbihType('لَا إِلَهَ إِلَّا اللَّهُ',this)" style="padding:5px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit">لا إله إلا الله</button>
+    </div>
+    <div style="display:flex;gap:8px;justify-content:center;align-items:center">
+      <button onclick="resetTasbih()" style="padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.1);border:none;color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit"><span class="ar">إعادة</span><span class="en">Reset</span></button>
+      <button onclick="incrementTasbih()" style="width:72px;height:72px;border-radius:50%;background:var(--gold);border:none;color:var(--navy);font-size:30px;cursor:pointer;font-weight:900;font-family:inherit;transition:transform .1s" onmousedown="this.style.transform='scale(.93)'" onmouseup="this.style.transform='scale(1)'" ontouchstart="this.style.transform='scale(.93)'" ontouchend="this.style.transform='scale(1)'">+</button>
+    </div>
+    <div style="font-size:11px;opacity:.5;margin-top:8px" id="tasbih-progress">٠ / ٣٣</div>
+  </div>
+  <!-- Categories -->
   <div class="duaa-cats">
-    <div class="dcat active" onclick="filterDuaa(this,'all')">الكل</div>
-    <div class="dcat" onclick="filterDuaa(this,'tawaf')">الطواف</div>
-    <div class="dcat" onclick="filterDuaa(this,'sai')">السعي</div>
-    <div class="dcat" onclick="filterDuaa(this,'ihram')">الإحرام</div>
-    <div class="dcat" onclick="filterDuaa(this,'morning')">الصباح</div>
+    <div class="dcat active" onclick="filterDuaa(this,'all')"><span class="ar">الكل</span><span class="en">All</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'ihram')"><span class="ar">الإحرام</span><span class="en">Ihram</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'tawaf')"><span class="ar">الطواف</span><span class="en">Tawaf</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'sai')"><span class="ar">السعي</span><span class="en">Sa'i</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'morning')"><span class="ar">الصباح</span><span class="en">Morning</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'evening')"><span class="ar">المساء</span><span class="en">Evening</span></div>
+    <div class="dcat" onclick="filterDuaa(this,'general')"><span class="ar">عامة</span><span class="en">General</span></div>
   </div>
   <div id="duaa-list">
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الإحرام</div><div class="d-ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">لَبَّيْكَ لَا شَرِيكَ لَكَ لَبَّيْكَ، إِنَّ الْحَمْدَ وَالنِّعْمَةَ لَكَ وَالْمُلْكَ، لَا شَرِيكَ لَكَ</div><div class="d-tr">لبيك اللهم لبيك، لبيك لا شريك لك لبيك</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء دخول مكة</div><div class="d-ar">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">اللَّهُمَّ هَذَا حَرَمُكَ وَأَمْنُكَ، فَحَرِّمْنِي عَلَى النَّارِ، وَأَمِّنِّي مِنْ عَذَابِكَ يَوْمَ تَبْعَثُ عِبَادَكَ</div><div class="d-tr">اللهم هذا حرمك وأمنك فحرمني على النار</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الطواف</div><div class="d-ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً</div><div class="d-exp"><div class="d-ar" style="font-size:15px">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ</div><div class="d-tr">ربنا آتنا في الدنيا حسنة وفي الآخرة حسنة وقنا عذاب النار</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="tawaf" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء عند الحجر الأسود</div><div class="d-ar">بِسْمِ اللهِ وَاللهُ أَكْبَرُ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">بِسْمِ اللهِ وَاللهُ أَكْبَرُ، اللَّهُمَّ إِيمَاناً بِكَ وَتَصْدِيقاً بِكِتَابِكَ وَوَفَاءً بِعَهْدِكَ وَاتِّبَاعاً لِسُنَّةِ نَبِيِّكَ</div><div class="d-tr">بسم الله والله أكبر، اللهم إيماناً بك وتصديقاً بكتابك</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="sai" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء السعي</div><div class="d-ar">إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَبْدَأُ بِمَا بَدَأَ اللهُ بِهِ، إِنَّ الصَّفَا وَالْمَرْوَةَ مِن شَعَائِرِ اللَّهِ</div><div class="d-tr">أبدأ بما بدأ الله به، إن الصفا والمروة من شعائر الله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="morning" onclick="toggleDuaa(this)"><div class="d-lbl">ذكر الصباح</div><div class="d-ar">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ</div><div class="d-tr">أصبحنا وأصبح الملك لله والحمد لله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="evening" onclick="toggleDuaa(this)"><div class="d-lbl">ذكر المساء</div><div class="d-ar">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</div><div class="d-tr">أمسينا وأمسى الملك لله والحمد لله</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء الكرب</div><div class="d-ar">لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">لَا إِلَهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ</div><div class="d-tr">لا إله إلا أنت سبحانك إني كنت من الظالمين</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">دعاء المغفرة</div><div class="d-ar">رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ</div><div class="d-exp"><div class="d-ar" style="font-size:15px">رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ، إِنَّكَ أَنتَ التَّوَّابُ الرَّحِيمُ</div><div class="d-tr">رب اغفر لي وتب علي إنك أنت التواب الرحيم</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+    <div class="dcard" data-cat="general" onclick="toggleDuaa(this)"><div class="d-lbl">آية الكرسي</div><div class="d-ar">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ</div><div class="d-exp"><div class="d-ar" style="font-size:14px;line-height:2">اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ</div><div class="d-tr">الله لا إله إلا هو الحي القيوم لا تأخذه سنة ولا نوم</div><button class="copy-btn" onclick="event.stopPropagation();copyDuaa(this)">نسخ</button></div></div>
+  </div>
+</div>
     <div class="dcard" data-cat="ihram" onclick="toggleDuaa(this)">
       <div class="d-lbl">دعاء الإحرام</div>
       <div class="d-ar">لَبَّيْكَ اللَّهُمَّ لَبَّيْكَ</div>
@@ -736,7 +781,68 @@ html[lang="ar"] .en{display:none!important}
     <div style="font-size:18px;font-weight:700;color:var(--gold);margin-bottom:6px">تقبّل الله عمرتك</div>
     <div style="font-size:13px;opacity:.8">اكتملت جميع أعمال العمرة المفردة<br>تقبّل الله منك وجعلها في ميزان حسناتك</div>
   </div>
-<div id="review-panel" class="panel">
+<div id="settings-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">⚙️ <span class="ar">الإعدادات</span><span class="en">Settings</span></div></div>
+
+  <!-- Profile -->
+  <div style="background:var(--navy);border-radius:16px;padding:16px;color:#fff;text-align:center;margin-bottom:14px">
+    <div id="settings-avatar" style="width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.2);border:3px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 10px;cursor:pointer" onclick="changePhoto()">👤</div>
+    <div style="font-size:11px;opacity:.6;margin-bottom:6px"><span class="ar">اضغط لتغيير الصورة</span><span class="en">Tap to change photo</span></div>
+    <input id="settings-name-inp" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:8px 14px;color:#fff;font-size:15px;font-family:inherit;width:100%;text-align:center" value="محمد عبدالله" placeholder="اسمك">
+    <input type="file" id="photo-input" accept="image/*" style="display:none" onchange="handlePhoto(this)">
+  </div>
+
+  <!-- Settings Options -->
+  <div style="background:var(--white);border-radius:14px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px">
+    <div style="padding:14px;border-bottom:1px solid var(--border)">
+      <div style="font-size:13px;font-weight:700;margin-bottom:8px"><span class="ar">🌍 اللغة</span><span class="en">🌍 Language</span></div>
+      <div style="display:flex;gap:8px">
+        <button id="lang-ar-btn" onclick="setLang('ar')" style="flex:1;padding:10px;border-radius:10px;background:var(--navy);color:#fff;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🇸🇦 العربية</button>
+        <button id="lang-en-btn" onclick="setLang('en')" style="flex:1;padding:10px;border-radius:10px;background:var(--navyp);color:var(--navy);border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">🇬🇧 English</button>
+      </div>
+    </div>
+    <div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:700">🌙 <span class="ar">الوضع الليلي</span><span class="en">Dark Mode</span></div><div style="font-size:11px;color:var(--gray)"><span class="ar">يتفعل تلقائياً ٨م - ٦ص</span><span class="en">Auto: 8PM - 6AM</span></div></div>
+      <div id="dark-indicator" style="padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--navyp);color:var(--navy)">تلقائي</div>
+    </div>
+    <div style="padding:14px;display:flex;align-items:center;justify-content:space-between">
+      <div><div style="font-size:13px;font-weight:700">🔔 <span class="ar">تنبيهات الصلاة</span><span class="en">Prayer Alerts</span></div><div style="font-size:11px;color:var(--gray)"><span class="ar">تنبيه قبل الصلاة بـ ١٥ دقيقة</span><span class="en">Alert 15 mins before prayer</span></div></div>
+      <div onclick="togglePrayerAlert()" id="prayer-toggle" style="width:44px;height:24px;border-radius:12px;background:var(--ok);cursor:pointer;position:relative;transition:all .2s"><div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;right:2px;transition:all .2s"></div></div>
+    </div>
+  </div>
+
+  <button class="sub-btn" onclick="saveSettings()"><span class="ar">💾 حفظ الإعدادات</span><span class="en">💾 Save Settings</span></button>
+</div>
+
+<!-- REAL MAP -->
+<div id="map-panel" class="panel">
+  <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">📍 <span class="ar">موقعك الحالي</span><span class="en">Your Location</span></div></div>
+  <div style="background:var(--navyp);border-radius:12px;padding:12px;margin-bottom:12px">
+    <div style="font-size:13px;font-weight:600;margin-bottom:3px">📍 <span class="ar">فندق الجنان · شارع أجياد · مكة المكرمة</span><span class="en">Al-Jinan Hotel · Ajyad St · Makkah</span></div>
+    <div style="font-size:11px;color:var(--gray)">٢١.٤٢٤٦° N · ٣٩.٨٢٦١° E</div>
+  </div>
+  <!-- Google Maps Embed - مكة المكرمة -->
+  <div style="border-radius:14px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border);height:220px">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3713.5!2d39.8261!3d21.4246!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c204b77b3c0a15%3A0x2f5b4da9f57d9be0!2z2KfZhNmF2LPYrNixINin2YTYrdix2KfZhQ!5e0!3m2!1sar!2ssa!4v1"
+      width="100%" height="220" style="border:0;display:block" allowfullscreen="" loading="lazy">
+    </iframe>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+    <div style="background:var(--navyp);border-radius:12px;padding:12px;text-align:center;cursor:pointer" onclick="openGoogleMaps('haram')">
+      <div style="font-size:20px;margin-bottom:4px">🕋</div>
+      <div style="font-size:12px;font-weight:600"><span class="ar">المسجد الحرام</span><span class="en">Al-Masjid Al-Haram</span></div>
+      <div style="font-size:11px;color:var(--gray)"><span class="ar">٨٠٠ متر</span><span class="en">800m away</span></div>
+    </div>
+    <div style="background:var(--navyp);border-radius:12px;padding:12px;text-align:center;cursor:pointer" onclick="openGoogleMaps('hotel')">
+      <div style="font-size:20px;margin-bottom:4px">🏨</div>
+      <div style="font-size:12px;font-weight:600"><span class="ar">فندق الجنان</span><span class="en">Al-Jinan Hotel</span></div>
+      <div style="font-size:11px;color:var(--gray)"><span class="ar">أنت هنا</span><span class="en">You are here</span></div>
+    </div>
+  </div>
+  <button class="big-btn" style="background:var(--navy);color:#fff" onclick="showToast('✅ تم إرسال موقعك للكادر')">📤 <span class="ar">أرسل موقعي للكادر</span><span class="en">Send Location to Staff</span></button>
+  <button class="big-btn" style="background:var(--navyp);color:var(--navy);margin-top:8px" onclick="openGoogleMaps('haram')">🗺️ <span class="ar">اتجاهات للمسجد الحرام</span><span class="en">Directions to Al-Haram</span></button>
+</div>
   <div class="ph"><button class="back" onclick="showHome()"><i class="ti ti-arrow-right"></i></button><div class="pt">⭐ <span class="ar">تقييم الرحلة</span><span class="en">Rate the Trip</span></div></div>
 
   <div style="text-align:center;margin-bottom:20px">
@@ -827,13 +933,13 @@ var drinkNames={tea:'شاي ☕',milk:'لبن 🥛',water:'ماء 💧',juice:'�
 
 function showPanel(n){
   document.getElementById('home-panel').style.display='none';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review','settings'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   var el=document.getElementById(n+'-panel');if(el)el.classList.add('active');
   document.getElementById('scroll').scrollTop=0;updateNav(n);
 }
 function showHome(){
   document.getElementById('home-panel').style.display='block';
-  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
+  ['meals','confirm','tours','schedule','emergency','map','duaa','cert','guide','review','settings'].forEach(function(p){var el=document.getElementById(p+'-panel');if(el)el.classList.remove('active');});
   document.getElementById('scroll').scrollTop=0;updateNav('home');
 }
 function navTo(n){n==='home'?showHome():showPanel(n);}
@@ -958,6 +1064,116 @@ function showShawt(btn,n){
   btn.classList.add('active');
   document.getElementById('shawt-'+n).style.display='block';
 }
+/* TASBIH */
+var tasbihCount=0;
+function incrementTasbih(){
+  tasbihCount++;
+  document.getElementById('tasbih-count').textContent=tasbihCount;
+  var prog=tasbihCount%33;
+  document.getElementById('tasbih-progress').textContent=prog+' / ٣٣';
+  if(tasbihCount%33===0&&tasbihCount>0){showToast('✅ اكتملت ٣٣ '+document.getElementById('tasbih-type').textContent);}
+}
+function resetTasbih(){tasbihCount=0;document.getElementById('tasbih-count').textContent='0';document.getElementById('tasbih-progress').textContent='٠ / ٣٣';}
+function setTasbihType(type,btn){
+  document.getElementById('tasbih-type').textContent=type;
+  document.querySelectorAll('.duaa-panel button[onclick^="setTasbih"]').forEach(function(b){b.style.background='rgba(255,255,255,.15)';});
+  if(btn)btn.style.background='rgba(201,168,76,.4)';
+  resetTasbih();
+}
+
+/* COPY DUAA */
+function copyDuaa(btn){
+  var card=btn.closest('.dcard');
+  var text=card.querySelector('.d-ar').textContent;
+  if(navigator.clipboard){navigator.clipboard.writeText(text);}
+  showToast('تم نسخ الدعاء 📿');
+}
+
+/* PRAYER ALERT */
+var prayerAlertOn=true;
+var prayers=[
+  {name:'الفجر',nameEn:'Fajr',time:'4:18',hour:4,min:18},
+  {name:'الظهر',nameEn:'Dhuhr',time:'12:15',hour:12,min:15},
+  {name:'العصر',nameEn:'Asr',time:'15:45',hour:15,min:45},
+  {name:'المغرب',nameEn:'Maghrib',time:'18:26',hour:18,min:26},
+  {name:'العشاء',nameEn:'Isha',time:'19:56',hour:19,min:56}
+];
+function updatePrayerAlert(){
+  var now=new Date();
+  var h=now.getHours(),m=now.getMinutes();
+  var next=null;
+  for(var i=0;i<prayers.length;i++){
+    if(h<prayers[i].hour||(h===prayers[i].hour&&m<prayers[i].min)){next=prayers[i];break;}
+  }
+  if(!next)next=prayers[0];
+  var el=document.getElementById('prayer-alert');
+  var nameEl=document.getElementById('next-prayer-name');
+  var timeEl=document.getElementById('next-prayer-time');
+  if(el&&nameEl&&timeEl){
+    var diffMin=(next.hour*60+next.min)-(h*60+m);
+    if(diffMin<0)diffMin+=24*60;
+    var lang=document.documentElement.getAttribute('lang')||'ar';
+    nameEl.textContent=lang==='ar'?'صلاة '+next.name:'Prayer: '+next.nameEn;
+    timeEl.textContent=lang==='ar'?'بعد '+diffMin+' دقيقة · '+next.time:'In '+diffMin+' mins · '+next.time;
+    if(prayerAlertOn&&diffMin<=15&&diffMin>0){showToast('🔔 صلاة '+next.name+' بعد '+diffMin+' دقيقة');}
+  }
+}
+updatePrayerAlert();
+setInterval(updatePrayerAlert,60000);
+
+function togglePrayerAlert(){
+  prayerAlertOn=!prayerAlertOn;
+  var tog=document.getElementById('prayer-toggle');
+  tog.style.background=prayerAlertOn?'var(--ok)':'var(--gray)';
+  tog.querySelector('div').style.right=prayerAlertOn?'2px':'auto';
+  tog.querySelector('div').style.left=prayerAlertOn?'auto':'2px';
+  showToast(prayerAlertOn?'🔔 تم تفعيل تنبيهات الصلاة':'🔕 تم إيقاف التنبيهات');
+}
+
+/* SETTINGS */
+function saveSettings(){
+  var name=document.getElementById('settings-name-inp').value;
+  if(name){
+    document.getElementById('user-display-name').textContent=name;
+    document.getElementById('cert-pilgrim-name')&&(document.getElementById('cert-pilgrim-name').textContent=name);
+  }
+  showToast('✅ تم حفظ الإعدادات');
+  showHome();
+}
+function changePhoto(){document.getElementById('photo-input').click();}
+function handlePhoto(input){
+  if(input.files&&input.files[0]){
+    var reader=new FileReader();
+    reader.onload=function(e){
+      var img='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+      document.getElementById('settings-avatar').innerHTML=img;
+      document.getElementById('user-avatar').innerHTML=img;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+function setLang(lang){
+  currentLang=lang;
+  var html=document.documentElement;
+  html.setAttribute('lang',lang);
+  html.setAttribute('dir',lang==='ar'?'rtl':'ltr');
+  document.getElementById('lang-btn').textContent=lang==='ar'?'🇬🇧 EN':'🇸🇦 AR';
+  document.getElementById('lang-ar-btn').style.background=lang==='ar'?'var(--navy)':'var(--navyp)';
+  document.getElementById('lang-ar-btn').style.color=lang==='ar'?'#fff':'var(--navy)';
+  document.getElementById('lang-en-btn').style.background=lang==='en'?'var(--navy)':'var(--navyp)';
+  document.getElementById('lang-en-btn').style.color=lang==='en'?'#fff':'var(--navy)';
+  showToast(lang==='ar'?'تم التغيير للعربية 🇸🇦':'Language changed to English 🇬🇧');
+}
+
+/* MAP */
+function openGoogleMaps(dest){
+  var urls={
+    haram:'https://maps.google.com/maps?q=المسجد+الحرام+مكة+المكرمة',
+    hotel:'https://maps.google.com/maps?q=21.4246,39.8261'
+  };
+  window.open(urls[dest]||urls.haram,'_blank');
+}
+
 function showToast(msg){var t=document.getElementById('toast');t.textContent=msg;t.className='toast show';setTimeout(function(){t.className='toast';},3000);}
 
 /* AUTO DARK MODE */
